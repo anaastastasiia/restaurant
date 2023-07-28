@@ -1,0 +1,22 @@
+.menuWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    a {
+        color: #FFF;
+        font-family: 'Bert Sans' ,sans-serif;
+        font-size: 22px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal; 
+        text-decoration: none;
+        margin: 20px 30px;
+    }
+}
