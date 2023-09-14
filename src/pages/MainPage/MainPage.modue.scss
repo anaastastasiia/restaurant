@@ -9,32 +9,62 @@
   background-repeat: no-repeat;
   background-size: cover;
 
-  color: #fff;
+  .infoWrapper {
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
   .celebrate {
     color: #D1CCE1;
-font-family: PT Astra Sans;
-font-size: 32px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
+    font-family: PT Astra Sans;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
   }
   .logo {
-  
-color: #D1CCE1;
-font-family: PT Astra Sans;
-font-size: 140px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
+    color: #D1CCE1;
+    font-family: PT Astra Sans;
+    font-size: 140px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
   }
 
   .restaurant {
     color: #5E5E6A;
-font-family: Bert Sans;
-font-size: 32px;
-font-style: normal;
-font-weight: 300;
-line-height: normal;
-letter-spacing: 36.48px;
+    font-family: Bert Sans;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    letter-spacing: 36.48px;
+  }
+
+  .showMoreLink {
+    color: #b4b4b4;
+    text-decoration: none;
+    border: 0.5px #b4b4b4 solid;
+    padding: 5px 15px;
+    margin: 15px 0 0 0;
   }
 }
+
+.contentWrapper {
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  padding: 0 60px;
+  color: #b4b4b4;
+  flex-direction: column;
+  align-items: center;
+  
+  .content {
+    background-color: black;
+    display: flex;
+  }
+}
+

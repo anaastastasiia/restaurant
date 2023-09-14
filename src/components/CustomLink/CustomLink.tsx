@@ -8,7 +8,6 @@ interface CustomLinkProps {
 
 export const CustomLink = ({ children, to, ...props }: CustomLinkProps) => {
   const match = useMatch(to);
-  console.log(match);
   return (
     <Link to={to} style={{ color: match ? ' grey' : 'white' }} {...props}>
       {children}
