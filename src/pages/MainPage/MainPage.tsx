@@ -1,8 +1,17 @@
-import { useState } from 'react';
-import './MainPage.modue.scss';
+import { useEffect } from 'react';
+import { useItemsActions, useItemsStore } from '../../store/itemsStore';
 import ProductItem from '../../components/ProductItem';
+import { CustomLink } from '../../components/CustomLink';
+import './MainPage.modue.scss';
 
 export const MainPage = () => {
+  const { getItems } = useItemsActions;
+  const { item } = useItemsStore();
+
+  useEffect(() => {
+    getItems();
+  }, []);
+
   return (
     <>
       <div className="wrapper">
@@ -19,13 +28,11 @@ export const MainPage = () => {
         <div className="contentWrapper">
           <h1>Popularne dania</h1>
           <div className="content">
-            {/* <h1>Nowa zawartość</h1> */}
-            {/* <p>Tutaj jest więcej treści...</p> */}
-            <ProductItem />
-            <ProductItem />
-            <ProductItem />
-            <ProductItem />
+            {item.map((i) => {
+              return <ProductItem name={i.name} price={i.price} id={i.id} />;
+            })}
           </div>
+          <CustomLink to="/menu">Przejdź do menu</CustomLink>
         </div>
       </div>
     </>

@@ -1,5 +1,7 @@
 .wrapper {
-  padding: 10px;
+  flex-basis: calc(20% - 15px); 
+  margin: 20px 10px; 
+
   .productItemWrapper {
     display: flex;
     flex-direction: column;
