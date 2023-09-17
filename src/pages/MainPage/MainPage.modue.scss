@@ -69,5 +69,23 @@
     justify-content: center; 
     margin: -8px; 
   }
+
+  .menuLinkWrapper {
+    border: 1px #b4b4b4 solid;
+    padding: 5px 10px;
+
+    a {
+      text-decoration: none;
+      color: #b4b4b4 !important;
+
+      &:hover {
+        color: white !important;
+      }
+    }
+
+    &:hover {
+      border: 1px rgb(187, 23, 23) solid;
+    }
+  }
 }
 
