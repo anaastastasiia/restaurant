@@ -11,8 +11,6 @@ export const MenuPage = () => {
     getMenuItems();
   }, []);
 
-  console.log(menuItems);
-
   return (
     <>
       <div className={styles.wrapper}>

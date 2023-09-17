@@ -3,6 +3,7 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { MenuPage } from './MenuPage/MenuPage';
 import { MainLayout } from '../layout/MainLayout';
 import { MainPage } from './MainPage';
+import { DeliveryPage } from './DeliveryPage/DeliveryPage';
 
 export const AppRoutes = () => {
   return (
@@ -12,6 +13,7 @@ export const AppRoutes = () => {
         <Route index element={<MainPage />} />
       </Route>
       <Route path="/menu" element={<MenuPage />} />
+      <Route path="/delivery" element={<DeliveryPage />} />
     </Routes>
   );
 };
