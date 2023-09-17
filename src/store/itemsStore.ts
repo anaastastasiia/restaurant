@@ -11,12 +11,14 @@ export interface Item {
 
 interface ItemsState {
   item: Item[];
+  menuItems: Item[];
 }
 
 const axioss = axios.create();
 
 export const useItemsStore = create<ItemsState>(() => ({
-    item: []
+    item: [],
+    menuItems: []
 }));
 
 const getItems = async() => {
@@ -25,11 +27,21 @@ const getItems = async() => {
     useItemsStore.setState(() => ({
       item: res.data as Item[]
     }));
-    console.log(res.data);
   } catch {
-      console.log('ERROR');
+    console.error('No data');
   }
 }
 
-export const useItemsActions = { getItems };
+const getMenuItems = async() => {
+  try {
+    const res = (await axioss.get('http://localhost:3001/menu')) as AxiosResponse<Item[]>;
+    useItemsStore.setState(() => ({
+      menuItems: res.data as Item[]
+    }));
+  } catch {
+    console.error('No data');
+  }
+}
+
+export const useItemsActions = { getItems, getMenuItems };
 

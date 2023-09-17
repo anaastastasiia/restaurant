@@ -6,6 +6,9 @@ import Rectangle9 from '../../assets/Rectangle9.png';
 import Rectangle14 from '../../assets/Rectangle14.png';
 import Rectangle13 from '../../assets/Rectangle13.png';
 import Rectangle8 from '../../assets/Rectangle8.png';
+import Rectangle1 from '../../assets/Rectangle1.png';
+import Rectangle2 from '../../assets/Rectangle2.png';
+import Rectangle3 from '../../assets/Rectangle3.png';
 import { Item } from '../../store/itemsStore';
 import styles from './ProductItem.module.scss';
 
@@ -41,6 +44,18 @@ const images = [
   {
     id: '8',
     img: Rectangle14,
+  },
+  {
+    id: '9',
+    img: Rectangle1,
+  },
+  {
+    id: '10',
+    img: Rectangle2,
+  },
+  {
+    id: '11',
+    img: Rectangle3,
   },
 ];
 

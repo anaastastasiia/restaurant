@@ -40,5 +40,62 @@
       "name": "Śniedanie",
       "price": "23 PLN"
     }
+  ],
+  "menu": [
+    {
+      "id": "11",
+      "name": "Smażone skrzydełka",
+      "price": "26 PLN"
+    },
+    {
+      "id": "3",
+      "name": "Pizza",
+      "price": "32 PLN"
+    },
+    {
+      "id": "4",
+      "name": "Borszcz",
+      "price": "18 PLN"
+    },
+    {
+      "id": "5",
+      "name": "Salata",
+      "price": "19 PLN"
+    },
+    {
+      "id": "2",
+      "name": "Frytki",
+      "price": "8 PLN"
+    },
+    {
+      "id": "7",
+      "name": "Sushi",
+      "price": "43 PLN"
+    },
+    {
+      "id": "1",
+      "name": "Pasta",
+      "price": "35 PLN"
+    },
+    {
+      "id": "8",
+      "name": "Śniedanie",
+      "price": "23 PLN"
+    },
+    {
+      "id": "9",
+      "name": "Stek",
+      "price": "21 PLN"
+    },
+    {
+      "id": "6",
+      "name": "Burger",
+      "price": "24 PLN"
+    },
+    {
+      "id": "10",
+      "name": "Burger Double Cheese",
+      "price": "26 PLN"
+    }
   ]
 }
