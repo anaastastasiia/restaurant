@@ -8,7 +8,7 @@ export const AppBar = () => {
       <CustomLink to="/contact">Contact</CustomLink>
       <CustomLink to="/menu">Menu</CustomLink>
       <CustomLink to="/orders">Orders</CustomLink>
-      <CustomLink to="/dostawa">Dostawa</CustomLink>
+      <CustomLink to="/delivery">Dostawa</CustomLink>
     </header>
   );
 };
