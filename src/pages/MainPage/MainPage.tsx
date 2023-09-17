@@ -32,7 +32,9 @@ export const MainPage = () => {
               return <ProductItem name={i.name} price={i.price} id={i.id} />;
             })}
           </div>
-          <CustomLink to="/menu">Przejdź do menu</CustomLink>
+          <div className="menuLinkWrapper">
+            <CustomLink to="/menu">Przejdź do menu</CustomLink>
+          </div>
         </div>
       </div>
     </>
