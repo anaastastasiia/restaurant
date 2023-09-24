@@ -13,9 +13,11 @@
     "start": "concurrently \"npm run server\" \"npm run dev\""
   },
   "dependencies": {
+    "@react-google-maps/api": "^2.19.2",
     "@szhsin/react-menu": "^4.0.2",
     "axios": "^1.5.0",
     "concurrently": "^8.2.1",
+    "google-map-react": "^2.2.1",
     "immer": "^10.0.2",
     "jsdom": "^22.1.0",
     "json-server": "^0.17.3",
@@ -28,6 +30,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^14.0.0",
+    "@types/google-map-react": "^2.1.8",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.2.0",
