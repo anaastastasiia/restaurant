@@ -1,9 +1,10 @@
 import { Root } from '../app/Root';
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { MenuPage } from './MenuPage/MenuPage';
 import { MainLayout } from '../layout/MainLayout';
 import { MainPage } from './MainPage';
 import { DeliveryPage } from './DeliveryPage/DeliveryPage';
+import { ContactPage } from './ContactPage';
 
 export const AppRoutes = () => {
   return (
@@ -14,6 +15,7 @@ export const AppRoutes = () => {
       </Route>
       <Route path="/menu" element={<MenuPage />} />
       <Route path="/delivery" element={<DeliveryPage />} />
+      <Route path="/contact" element={<ContactPage />} />
     </Routes>
   );
 };
