@@ -20,9 +20,9 @@ export const MainPage = () => {
           <div className="logo">RADISH</div>
           <div className="restaurant">RESTAURANT</div>
         </div>
-        <a href="./#showMore" className="showMoreLink">
-          Pokaż więcej
-        </a>
+        <div className="showMoreWrapper">
+          <a href="./#showMore">Pokaż więcej</a>
+        </div>
       </div>
       <div id="showMore">
         <div className="contentWrapper">
