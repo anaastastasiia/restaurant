@@ -7,6 +7,7 @@
   top: 0;
   left: 0;
   right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
 
   a {
     color: #FFF;
@@ -17,5 +18,9 @@
     line-height: normal; 
     text-decoration: none;
     margin: 20px 30px;
+
+    &:hover {
+      color: rgb(180, 180, 180) !important;
+    }
   }
 }
