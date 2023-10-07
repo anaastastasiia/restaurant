@@ -91,11 +91,13 @@
 
   .menuLinkWrapper {
     border: 1px #b4b4b4 solid;
-    padding: 5px 10px;
+    padding: 5px 15px;
+    margin: 20px 0;
 
     a {
       text-decoration: none;
       color: #b4b4b4 !important;
+      font-size: 25px;
 
       &:hover {
         color: white !important;
@@ -107,4 +109,3 @@
     }
   }
 }
-

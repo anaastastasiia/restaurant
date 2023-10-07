@@ -3,6 +3,7 @@ import { useItemsActions, useItemsStore } from '../../store/itemsStore';
 import ProductItem from '../../components/ProductItem';
 import { CustomLink } from '../../components/CustomLink';
 import './MainPage.modue.scss';
+import { ContactUs } from '../../components/ContactUs';
 
 export const MainPage = () => {
   const { getItems } = useItemsActions;
@@ -23,6 +24,9 @@ export const MainPage = () => {
         <div className="showMoreWrapper">
           <a href="./#showMore">Pokaż więcej</a>
         </div>
+      </div>
+      <div>
+        <ContactUs />
       </div>
       <div id="showMore">
         <div className="contentWrapper">
