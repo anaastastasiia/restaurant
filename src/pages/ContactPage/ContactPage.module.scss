@@ -34,15 +34,26 @@
     line-height: normal;
   }
 
-  .mapWrapper {
+  .contactWithMap {
+    background-color: black;
+    width: 100vw;
     display: flex;
-    align-items: center;
-    flex-direction: column;
-    margin-bottom: 35px;
+    justify-content: center;
 
-    div {
-      padding: 30px 20px; 
-      font-size: 25px;
+    .mapWrapper {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      margin-bottom: 35px;
+      background-color: black;
+      width: 100vw;
+      display: flex;
+      justify-content: center;
+  
+      div {
+        padding: 30px 20px; 
+        font-size: 25px;
+      }
     }
   }
 }
