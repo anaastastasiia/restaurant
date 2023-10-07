@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
-import { useItemsActions, useItemsStore } from '../../store/itemsStore';
-import ProductItem from '../../components/ProductItem';
+import { useItemsActions } from '../../store/itemsStore';
 import { CustomLink } from '../../components/CustomLink';
 import './MainPage.modue.scss';
 import { ContactUs } from '../../components/ContactUs';
@@ -12,7 +11,6 @@ import { Carousel } from 'react-bootstrap';
 
 export const MainPage = () => {
   const { getItems } = useItemsActions;
-  const { item } = useItemsStore();
 
   useEffect(() => {
     getItems();
@@ -44,7 +42,7 @@ export const MainPage = () => {
               {images.map((image, index) => (
                 <Carousel.Item key={index}>
                   <img
-                    className="d-block mx-auto" // Dodano klasę mx-auto
+                    className="d-block mx-auto"
                     src={image}
                     alt={`Slide ${index + 1}`}
                   />
@@ -52,11 +50,6 @@ export const MainPage = () => {
               ))}
             </Carousel>
           </div>
-          {/* <div className="content">
-            {item.map((i) => {
-              return <ProductItem name={i.name} price={i.price} id={i.id} />;
-            })}
-          </div> */}
           <div className="menuLinkWrapper">
             <CustomLink to="/menu">Przejdź do menu</CustomLink>
           </div>
