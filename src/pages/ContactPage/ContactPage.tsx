@@ -10,7 +10,7 @@ export const ContactPage = () => {
           <div className={styles.celebrate}>Kontakt</div>
         </div>
       </div>
-      <div>
+      <div className={styles.contactWithMap}>
         <ContactUs />
         <div className={styles.mapWrapper}>
           <div>Mapa dojazdu</div>
