@@ -1,19 +1,23 @@
 import { useEffect } from 'react';
-import { useItemsActions } from '../../store/itemsStore';
-import { CustomLink } from '../../components/CustomLink';
-import './MainPage.modue.scss';
-import { ContactUs } from '../../components/ContactUs';
+import { Carousel } from 'react-bootstrap';
 import Rectangle9 from '../../assets/Rectangle9.png';
 import Rectangle8 from '../../assets/Rectangle8.png';
 import Rectangle11 from '../../assets/Rectangle11.png';
+import sushi from '../../assets/sushi.png';
+import ProductItem from '../../components/ProductItem';
+import { useItemsActions, useItemsStore } from '../../store/itemsStore';
+import { CustomLink } from '../../components/CustomLink';
+import { ContactUs } from '../../components/ContactUs';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Carousel } from 'react-bootstrap';
+import './MainPage.modue.scss';
 
 export const MainPage = () => {
-  const { getItems } = useItemsActions;
+  const { getItems, getHotPriceItems } = useItemsActions;
+  const { hotPriceItems } = useItemsStore();
 
   useEffect(() => {
     getItems();
+    getHotPriceItems();
   }, []);
 
   const images = [Rectangle9, Rectangle8, Rectangle11];
@@ -52,6 +56,26 @@ export const MainPage = () => {
           </div>
           <div className="menuLinkWrapper">
             <CustomLink to="/menu">Przejdź do menu</CustomLink>
+          </div>
+        </div>
+        <div className="sushiImgWrapper">
+          <img src={sushi} />
+        </div>
+        <div className="lowPricesWrapper">
+          <h1>Gorące ceny</h1>
+          <div className="hotPriceContentWrapper">
+            <div className="hotPriceContent">
+              {hotPriceItems.map((i) => {
+                return (
+                  <ProductItem
+                    name={i.name}
+                    price={i.price}
+                    id={i.id}
+                    newPrice={i.newPrice}
+                  />
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>

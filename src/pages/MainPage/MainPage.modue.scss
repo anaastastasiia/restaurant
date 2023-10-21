@@ -188,3 +188,48 @@
   background-color: black;
   width: 100vw;
 }
+
+.sushiImgWrapper {
+  display: flex;
+  height: 550px;
+  flex-direction: column;
+  align-items: center;
+  background-color: black;
+
+
+  img {
+    width: 100%;
+    height: 550px;
+  }
+}
+
+.lowPricesWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: black;
+
+  h1 {
+    padding-top: 40px;
+    color: #b4b4b4;
+  }
+
+  .hotPriceContentWrapper {
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    padding: 50px 100px 100px 100px;
+    color: #b4b4b4;
+    flex-direction: column;
+    align-items: center;
+    
+    .hotPriceContent {
+      background-color: black;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center; 
+      margin: -8px; 
+    }
+  } 
+
+}

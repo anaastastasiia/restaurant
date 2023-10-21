@@ -3,99 +3,119 @@
     {
       "id": "1",
       "name": "Pasta",
-      "price": "35 PLN"
+      "price": "33.99 PLN"
     },
     {
       "id": "2",
       "name": "Frytki",
-      "price": "8 PLN"
+      "price": "7.99 PLN"
     },
     {
       "id": "3",
       "name": "Pizza",
-      "price": "32 PLN"
+      "price": "32.99 PLN"
     },
     {
       "id": "4",
       "name": "Borszcz",
-      "price": "18 PLN"
+      "price": "16.99 PLN"
     },
     {
       "id": "5",
       "name": "Salata",
-      "price": "19 PLN"
+      "price": "18.99 PLN"
     },
     {
       "id": "6",
       "name": "Burger",
-      "price": "24 PLN"
+      "price": "23.99 PLN"
     },
     {
       "id": "7",
       "name": "Sushi",
-      "price": "43 PLN"
+      "price": "46.99 PLN"
     },
     {
       "id": "8",
       "name": "Śniedanie",
-      "price": "23 PLN"
+      "price": "23.99 PLN"
     }
   ],
   "menu": [
     {
       "id": "11",
       "name": "Smażone skrzydełka",
-      "price": "26 PLN"
+      "price": "25.99 PLN"
     },
     {
       "id": "3",
       "name": "Pizza",
-      "price": "32 PLN"
+      "price": "32.99 PLN"
     },
     {
       "id": "4",
       "name": "Borszcz",
-      "price": "18 PLN"
+      "price": "16.99 PLN"
     },
     {
       "id": "5",
       "name": "Salata",
-      "price": "19 PLN"
+      "price": "18.99 PLN"
     },
     {
       "id": "2",
       "name": "Frytki",
-      "price": "8 PLN"
+      "price": "7.99 PLN"
     },
     {
       "id": "7",
       "name": "Sushi",
-      "price": "43 PLN"
+      "price": "46.99 PLN"
     },
     {
       "id": "1",
       "name": "Pasta",
-      "price": "35 PLN"
+      "price": "33.99 PLN"
     },
     {
       "id": "8",
       "name": "Śniedanie",
-      "price": "23 PLN"
+      "price": "23.99 PLN"
     },
     {
       "id": "9",
       "name": "Stek",
-      "price": "21 PLN"
+      "price": "25.99 PLN"
     },
     {
       "id": "6",
       "name": "Burger",
-      "price": "24 PLN"
+      "price": "23.99 PLN"
     },
     {
       "id": "10",
       "name": "Burger Double Cheese",
-      "price": "26 PLN"
+      "price": "25.99 PLN"
+    }
+  ],
+  "hotPrice": [
+    {
+      "id": "12",
+      "name": "Burger Duży",
+      "price": "26.99 PLN",
+      "newPrice": "16.99 PLN"
+    },
+    {
+      "id": "13",
+      "name": "Stek wieprzowy",
+      "price": "28.99 PLN",
+      "newPrice": "19.99 PLN"
+    },
+    {
+      "id": "14",
+      "name": "Grillowane skrzydełka",
+      "price": "25.99 PLN",
+      "newPrice": "18.99"
     }
   ]
 }

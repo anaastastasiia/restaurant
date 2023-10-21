@@ -7,18 +7,21 @@ export interface Item {
   id: string;
   name: string;
   price: string;
+  newPrice?: string;
 }
 
 interface ItemsState {
   item: Item[];
   menuItems: Item[];
+  hotPriceItems: Item[];
 }
 
 const axioss = axios.create();
 
 export const useItemsStore = create<ItemsState>(() => ({
     item: [],
-    menuItems: []
+    menuItems: [],
+    hotPriceItems: []
 }));
 
 const getItems = async() => {
@@ -43,5 +46,16 @@ const getMenuItems = async() => {
   }
 }
 
-export const useItemsActions = { getItems, getMenuItems };
+const getHotPriceItems = async() => {
+  try {
+    const res = (await axioss.get('http://localhost:3001/hotPrice')) as AxiosResponse<Item[]>;
+    useItemsStore.setState(() => ({
+      hotPriceItems: res.data as Item[]
+    }));
+  } catch {
+    console.error('No data');
+  }
+}
+
+export const useItemsActions = { getItems, getMenuItems, getHotPriceItems };
 
