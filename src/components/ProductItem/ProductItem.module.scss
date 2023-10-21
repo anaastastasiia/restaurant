@@ -28,7 +28,13 @@
   
     .productsName {
       font-size: 18px;
-      padding: 0 0 5px 0;
+      padding: 15px 0 5px 0;
+    }
+
+    .pricesWrapper {
+      padding: 10px;
+      display: flex;
+      align-items: center;
     }
   }
 }

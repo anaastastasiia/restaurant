@@ -9,6 +9,9 @@ import Rectangle8 from '../../assets/Rectangle8.png';
 import Rectangle1 from '../../assets/Rectangle1.png';
 import Rectangle2 from '../../assets/Rectangle2.png';
 import Rectangle3 from '../../assets/Rectangle3.png';
+import burger from '../../assets/burger.png';
+import frytki from '../../assets/frytki.png';
+import meat from '../../assets/meat.png';
 import { Item } from '../../store/itemsStore';
 import styles from './ProductItem.module.scss';
 
@@ -57,6 +60,18 @@ const images = [
     id: '11',
     img: Rectangle3,
   },
+  {
+    id: '12',
+    img: burger,
+  },
+  {
+    id: '13',
+    img: frytki,
+  },
+  {
+    id: '14',
+    img: meat,
+  },
 ];
 
 export const ProductItem = (product: Item) => {
@@ -71,8 +86,17 @@ export const ProductItem = (product: Item) => {
     <div className={styles.wrapper}>
       <div className={styles.productItemWrapper}>
         <img src={imgForItem ?? ''} width={'250px'} height={'250px'} />
-        <p>{product.price}</p>
         <p className={styles.productsName}>{product.name}</p>
+        {product.newPrice ? (
+          <div className={styles.pricesWrapper}>
+            <div>{product.newPrice}</div>
+            <div style={{ textDecoration: 'line-through', padding: '10px' }}>
+              {product.price}
+            </div>
+          </div>
+        ) : (
+          <p>{product.price}</p>
+        )}
         <button>Szczegóły</button>
       </div>
     </div>
