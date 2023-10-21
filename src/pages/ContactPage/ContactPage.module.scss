@@ -25,6 +25,7 @@
     font-weight: 400;
     line-height: normal;
   }
+
   .logo {
     color: #D1CCE1;
     font-family: PT Astra Sans;
@@ -33,27 +34,31 @@
     font-weight: 400;
     line-height: normal;
   }
+}
 
-  .contactWithMap {
-    background-color: black;
-    width: 100vw;
-    display: flex;
-    justify-content: center;
+.contactWithMap {
+  background-color: black;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+}
 
-    .mapWrapper {
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      margin-bottom: 35px;
-      background-color: black;
-      width: 100vw;
-      display: flex;
-      justify-content: center;
-  
-      div {
-        padding: 30px 20px; 
-        font-size: 25px;
-      }
-    }
+.mapWrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: black;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+
+  div {
+    padding: 30px 20px; 
+    font-size: 25px;
+    color: #D1CCE1;
+  }
+
+  iframe {
+    margin-bottom: 35px;
   }
 }
