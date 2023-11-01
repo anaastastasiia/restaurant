@@ -1,0 +1,20 @@
+{
+    "contact": "Kontakt",
+    "contactUs": "Skontaktuj się z nami",
+    "ourAddress": "Nasz adres",
+    "street": "Doktora Seweryna Sterlinga 26, 90-212 Łódź",
+    "contactPhone": "Numer kontaktowy",
+    "email": "Adres email",
+    "openedHours": "Godziny otwarcia",
+    "today": "Dzisiaj",
+    "daysOfWeek": {
+        "monday": "Poniedziłek",
+        "tuesday": "Wtorek",
+        "wednesday": "Środa",
+        "thursday": "Czwartek",
+        "friday": "Piątek",
+        "saturday": "Sobota",
+        "sunday": "Niedziela"
+    },
+    "map": "Mapa dojazdu"
+}
