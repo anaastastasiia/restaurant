@@ -7,9 +7,11 @@ import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
 import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
 import ArrowDropUpOutlinedIcon from '@mui/icons-material/ArrowDropUpOutlined';
+import { useTranslation } from 'react-i18next';
 
 export const ContactUs = () => {
   const [currentDay, setCurrentDate] = useState('');
+  const { t } = useTranslation();
 
   useEffect(() => {
     const currentDate = new Date();
@@ -26,7 +28,7 @@ export const ContactUs = () => {
   return (
     <div className={styles.contentWrapper}>
       <div className={styles.content}>
-        <div>Skontaktuj się z nami</div>
+        <div>{t('pages.contactUs.contactUs')}</div>
       </div>
       <div className={styles.contactIconsWrapper}>
         <div
@@ -36,10 +38,8 @@ export const ContactUs = () => {
           <LocationOnOutlinedIcon
             style={{ color: 'white', width: ' 40px', height: ' 40px' }}
           />
-          <div>Nasz adres</div>
-          <div className={styles.textBold}>
-            Doktora Seweryna Sterlinga 26, 90-212 Łódź
-          </div>
+          <div>{t('pages.contactUs.ourAddress')}</div>
+          <div className={styles.textBold}>{t('pages.contactUs.street')}</div>
         </div>
         <div
           className={styles.contactIcon}
@@ -48,7 +48,7 @@ export const ContactUs = () => {
           <PhoneAndroidOutlinedIcon
             style={{ color: 'white', width: ' 40px', height: ' 40px' }}
           />
-          <div>Numer kontaktowy</div>
+          <div>{t('pages.contactUs.contactPhone')}</div>
           <div className={styles.textBold}>+(48) 444 555 444</div>
         </div>
         <div
@@ -58,17 +58,17 @@ export const ContactUs = () => {
           <EmailOutlinedIcon
             style={{ color: 'white', width: ' 40px', height: ' 40px' }}
           />
-          <div>Adres email</div>
+          <div>{t('pages.contactUs.email')}</div>
           <div className={styles.textBold}>radish@gmail.com</div>
         </div>
         <div className={styles.contactIcon} style={{ width: '33%' }}>
           <AccessTimeOutlinedIcon
             style={{ color: 'white', width: ' 40px', height: ' 40px' }}
           />
-          <div>Godziny otwarcia</div>
+          <div>{t('pages.contactUs.openedHours')}</div>
           <div className={styles.houres}>
             <div>
-              Dzisiaj:{' '}
+              {t('pages.contactUs.today')}:{' '}
               {currentDay === 'weekend' ? '9:00 - 24:00' : '11:00 - 23:00'}
             </div>
             <div onClick={handleToggle} style={{ cursor: 'pointer' }}>
@@ -81,13 +81,17 @@ export const ContactUs = () => {
           </div>
           {isExpanded && (
             <div>
-              <div>poniedziałek 11:00 - 23:00</div>
-              <div>wtorek 11:00 - 23:00</div>
-              <div>środa 11:00 - 23:00</div>
-              <div>czwartek 11:00 - 23:00</div>
-              <div>piątek 11:00 - 23:00</div>
-              <div>sobota 9:00 - 24:00</div>
-              <div>niedziela 9:00 - 24:00</div>
+              <div>{t('pages.contactUs.daysOfWeek.monday')} 11:00 - 23:00</div>
+              <div>{t('pages.contactUs.daysOfWeek.tuesday')} 11:00 - 23:00</div>
+              <div>
+                {t('pages.contactUs.daysOfWeek.wednesday')} 11:00 - 23:00
+              </div>
+              <div>
+                {t('pages.contactUs.daysOfWeek.thursday')} 11:00 - 23:00
+              </div>
+              <div>{t('pages.contactUs.daysOfWeek.friday')} 11:00 - 23:00</div>
+              <div>{t('pages.contactUs.daysOfWeek.saturday')} 9:00 - 24:00</div>
+              <div>{t('pages.contactUs.daysOfWeek.sunday')} 9:00 - 24:00</div>
             </div>
           )}
         </div>

@@ -1,0 +1,20 @@
+{
+    "contact": "Contact",
+    "contactUs": "Contact us",
+    "ourAddress": "Our address",
+    "street": "Doktora Seweryna Sterlinga 26, 90-212, Łódź",
+    "contactPhone": "Contact number",
+    "email": "Email address",
+    "openedHours": "Opening hours",
+    "today": "Today",
+    "daysOfWeek": {
+        "monday": "Monday",
+        "tuesday": "Tuesday",
+        "wednesday": "Wednesday",
+        "thursday": "Thursday",
+        "friday": "Friday",
+        "saturday": "Saturday",
+        "sunday": "Sunday"
+    },
+    "map": "Directions map"
+}
