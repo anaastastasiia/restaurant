@@ -5,7 +5,8 @@ export type ProduceState<T> = (state: T) => void;
 
 export interface Item {
   id: string;
-  name: string;
+  namePL: string;
+  nameEN: string;
   price: string;
   newPrice?: string;
 }

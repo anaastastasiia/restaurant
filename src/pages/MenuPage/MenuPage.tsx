@@ -25,7 +25,14 @@ export const MenuPage = () => {
         <div className={styles.contentWrapper}>
           <div className={styles.content}>
             {menuItems.map((i) => {
-              return <ProductItem name={i.name} price={i.price} id={i.id} />;
+              return (
+                <ProductItem
+                  namePL={i.namePL}
+                  nameEN={i.nameEN}
+                  price={i.price}
+                  id={i.id}
+                />
+              );
             })}
           </div>
         </div>
