@@ -76,7 +76,7 @@ const images = [
 ];
 
 export const ProductItem = (product: Item) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const findImgForItem = (item: Item): string | undefined => {
     const imgMatch = images.find((img) => img.id === item.id);
@@ -85,11 +85,18 @@ export const ProductItem = (product: Item) => {
 
   const imgForItem = findImgForItem(product);
 
+  console.log('i18n : ' + i18n.language);
+  console.log('product : ', product);
+  console.log('name : ' + product.namePL);
+  console.log('name EN: ' + product.nameEN);
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.productItemWrapper}>
         <img src={imgForItem ?? ''} width={'250px'} height={'250px'} />
-        <p className={styles.productsName}>{product.name}</p>
+        <p className={styles.productsName}>
+          {i18n.language === 'pl' ? product.namePL : product.nameEN}
+        </p>
         {product.newPrice ? (
           <div className={styles.pricesWrapper}>
             <div>{product.newPrice}</div>

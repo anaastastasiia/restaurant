@@ -70,7 +70,8 @@ export const MainPage = () => {
               {hotPriceItems.map((i) => {
                 return (
                   <ProductItem
-                    name={i.name}
+                    namePL={i.namePL}
+                    nameEN={i.nameEN}
                     price={i.price}
                     id={i.id}
                     newPrice={i.newPrice}
