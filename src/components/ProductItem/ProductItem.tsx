@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import Rectangle7 from '../../assets/Rectangle7.png';
 import Rectangle10 from '../../assets/Rectangle10.png';
 import Rectangle11 from '../../assets/Rectangle11.png';
@@ -75,6 +76,8 @@ const images = [
 ];
 
 export const ProductItem = (product: Item) => {
+  const { t } = useTranslation();
+
   const findImgForItem = (item: Item): string | undefined => {
     const imgMatch = images.find((img) => img.id === item.id);
     return imgMatch?.img;
@@ -97,7 +100,7 @@ export const ProductItem = (product: Item) => {
         ) : (
           <p>{product.price}</p>
         )}
-        <button>Szczegóły</button>
+        <button>{t('pages.start.details')}</button>
       </div>
     </div>
   );

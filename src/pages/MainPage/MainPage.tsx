@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Carousel } from 'react-bootstrap';
 import Rectangle9 from '../../assets/Rectangle9.png';
 import Rectangle8 from '../../assets/Rectangle8.png';
@@ -12,6 +13,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './MainPage.modue.scss';
 
 export const MainPage = () => {
+  const { t } = useTranslation();
   const { getItems, getHotPriceItems } = useItemsActions;
   const { hotPriceItems } = useItemsStore();
 
@@ -31,7 +33,7 @@ export const MainPage = () => {
           <div className="restaurant">RESTAURANT</div>
         </div>
         <div className="showMoreWrapper">
-          <a href="./#showMore">Pokaż więcej</a>
+          <a href="./#showMore">{t('pages.start.showMore')}</a>
         </div>
       </div>
       <div className="contactUsWrapper">
@@ -40,7 +42,7 @@ export const MainPage = () => {
 
       <div id="showMore">
         <div className="contentWrapper">
-          <h1>Popularne dania</h1>
+          <h1>{t('pages.start.popularDishes')}</h1>
           <div className="scrollWrapper text-center">
             <Carousel style={{ maxWidth: '600px', margin: 'auto' }}>
               {images.map((image, index) => (
@@ -55,14 +57,14 @@ export const MainPage = () => {
             </Carousel>
           </div>
           <div className="menuLinkWrapper">
-            <CustomLink to="/menu">Przejdź do menu</CustomLink>
+            <CustomLink to="/menu">{t('pages.start.goToMenu')}</CustomLink>
           </div>
         </div>
         <div className="sushiImgWrapper">
           <img src={sushi} />
         </div>
         <div className="lowPricesWrapper">
-          <h1>Gorące ceny</h1>
+          <h1>{t('pages.start.hotPrices')}</h1>
           <div className="hotPriceContentWrapper">
             <div className="hotPriceContent">
               {hotPriceItems.map((i) => {
