@@ -85,11 +85,6 @@ export const ProductItem = (product: Item) => {
 
   const imgForItem = findImgForItem(product);
 
-  console.log('i18n : ' + i18n.language);
-  console.log('product : ', product);
-  console.log('name : ' + product.namePL);
-  console.log('name EN: ' + product.nameEN);
-
   return (
     <div className={styles.wrapper}>
       <div className={styles.productItemWrapper}>
