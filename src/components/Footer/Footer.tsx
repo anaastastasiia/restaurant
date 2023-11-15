@@ -1,8 +1,11 @@
-import styles from './Footer.module.scss';
+import { useTranslation } from 'react-i18next';
 import logo from '../../assets/logo.png';
 import { CustomLink } from '../CustomLink';
+import styles from './Footer.module.scss';
 
 export const Footer = () => {
+  const { t } = useTranslation();
+
   return (
     <>
       <div className={styles.footerWrapper}>
@@ -11,10 +14,10 @@ export const Footer = () => {
           <div>RADISH</div>
         </div>
         <div className={styles.linksWrapper}>
-          <CustomLink to="/contact">Contact</CustomLink>
-          <CustomLink to="/menu">Menu</CustomLink>
-          <CustomLink to="/orders">Orders</CustomLink>
-          <CustomLink to="/delivery">Dostawa</CustomLink>
+          <CustomLink to="/contact">{t('header.contact')}</CustomLink>
+          <CustomLink to="/menu">{t('header.menu')}</CustomLink>
+          <CustomLink to="/orders">{t('header.orders')}</CustomLink>
+          <CustomLink to="/delivery">{t('header.delivery')}</CustomLink>
         </div>
         <div>
           <div>ul. Piotrkowska, 555</div>
