@@ -94,13 +94,13 @@ export const ProductItem = (product: Item) => {
         </p>
         {product.newPrice ? (
           <div className={styles.pricesWrapper}>
-            <div>{product.newPrice}</div>
+            <div>{product.newPrice} PLN</div>
             <div style={{ textDecoration: 'line-through', padding: '10px' }}>
-              {product.price}
+              {product.price} PLN
             </div>
           </div>
         ) : (
-          <p>{product.price}</p>
+          <p>{product.price} PLN</p>
         )}
         <button>{t('pages.start.details')}</button>
       </div>
