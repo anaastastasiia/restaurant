@@ -1,3 +1,9 @@
 {
-    "findOutMore": "Find out more about our menu"
+    "findOutMore": "Find out more about our menu",
+    "findByName": "Search by name...",
+    "byNameAsc": "By name (ascending)",
+    "byNameDesc": "By name (descending)",
+    "byPriceAsc": "By price (ascending)",
+    "byPriceDesc": "By price (descending)",
+    "noData": "Oops... No data :("
 }

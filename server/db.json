@@ -4,49 +4,49 @@
       "id": "1",
       "namePL": "Pasta",
       "nameEN": "Paste",
-      "price": "33.99 PLN"
+      "price": "33.99"
     },
     {
       "id": "2",
       "namePL": "Frytki",
       "nameEN": "Fries",
-      "price": "7.99 PLN"
+      "price": "7.99"
     },
     {
       "id": "3",
       "namePL": "Pizza",
       "nameEN": "Pizza",
-      "price": "32.99 PLN"
+      "price": "32.99"
     },
     {
       "id": "4",
       "namePL": "Borszcz",
       "nameEN": "Borshch",
-      "price": "16.99 PLN"
+      "price": "16.99"
     },
     {
       "id": "5",
       "namePL": "Salata",
       "nameEN": "Salad",
-      "price": "18.99 PLN"
+      "price": "18.99"
     },
     {
       "id": "6",
       "namePL": "Burger",
       "nameEN": "Burger",
-      "price": "23.99 PLN"
+      "price": "23.99"
     },
     {
       "id": "7",
       "namePL": "Sushi",
       "nameEN": "Sushi",
-      "price": "46.99 PLN"
+      "price": "46.99"
     },
     {
       "id": "8",
       "namePL": "Śniedanie",
       "nameEN": "Breakfast",
-      "price": "23.99 PLN"
+      "price": "23.99"
     }
   ],
   "menu": [
@@ -54,67 +54,67 @@
       "id": "11",
       "namePL": "Smażone skrzydełka",
       "nameEN": "Fried wings",
-      "price": "25.99 PLN"
+      "price": "25.99"
     },
     {
       "id": "3",
       "namePL": "Pizza",
       "nameEN": "Pizza",
-      "price": "32.99 PLN"
+      "price": "32.99"
     },
     {
       "id": "4",
       "namePL": "Borszcz",
       "nameEN": "Borshch",
-      "price": "16.99 PLN"
+      "price": "16.99"
     },
     {
       "id": "5",
       "namePL": "Salata",
       "nameEN": "Salad",
-      "price": "18.99 PLN"
+      "price": "18.99"
     },
     {
       "id": "2",
       "namePL": "Frytki",
       "nameEN": "Fries",
-      "price": "7.99 PLN"
+      "price": "7.99"
     },
     {
       "id": "7",
       "namePL": "Sushi",
       "nameEN": "Sushi",
-      "price": "46.99 PLN"
+      "price": "46.99"
     },
     {
       "id": "1",
       "namePL": "Pasta",
       "nameEN": "Paste",
-      "price": "33.99 PLN"
+      "price": "33.99"
     },
     {
       "id": "8",
       "namePL": "Śniedanie",
       "nameEN": "Breakfast",
-      "price": "23.99 PLN"
+      "price": "23.99"
     },
     {
       "id": "9",
       "namePL": "Stek",
       "nameEN": "Steak",
-      "price": "25.99 PLN"
+      "price": "25.99"
     },
     {
       "id": "6",
       "namePL": "Burger",
       "nameEN": "Burger",
-      "price": "23.99 PLN"
+      "price": "23.99"
     },
     {
       "id": "10",
       "namePL": "Burger z podwójnym serem",
       "nameEN": "Burger Double Cheese",
-      "price": "25.99 PLN"
+      "price": "25.99"
     }
   ],
   "hotPrice": [
@@ -122,21 +122,21 @@
       "id": "12",
       "namePL": "Burger Duży",
       "nameEN": "Burger Big",
-      "price": "26.99 PLN",
-      "newPrice": "16.99 PLN"
+      "price": "26.99",
+      "newPrice": "16.99"
     },
     {
       "id": "13",
       "namePL": "Stek wieprzowy",
       "nameEN": "Pork steak",
-      "price": "28.99 PLN",
-      "newPrice": "19.99 PLN"
+      "price": "28.99",
+      "newPrice": "19.99"
     },
     {
       "id": "14",
       "namePL": "Grillowane skrzydełka",
       "nameEN": "Grilled wings",
-      "price": "25.99 PLN",
+      "price": "25.99",
       "newPrice": "18.99"
     }
   ]

@@ -1,3 +1,9 @@
 {
-    "findOutMore": "Dowiedź się więcej o naszym menu"
+    "findOutMore": "Dowiedź się więcej o naszym menu",
+    "findByName": "Wyszukaj po nazwie...",
+    "byNameAsc": "Po nazwie (rosnąco)",
+    "byNameDesc": "Po nazwie (malejąco)",
+    "byPriceAsc": "Po cenie (rosnąco)",
+    "byPriceDesc": "Po cenie (malejąco)",
+    "noData": "Ups... Brak danych :("
 }
