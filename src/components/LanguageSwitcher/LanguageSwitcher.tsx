@@ -9,7 +9,6 @@ const LanguageSwitcher: React.FC = () => {
   const { i18n } = useTranslation();
 
   const changeLanguage = (language: string) => {
-    console.log(language);
     i18n.changeLanguage(language);
   };
 

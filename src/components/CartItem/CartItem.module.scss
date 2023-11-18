@@ -1,0 +1,53 @@
+.wrapper {
+  flex-basis: calc(20% - 15px); 
+  // margin: 20px 10px; 
+
+  .productItemWrapper {
+    display: flex;
+    align-items: center;
+    color: #b4b4b4;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 200;
+    line-height: normal;
+    color: #b4b4b4;
+  
+    p {
+      margin: 0;
+      padding: 10px 0 5px 0;
+    }
+  
+    button {
+      background: none;
+      color: #b4b4b4;
+      border: 0.5px #b4b4b4 solid;
+      margin: 5px 0 5px 0;
+    }
+  
+    .productsName {
+      font-size: 18px;
+      padding: 15px 0 5px 0;
+    }
+
+    .pricesWrapper {
+      padding: 10px;
+      display: flex;
+      align-items: center;
+    }
+
+    .cartItemDetails {
+      input {
+        background: none;
+        color: #b4b4b4;
+        line-height: 35px;
+        width: 100px;
+        margin: 0 10px;
+      }
+
+      .deleteButton {
+        margin-left: 10px;
+      }
+    }
+  }
+}

@@ -15,6 +15,7 @@ import frytki from '../../assets/frytki.png';
 import meat from '../../assets/meat.png';
 import { Item } from '../../store/itemsStore';
 import styles from './ProductItem.module.scss';
+import { useCartActions, useCartStore } from '../../store/cartStore';
 
 const images = [
   {
@@ -77,6 +78,7 @@ const images = [
 
 export const ProductItem = (product: Item) => {
   const { t, i18n } = useTranslation();
+  const { getCartItems, addToCart } = useCartActions;
 
   const findImgForItem = (item: Item): string | undefined => {
     const imgMatch = images.find((img) => img.id === item.id);
@@ -84,6 +86,11 @@ export const ProductItem = (product: Item) => {
   };
 
   const imgForItem = findImgForItem(product);
+
+  const handleAddToCart = (product: Item) => {
+    getCartItems();
+    addToCart(product, 1);
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -102,7 +109,9 @@ export const ProductItem = (product: Item) => {
         ) : (
           <p>{product.price} PLN</p>
         )}
-        <button>{t('pages.start.details')}</button>
+        <button onClick={() => handleAddToCart(product)}>
+          {t('pages.start.addToCart')}
+        </button>
       </div>
     </div>
   );
