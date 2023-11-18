@@ -53,8 +53,6 @@ export const MenuPage = () => {
       return 0;
     });
 
-    console.log('data: ' + sortedData.length);
-
     return (
       <div className={styles.contentWrapper}>
         <div className={styles.inputWrapper}>

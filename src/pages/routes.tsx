@@ -5,6 +5,7 @@ import { MainLayout } from '../layout/MainLayout';
 import { MainPage } from './MainPage';
 import { DeliveryPage } from './DeliveryPage/DeliveryPage';
 import { ContactPage } from './ContactPage';
+import { CartPage } from './CartPage';
 
 export const AppRoutes = () => {
   return (
@@ -16,6 +17,7 @@ export const AppRoutes = () => {
       <Route path="/menu" element={<MenuPage />} />
       <Route path="/delivery" element={<DeliveryPage />} />
       <Route path="/contact" element={<ContactPage />} />
+      <Route path="/cart" element={<CartPage />} />
     </Routes>
   );
 };

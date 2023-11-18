@@ -16,7 +16,6 @@ export const Footer = () => {
         <div className={styles.linksWrapper}>
           <CustomLink to="/contact">{t('header.contact')}</CustomLink>
           <CustomLink to="/menu">{t('header.menu')}</CustomLink>
-          <CustomLink to="/orders">{t('header.orders')}</CustomLink>
           <CustomLink to="/delivery">{t('header.delivery')}</CustomLink>
         </div>
         <div>
