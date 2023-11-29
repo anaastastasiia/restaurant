@@ -142,18 +142,88 @@
   ],
   "cart": [
     {
-      "id": "1",
-      "namePL": "Pasta",
-      "nameEN": "Paste",
-      "count": "2",
-      "price": "67.98"
+      "cartItems": [
+        {
+          "namePL": "Burger",
+          "nameEN": "Burger",
+          "price": "23.99",
+          "id": "6",
+          "count": 1
+        },
+        {
+          "namePL": "Pasta",
+          "nameEN": "Paste",
+          "price": "33.99",
+          "id": "1",
+          "count": 1
+        }
+      ],
+      "id": 1
     },
     {
-      "id": "3",
-      "namePL": "Pizza",
-      "nameEN": "Pizza",
-      "count": "3",
-      "price": "98.97"
+      "cartItems": [
+        {
+          "namePL": "Burger",
+          "nameEN": "Burger",
+          "price": "23.99",
+          "id": "6",
+          "count": 2
+        },
+        {
+          "namePL": "Burger z podwójnym serem",
+          "nameEN": "Burger Double Cheese",
+          "price": "25.99",
+          "id": "10",
+          "count": 2
+        },
+        {
+          "namePL": "Borszcz",
+          "nameEN": "Borshch",
+          "price": "16.99",
+          "id": "4",
+          "count": 1
+        }
+      ],
+      "id": 2
+    },
+    {
+      "cartItems": [
+        {
+          "namePL": "Burger",
+          "nameEN": "Burger",
+          "price": "23.99",
+          "id": "6",
+          "count": 1,
+          "startPrice": "23.99"
+        }
+      ],
+      "id": 3
+    },
+    {
+      "cartItems": [
+        {
+          "namePL": "Burger",
+          "nameEN": "Burger",
+          "price": "383.84",
+          "id": "6",
+          "count": 8,
+          "startPrice": "47.98"
+        }
+      ],
+      "id": 4
+    },
+    {
+      "cartItems": [
+        {
+          "namePL": "Burger",
+          "nameEN": "Burger",
+          "price": "47.98",
+          "id": "6",
+          "count": 2,
+          "startPrice": "23.99"
+        }
+      ],
+      "id": 5
     }
   ]
 }

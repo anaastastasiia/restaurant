@@ -16,6 +16,7 @@ import meat from '../../assets/meat.png';
 import { CartItem, useCartActions } from '../../store/cartStore';
 import { useReducer, useState } from 'react';
 import styles from './CartItem.module.scss';
+import { useCartStoreTest } from '../../store/cartTest';
 
 const images = [
   {
@@ -76,61 +77,67 @@ const images = [
   },
 ];
 
-const MAX_QUANTITY = 5;
+const MAX_QUANTITY = 8;
 const DEFAULT_QUANTITY = 1;
 
 export const CartsItem = (product: CartItem) => {
   const { t, i18n } = useTranslation();
-  const { removeFromCart, changeCartItemDetails } = useCartActions;
-  const initialState = { count: product.price, quantity: product.count };
   const [price, setPrice] = useState(product.price);
-
-  const reducer = (state: any, action: any) => {
-    switch (action.type) {
-      case 'setQuantity':
-        return { ...state, quantity: action.payload };
-      default:
-        throw new Error();
-    }
-  };
+  const [count, setCount] = useState(product.count);
+  const updateItemCount = useCartStoreTest((state) => state.updateItemCount);
+  const removeFromCart = useCartStoreTest((state) => state.removeFromCart);
+  const firstPrice = useCartStoreTest((state) =>
+    state.cartItems.map((i) => {
+      console.log('map i start price: ', i.startPrice);
+      if (i.id === product.id) {
+        return i.startPrice;
+      }
+    })
+  )[0];
 
   const findImgForItem = (item: CartItem): string | undefined => {
     const imgMatch = images.find((img) => img.id === item.id);
     return imgMatch?.img;
   };
 
-  const [state, dispatch] = useReducer(reducer, initialState);
   const imgForItem = findImgForItem(product);
 
   const handleSubtractQuantity = () => {
-    if (state.quantity > 0) {
-      const newQuantity = state.quantity - 1;
-      const newPrice = calculatePrice(product, newQuantity);
-      dispatch({ type: 'setQuantity', payload: newQuantity, newPrice });
-      setPrice(newPrice.toString());
-      changeCartItemDetails(
-        product,
-        newQuantity.toString(),
-        newPrice.toString()
-      );
+    console.log('CLICK - ');
+    console.log('update product: ', product + ', firstPrice: ' + firstPrice);
+    if (count > 0) {
+      const newQuantity = count - 1;
+      setCount(newQuantity);
+      const price = calculatePrice(firstPrice, newQuantity);
+      setPrice(price.toFixed(2));
+      updateItemCount(product.id, newQuantity, price.toFixed(2));
+      console.log('update price: ', price + ', count: ', newQuantity);
     }
   };
 
   const handleAddQuantity = () => {
-    const newQuantity = Math.min(state.quantity + 1, MAX_QUANTITY);
-    const newPrice = calculatePrice(product, newQuantity);
-    dispatch({ type: 'setQuantity', payload: newQuantity, newPrice });
-    setPrice(newPrice.toString());
-    changeCartItemDetails(product, newQuantity.toString(), newPrice.toString());
+    console.log('CLICK + ');
+    console.log('update product: ', product + ', firstPrice: ' + firstPrice);
+
+    const newQuantity = Math.min(count + 1, MAX_QUANTITY);
+    setCount(newQuantity);
+    const price = calculatePrice(firstPrice, newQuantity);
+    setPrice(price.toFixed(2));
+    updateItemCount(product.id, newQuantity, price.toFixed(2));
+    console.log('update price: ', price + ', count: ', newQuantity);
   };
 
   const deleteItem = (item: CartItem) => {
-    removeFromCart(item);
+    removeFromCart(item.id);
   };
 
-  const calculatePrice = (item: CartItem, quantity: number) => {
-    const priceWithoutDiscount = item.newPrice ? item.newPrice : item.price;
-    return Number(priceWithoutDiscount) * quantity;
+  const calculatePrice = (firstPrice: string | undefined, quantity: number) => {
+    console.log(
+      'priceWithoutDiscount: ',
+      firstPrice + ', mnożenie: ',
+      Number(firstPrice) * quantity
+    );
+    return firstPrice ? parseFloat(firstPrice) * quantity : 0;
   };
 
   return (
@@ -143,30 +150,28 @@ export const CartsItem = (product: CartItem) => {
           <p className={styles.productsName}>
             {i18n.language === 'pl' ? product.namePL : product.nameEN}
           </p>
-
-          <button
-            onClick={handleSubtractQuantity}
-            disabled={state.quantity === DEFAULT_QUANTITY}
-          >
-            -
-          </button>
-          <input type="text" value={state.quantity} disabled={true} />
-          <button
-            onClick={handleAddQuantity}
-            disabled={state.quantity === MAX_QUANTITY}
-          >
-            +
-          </button>
-          <button
-            onClick={() => deleteItem(product)}
-            className={styles.deleteButton}
-          >
-            {t('buttons.delete')}
-          </button>
-          <p>
-            {price}
-            PLN
-          </p>
+          <div className={styles.countWrapper}>
+            <button
+              onClick={handleSubtractQuantity}
+              disabled={count === DEFAULT_QUANTITY}
+            >
+              -
+            </button>
+            <div className={styles.count}>{count}</div>
+            <button
+              onClick={handleAddQuantity}
+              disabled={count === MAX_QUANTITY}
+            >
+              +
+            </button>
+            <button
+              onClick={() => deleteItem(product)}
+              className={styles.deleteButton}
+            >
+              {t('buttons.delete')}
+            </button>
+          </div>
+          <p className={styles.price}>{Number(price).toFixed(2)} PLN</p>
         </div>
       </div>
     </div>
