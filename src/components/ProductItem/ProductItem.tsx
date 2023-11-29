@@ -14,9 +14,8 @@ import burger from '../../assets/burger.png';
 import frytki from '../../assets/frytki.png';
 import meat from '../../assets/meat.png';
 import { Item } from '../../store/itemsStore';
-import styles from './ProductItem.module.scss';
-import { useCartActions } from '../../store/cartStore';
 import { useCartStoreTest } from '../../store/cartTest';
+import styles from './ProductItem.module.scss';
 
 const images = [
   {
@@ -79,7 +78,6 @@ const images = [
 
 export const ProductItem = (product: Item) => {
   const { t, i18n } = useTranslation();
-  const { getCartItems } = useCartActions; //addToCart
   const addToCart = useCartStoreTest((state) => state.addToCart);
 
   const findImgForItem = (item: Item): string | undefined => {
@@ -90,7 +88,6 @@ export const ProductItem = (product: Item) => {
   const imgForItem = findImgForItem(product);
 
   const handleAddToCart = () => {
-    getCartItems();
     addToCart(product);
   };
 

@@ -1,18 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import CartsItem from '../../components/CartItem';
-import styles from './CartPage.module.scss';
-import { useCartActions } from '../../store/cartStore';
 import ReservationForm from '../../components/ReservationForm';
 import { useCartStoreTest } from '../../store/cartTest';
-import emptyCart from '../../assets/add-to-cart.png';
 import ProductItem from '../../components/ProductItem';
 import { useItemsActions, useItemsStore } from '../../store/itemsStore';
+import emptyCart from '../../assets/add-to-cart.png';
+import styles from './CartPage.module.scss';
 
 export const CartPage = () => {
   const { t } = useTranslation();
-  const { getCartItems } = useCartActions;
-  // const { cartItems } = useCartStore();
   const [showStep1, setShowStep1] = useState(false);
   const [showStep2, setShowStep2] = useState(false);
   const cartItems = useCartStoreTest((state) => state.cartItems);
@@ -22,14 +19,15 @@ export const CartPage = () => {
   const { hotPriceItems } = useItemsStore();
 
   useEffect(() => {
-    getCartItems();
     getHotPriceItems();
+  }, []);
+
+  useEffect(() => {
     setShowStep1(true);
     setShowStep2(false);
   }, []);
 
   const onCLick = async () => {
-    await getCartItems();
     setShowStep2(true);
     setShowStep1(false);
   };
