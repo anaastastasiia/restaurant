@@ -13,8 +13,8 @@ import Rectangle3 from '../../assets/Rectangle3.png';
 import burger from '../../assets/burger.png';
 import frytki from '../../assets/frytki.png';
 import meat from '../../assets/meat.png';
-import { CartItem, useCartActions } from '../../store/cartStore';
-import { useReducer, useState } from 'react';
+import { CartItem } from '../../store/cartTest';
+import { useState } from 'react';
 import styles from './CartItem.module.scss';
 import { useCartStoreTest } from '../../store/cartTest';
 
