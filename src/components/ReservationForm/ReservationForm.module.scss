@@ -1,0 +1,44 @@
+.reservationForm {
+    max-width: 400px;
+    margin: 0 auto;
+
+    .inputName {
+        padding: 10px 0 0 0;
+        font-size: 20px;
+    }
+  
+    input {
+        width: 100%;
+        padding: 8px;
+        margin-top: 4px;
+        box-sizing: border-box;
+        background: none;
+        border: none;
+        border-bottom: 1px solid grey;
+        color: grey;
+    }
+  
+    input[type="date"], input[type="time"] {
+        width: calc(100% - 16px);
+        padding: 8px;
+        margin-top: 4px;
+        box-sizing: border-box;
+        background: none;
+        border: none;
+        border-bottom: 1px solid slategrey;
+    
+        &::-webkit-calendar-picker-indicator {
+          filter: invert(1);
+        }
+    }
+  
+    button {
+      background-color: #4caf50;
+      color: white;
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+  }
+  

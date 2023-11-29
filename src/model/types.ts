@@ -5,3 +5,9 @@ export type Route = RouteObject & {
 }
 
 export const API_URL = 'http://localhost:3001';
+
+export interface TableData {
+  id: string;
+  seats: number;
+  isReserved: boolean;
+}

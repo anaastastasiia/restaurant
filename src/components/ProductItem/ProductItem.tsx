@@ -15,7 +15,8 @@ import frytki from '../../assets/frytki.png';
 import meat from '../../assets/meat.png';
 import { Item } from '../../store/itemsStore';
 import styles from './ProductItem.module.scss';
-import { useCartActions, useCartStore } from '../../store/cartStore';
+import { useCartActions } from '../../store/cartStore';
+import { useCartStoreTest } from '../../store/cartTest';
 
 const images = [
   {
@@ -78,7 +79,8 @@ const images = [
 
 export const ProductItem = (product: Item) => {
   const { t, i18n } = useTranslation();
-  const { getCartItems, addToCart } = useCartActions;
+  const { getCartItems } = useCartActions; //addToCart
+  const addToCart = useCartStoreTest((state) => state.addToCart);
 
   const findImgForItem = (item: Item): string | undefined => {
     const imgMatch = images.find((img) => img.id === item.id);
@@ -87,9 +89,9 @@ export const ProductItem = (product: Item) => {
 
   const imgForItem = findImgForItem(product);
 
-  const handleAddToCart = (product: Item) => {
+  const handleAddToCart = () => {
     getCartItems();
-    addToCart(product, 1);
+    addToCart(product);
   };
 
   return (
@@ -107,11 +109,9 @@ export const ProductItem = (product: Item) => {
             </div>
           </div>
         ) : (
-          <p>{product.price} PLN</p>
+          <p className={styles.price}>{product.price} PLN</p>
         )}
-        <button onClick={() => handleAddToCart(product)}>
-          {t('pages.start.addToCart')}
-        </button>
+        <button onClick={handleAddToCart}>{t('pages.start.addToCart')}</button>
       </div>
     </div>
   );
