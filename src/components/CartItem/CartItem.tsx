@@ -13,10 +13,10 @@ import Rectangle3 from '../../assets/Rectangle3.png';
 import burger from '../../assets/burger.png';
 import frytki from '../../assets/frytki.png';
 import meat from '../../assets/meat.png';
-import { CartItem } from '../../store/cartTest';
-import { useState } from 'react';
+import { CartItem } from '../../store/cartStore';
+import { useEffect, useState } from 'react';
 import styles from './CartItem.module.scss';
-import { useCartStoreTest } from '../../store/cartTest';
+import { useCartStoreTest } from '../../store/cartStore';
 
 const images = [
   {
@@ -82,13 +82,18 @@ const DEFAULT_QUANTITY = 1;
 
 export const CartsItem = (product: CartItem) => {
   const { t, i18n } = useTranslation();
-  const [price, setPrice] = useState(product.price);
-  const [count, setCount] = useState(product.count);
+  const [price, setPrice] = useState('');
+  const [count, setCount] = useState(1);
   const updateItemCount = useCartStoreTest((state) => state.updateItemCount);
   const removeFromCart = useCartStoreTest((state) => state.removeFromCart);
+
+  useEffect(() => {
+    setPrice(product.price);
+    setCount(product.count);
+  }, []);
+
   const firstPrice = useCartStoreTest((state) =>
     state.cartItems.map((i) => {
-      console.log('map i start price: ', i.startPrice);
       if (i.id === product.id) {
         return i.startPrice;
       }
@@ -103,28 +108,21 @@ export const CartsItem = (product: CartItem) => {
   const imgForItem = findImgForItem(product);
 
   const handleSubtractQuantity = () => {
-    console.log('CLICK - ');
-    console.log('update product: ', product + ', firstPrice: ' + firstPrice);
     if (count > 0) {
       const newQuantity = count - 1;
       setCount(newQuantity);
       const price = calculatePrice(firstPrice, newQuantity);
       setPrice(price.toFixed(2));
       updateItemCount(product.id, newQuantity, price.toFixed(2));
-      console.log('update price: ', price + ', count: ', newQuantity);
     }
   };
 
   const handleAddQuantity = () => {
-    console.log('CLICK + ');
-    console.log('update product: ', product + ', firstPrice: ' + firstPrice);
-
     const newQuantity = Math.min(count + 1, MAX_QUANTITY);
     setCount(newQuantity);
     const price = calculatePrice(firstPrice, newQuantity);
     setPrice(price.toFixed(2));
     updateItemCount(product.id, newQuantity, price.toFixed(2));
-    console.log('update price: ', price + ', count: ', newQuantity);
   };
 
   const deleteItem = (item: CartItem) => {
@@ -132,11 +130,6 @@ export const CartsItem = (product: CartItem) => {
   };
 
   const calculatePrice = (firstPrice: string | undefined, quantity: number) => {
-    console.log(
-      'priceWithoutDiscount: ',
-      firstPrice + ', mnożenie: ',
-      Number(firstPrice) * quantity
-    );
     return firstPrice ? parseFloat(firstPrice) * quantity : 0;
   };
 

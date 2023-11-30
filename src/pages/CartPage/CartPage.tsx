@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import CartsItem from '../../components/CartItem';
 import ReservationForm from '../../components/ReservationForm';
-import { useCartStoreTest } from '../../store/cartTest';
+import { useCartStoreTest } from '../../store/cartStore';
 import ProductItem from '../../components/ProductItem';
 import { useItemsActions, useItemsStore } from '../../store/itemsStore';
 import emptyCart from '../../assets/add-to-cart.png';
@@ -57,7 +57,7 @@ export const CartPage = () => {
                       nameEN={i.nameEN}
                       price={i.price}
                       id={i.id}
-                      newPrice={i.newPrice}
+                      oldPrice={i.oldPrice}
                       count={i.count ? i.count : 1}
                     />
                   );
@@ -98,7 +98,7 @@ export const CartPage = () => {
                         nameEN={i.nameEN}
                         price={i.price}
                         id={i.id}
-                        newPrice={i.newPrice}
+                        oldPrice={i.oldPrice}
                       />
                     );
                   })}

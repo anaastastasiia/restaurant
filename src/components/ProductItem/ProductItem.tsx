@@ -14,7 +14,7 @@ import burger from '../../assets/burger.png';
 import frytki from '../../assets/frytki.png';
 import meat from '../../assets/meat.png';
 import { Item } from '../../store/itemsStore';
-import { useCartStoreTest } from '../../store/cartTest';
+import { useCartStoreTest } from '../../store/cartStore';
 import styles from './ProductItem.module.scss';
 
 const images = [
@@ -98,11 +98,11 @@ export const ProductItem = (product: Item) => {
         <p className={styles.productsName}>
           {i18n.language === 'pl' ? product.namePL : product.nameEN}
         </p>
-        {product.newPrice ? (
+        {product.oldPrice ? (
           <div className={styles.pricesWrapper}>
-            <div>{product.newPrice} PLN</div>
+            <div>{product.price} PLN</div>
             <div style={{ textDecoration: 'line-through', padding: '10px' }}>
-              {product.price} PLN
+              {product.oldPrice} PLN
             </div>
           </div>
         ) : (

@@ -1,135 +1,87 @@
-// import { create } from 'zustand';
-// import axios, { AxiosResponse} from 'axios';
-// import { Item } from './itemsStore';
-// import { API_URL } from '../model/types';
+import create from 'zustand';
+import { Item } from './itemsStore';
+import { API_URL } from '../model/types';
 
-// export type ProduceState<T> = (state: T) => void;
+export interface CartItem {
+    id: string;
+    namePL: string;
+    nameEN: string;
+    price: string;
+    oldPrice?: string;
+    count: number;
+    startPrice?: string;
+  }
 
-// export interface CartItem {
-//   id: string;
-//   namePL: string;
-//   nameEN: string;
-//   price: string;
-//   newPrice?: string;
-//   count: number;
-// }
+interface CartState {
+  cartItems: CartItem[];
+  addToCart: (item: Item) => void;
+  clearCart: () => void;
+  placeOrder: () => Promise<void>;
+  updateItemCount: (itemId: string, newCount: number, newPrice: string) => void;
+  removeFromCart: (itemId: string) => void;
+}
 
-// interface CartState {
-//   cartItems: CartItem[];
-// }
-
-// const axioss = axios.create();
-
-
-// export const useCartStore = create<CartState>((set) => ({
-//     cartItems: [],
-// }));
-
-// const getCartItems = async() => {
-//   try {
-//     const res = (await axioss.get(`${API_URL}/cart`)) as AxiosResponse<CartItem[]>;
-//     useCartStore.setState(() => ({
-//       cartItems: res.data as CartItem[]
-//     }));
-//     return useCartStore.getState().cartItems;
-// } catch {
-//     console.error('No data');
-//     return [];
-//   }
-// }
-
-// export const addToCart = async (item: Item, quantity: number) => {
-//     try {
-//       const newItem = {
-//         id: item.id,
-//         namePL: item.namePL,
-//         nameEN: item.nameEN,
-//         price: item.newPrice ? item.newPrice : item.price,
-//         count: quantity,
-//       };
-//       console.log('addToCart przed kopiowaniem:', useCartStore.getState().cartItems);
-
-//       if (useCartStore.getState().cartItems.length != 0) {
-//         useCartStore.setState((state) => ({
-//           cartItems: [...state.cartItems, newItem],
-//         }));
-//       } else {
-//         useCartStore.setState(() => ({
-//           cartItems: [newItem],
-//         }));
-//       }
+export const useCartStoreTest = create<CartState>((set, get) => ({
+  cartItems: [],
+  addToCart: (item: Item) => {
+    const existingItem = get().cartItems.find((cartItem) => cartItem.id === item.id);
   
-    
+    if (existingItem) {
+    set((state) => ({
+        cartItems: state.cartItems.map((cartItem) =>
+          cartItem.id === item.id
+            ? {
+                ...cartItem,
+                count: cartItem.count + 1,
+                startPrice: cartItem.price,
+                price: (parseFloat(cartItem.price) * (cartItem.count + 1)).toFixed(2),
+              }
+            : cartItem
+        ),
+      }));
+    } else {
+      set((state) => ({
+        cartItems: [...state.cartItems, { ...item, count: 1, price: item.price, startPrice: item.price, }],
+      }));
+    }
+  },
+  clearCart: () => set({ cartItems: [] }),
+  placeOrder: async () => {
+    try {
+      const response = await fetch(`${API_URL}/cart`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ cartItems: useCartStoreTest.getState().cartItems }),
+      });
 
-//       console.log('addToCart :', useCartStore.getState().cartItems);
-//       // const res = await axios.post(`${API_URL}/cart`, {
-//       //   id: item.id,
-//       //   namePL: item.namePL,
-//       //   nameEN: item.nameEN,
-//       //   price: item.newPrice ? item.newPrice : item.price,
-//       //   count: quantity
-//       // });
-//       // useCartStore.setState((state) => ({ 
-//       //   cartItems: [
-//       //     ...state.cartItems,
-//       //     res.data
-//       //   ] 
-//       // }));
-//       // return res.data;
-//     } catch (error) {
-//       console.error('Error adding to cart:', error);
-//       throw error;
-//     }
-//   };
-
+      if (response.ok) {
+        useCartStoreTest.getState().clearCart();
+      } else {
+        console.error('Wystąpił błąd podczas składania zamówienia');
+      }
+    } catch (error) {
+      console.error('Wystąpił błąd podczas składania zamówienia:', error);
+    }
+  },
+  updateItemCount: (itemId: string, newCount: number, newPrice: string) => {
+    set((state) => ({
+      cartItems: state.cartItems.map((item) =>
+        item.id === itemId
+          ? {
+              ...item,
+              count: newCount,
+              price: newPrice,
+            }
+          : item
+      ),
+    }));
+  },
   
-// const removeFromCart = async (item: CartItem) => {
-//   try {
-//     // const res = await axios.delete(`${API_URL}/cart/${item.id}`);
-//     useCartStore.setState((state) => ({ cartItems: state.cartItems.filter((i) => i.id !== item.id) }));
-//     // return res.data;
-//   } catch (error) {
-//     console.error('Error adding to cart:', error);
-//     throw error;
-//   }
-// };
-
-// const changeCartItemDetails = async (item: CartItem, newQuantity: string, newItemPrice: string) => {
-//   console.log("item: ", item.id + ", ilosc: ", newQuantity, ", new cena: " + newItemPrice);
-  
-//   const newItem = {
-//     id: item.id,
-//     namePL: item.namePL,
-//     nameEN: item.nameEN,
-//     count: Number(newQuantity),
-//     price: newItemPrice
-//   };
-
-//   useCartStore.setState((state) => ({
-//     cartItems: [...state.cartItems, newItem],
-//   }));
-//   // try {
-//   //   const res = await axios.put(`${API_URL}/cart/${item.id}`, {
-//   //     id: item.id,
-//   //     namePL: item.namePL,
-//   //     nameEN: item.nameEN,
-//   //     count: newQuantity,
-//   //     price: newItemPrice,
-//   //   });
-//   //   console.log(res.data);
-//   //   return res.data;
-//   // } catch (error) {
-//   //   console.error('Error adding to cart:', error);
-//   //   throw error;
-//   // }
-// };
-
-
-// const cleanCart = () => {
-//   useCartStore.setState(() => ({
-//     cartItems: [],
-//   }));
-// }
-
-// export const useCartActions = { getCartItems, removeFromCart, addToCart, changeCartItemDetails, cleanCart };
-
+  removeFromCart: (itemId: string) => {
+    set((state) => ({
+      cartItems: state.cartItems.filter((item) => item.id !== itemId),
+    }));
+  },
+}));
