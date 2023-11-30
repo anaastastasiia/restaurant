@@ -44,6 +44,31 @@
   width: 100vw;
   display: flex;
   justify-content: center;
+
+  .summary {
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+
+    div {
+      font-size: 25px;
+      margin-bottom: 15px;
+
+      b {
+        font-weight: 600;
+      }
+    }
+
+    button {
+      background: none;
+      color: #b4b4b4;
+      border: 0.5px #b4b4b4 solid;
+      padding: 10px 15px;
+      margin: 5px 10px 5px 0;
+      width: 135px;
+      font-size: 18px;
+    }
+  }
 }
 
 .emptyCartTitle {
@@ -83,4 +108,18 @@
     }
   } 
 
+}
+
+.rezervation {
+  color: grey;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+
+  .rezTitle {
+    font-size: 25px;
+    margin: 15px 0;
+    color: #fff;
+  }
 }

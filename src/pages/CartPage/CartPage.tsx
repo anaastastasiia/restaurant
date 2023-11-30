@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import CartsItem from '../../components/CartItem';
 import ReservationForm from '../../components/ReservationForm';
-import { useCartStoreTest } from '../../store/cartStore';
+import { ClientData, useCartStore } from '../../store/cartStore';
 import ProductItem from '../../components/ProductItem';
 import { useItemsActions, useItemsStore } from '../../store/itemsStore';
 import emptyCart from '../../assets/add-to-cart.png';
@@ -12,8 +12,11 @@ export const CartPage = () => {
   const { t } = useTranslation();
   const [showStep1, setShowStep1] = useState(false);
   const [showStep2, setShowStep2] = useState(false);
-  const cartItems = useCartStoreTest((state) => state.cartItems);
-  const placeOrder = useCartStoreTest((state) => state.placeOrder);
+  const cartItems = useCartStore((state) => state.cartItems);
+  const createOrder = useCartStore((state) => state.placeOrder);
+  const setRezervationDetails = useCartStore(
+    (state) => state.setRezervationDetails
+  );
 
   const { getHotPriceItems } = useItemsActions;
   const { hotPriceItems } = useItemsStore();
@@ -32,8 +35,9 @@ export const CartPage = () => {
     setShowStep1(false);
   };
 
-  const handleReservationSubmit = (formData: any) => {
-    console.log('Reservation Data:', formData);
+  const handleReservationSubmit = (formData: ClientData) => {
+    setRezervationDetails(formData);
+    createOrder();
   };
 
   return (
@@ -62,20 +66,24 @@ export const CartPage = () => {
                     />
                   );
                 })}
-                <button onClick={onCLick}>Dalej</button>
+                <div className={styles.summary}>
+                  <div>
+                    Razem:{' '}
+                    <b>
+                      {cartItems
+                        .map((i) => Number(i.price))
+                        .reduce((suma, cena) => suma + cena, 0)
+                        .toFixed(2)}
+                    </b>
+                  </div>
+                  <button onClick={onCLick}>Zamów</button>
+                </div>
               </>
             )}
-            <button onClick={placeOrder}>Zamów</button>
 
             {showStep2 && (
-              <div>
-                <div>Zarezerwuj stolik:</div>
+              <div className={styles.rezervation}>
                 <ReservationForm onSubmit={handleReservationSubmit} />
-                Razem:{' '}
-                {cartItems
-                  .map((i) => Number(i.price))
-                  .reduce((suma, cena) => suma + cena, 0)
-                  .toFixed(2)}
               </div>
             )}
           </>

@@ -16,7 +16,7 @@ import meat from '../../assets/meat.png';
 import { CartItem } from '../../store/cartStore';
 import { useEffect, useState } from 'react';
 import styles from './CartItem.module.scss';
-import { useCartStoreTest } from '../../store/cartStore';
+import { useCartStore } from '../../store/cartStore';
 
 const images = [
   {
@@ -84,15 +84,15 @@ export const CartsItem = (product: CartItem) => {
   const { t, i18n } = useTranslation();
   const [price, setPrice] = useState('');
   const [count, setCount] = useState(1);
-  const updateItemCount = useCartStoreTest((state) => state.updateItemCount);
-  const removeFromCart = useCartStoreTest((state) => state.removeFromCart);
+  const updateItemCount = useCartStore((state) => state.updateItemCount);
+  const removeFromCart = useCartStore((state) => state.removeFromCart);
 
   useEffect(() => {
     setPrice(product.price);
     setCount(product.count);
   }, []);
 
-  const firstPrice = useCartStoreTest((state) =>
+  const firstPrice = useCartStore((state) =>
     state.cartItems.map((i) => {
       if (i.id === product.id) {
         return i.startPrice;
