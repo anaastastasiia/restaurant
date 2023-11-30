@@ -1,6 +1,6 @@
-import styles from './DeliveryPage.module.scss';
+import styles from './OrdersPage.module.scss';
 
-export const DeliveryPage = () => {
+export const OrdersPage = () => {
   return (
     <>
       <div className={styles.wrapper}>

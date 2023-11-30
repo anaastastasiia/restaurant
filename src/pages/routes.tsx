@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import { MenuPage } from './MenuPage/MenuPage';
 import { MainLayout } from '../layout/MainLayout';
 import { MainPage } from './MainPage';
-import { DeliveryPage } from './DeliveryPage/DeliveryPage';
+import { OrdersPage } from './OrdersPage/OrdersPage';
 import { ContactPage } from './ContactPage';
 import { CartPage } from './CartPage';
 
@@ -15,7 +15,7 @@ export const AppRoutes = () => {
         <Route index element={<MainPage />} />
       </Route>
       <Route path="/menu" element={<MenuPage />} />
-      <Route path="/delivery" element={<DeliveryPage />} />
+      <Route path="/orders" element={<OrdersPage />} />
       <Route path="/contact" element={<ContactPage />} />
       <Route path="/cart" element={<CartPage />} />
     </Routes>
