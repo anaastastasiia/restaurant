@@ -74,7 +74,7 @@ export const MainPage = () => {
                     nameEN={i.nameEN}
                     price={i.price}
                     id={i.id}
-                    newPrice={i.newPrice}
+                    oldPrice={i.oldPrice}
                   />
                 );
               })}

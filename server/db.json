@@ -122,22 +122,22 @@
       "id": "12",
       "namePL": "Burger Duży",
       "nameEN": "Burger Big",
-      "price": "26.99",
-      "newPrice": "16.99"
+      "oldPrice": "26.99",
+      "price": "16.99"
     },
     {
       "id": "13",
       "namePL": "Stek wieprzowy",
       "nameEN": "Pork steak",
-      "price": "28.99",
-      "newPrice": "19.99"
+      "oldPrice": "28.99",
+      "price": "19.99"
     },
     {
       "id": "14",
       "namePL": "Grillowane skrzydełka",
       "nameEN": "Grilled wings",
-      "price": "25.99",
-      "newPrice": "18.99"
+      "oldPrice": "25.99",
+      "price": "18.99"
     }
   ],
   "cart": [
