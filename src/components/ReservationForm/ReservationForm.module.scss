@@ -44,4 +44,13 @@
       font-size: 18px;
     }
   }
+
+  .errorInput {
+    border-color: rgb(155, 26, 26); 
+    border-bottom: 1px solid rgb(155, 26, 26) !important;
+  }
+
+  .errorText {
+    color: rgb(155, 26, 26);
+  }
   
