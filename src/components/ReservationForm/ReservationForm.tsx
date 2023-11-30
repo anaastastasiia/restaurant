@@ -6,7 +6,7 @@ interface ReservationFormProps {
 }
 
 interface ReservationFormData {
-  fullName: string;
+  name: string;
   email: string;
   phoneNumber: string;
   date: string;
@@ -18,7 +18,7 @@ export const ReservationForm: React.FC<ReservationFormProps> = ({
   onSubmit,
 }) => {
   const [formData, setFormData] = useState<ReservationFormData>({
-    fullName: '',
+    name: '',
     email: '',
     phoneNumber: '',
     date: '',
@@ -43,8 +43,8 @@ export const ReservationForm: React.FC<ReservationFormProps> = ({
       <div className={styles.inputName}>Nazwisko/Your name:</div>
       <input
         type="text"
-        name="fullName"
-        value={formData.fullName}
+        name="name"
+        value={formData.name}
         onChange={handleChange}
         required
       />
@@ -96,7 +96,7 @@ export const ReservationForm: React.FC<ReservationFormProps> = ({
         required
       />
 
-      <button type="submit">Submit Reservation</button>
+      <button type="submit">Zamów</button>
     </form>
   );
 };
