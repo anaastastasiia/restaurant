@@ -1,0 +1,28 @@
+.loginForm {
+    max-width: 400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    input {
+        width: 100%;
+        padding: 8px;
+        margin-top: 30px;
+        box-sizing: border-box;
+        background: none;
+        border: none;
+        border-bottom: 1px solid grey;
+        color: grey;
+    }
+
+    button {
+        background: none;
+        color: #b4b4b4;
+        border: 0.5px #b4b4b4 solid;
+        padding: 10px 15px;
+        margin: 30px 10px 5px 30px;
+        width: 135px;
+        font-size: 18px;
+      }
+}

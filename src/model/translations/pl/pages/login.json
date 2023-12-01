@@ -1,0 +1,9 @@
+{
+    "userName": "Nazwa użytkownika",
+    "password": "Hasło",
+    "confirmPassword": "Potwierdź hasło",
+    "login": "Zaloguj się",
+    "register": "Zarejestruj się",
+    "hasAccount": "Masz już konto?",
+    "hasNotAccount": "Nie masz konta?"
+}
