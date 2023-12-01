@@ -276,6 +276,28 @@
         "numberOfPeople": "2"
       },
       "id": 7
+    },
+    {
+      "cartItems": [
+        {
+          "namePL": "Stek wieprzowy",
+          "nameEN": "Pork steak",
+          "price": "39.98",
+          "id": "13",
+          "oldPrice": "28.99",
+          "count": 2,
+          "startPrice": "19.99"
+        }
+      ],
+      "rezervationDetails": {
+        "name": "Anastasiia",
+        "email": "admin@gmail.com",
+        "phoneNumber": "cccc",
+        "date": "2023-12-13",
+        "time": "16:56",
+        "numberOfPeople": "2"
+      },
+      "id": 8
     }
   ],
   "users": [
@@ -296,6 +318,31 @@
       "username": "adam789",
       "password": "tajneHaslo",
       "email": "adam@gmail.com"
+    },
+    {
+      "username": "test",
+      "password": "test321",
+      "id": 4
+    },
+    {
+      "username": "test1",
+      "password": "test1",
+      "id": 5
+    },
+    {
+      "username": "test2",
+      "password": "222",
+      "id": 6
+    },
+    {
+      "username": "rrr",
+      "password": "rrr",
+      "id": 7
+    },
+    {
+      "username": "rrrr",
+      "password": "eee",
+      "id": 8
     }
   ]
 }

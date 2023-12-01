@@ -12,6 +12,7 @@ interface AuthStore {
   user: User | null;
   users: User[];
   login: (username: string, password: string) => void;
+  register: (username: string, password: string, confirmPassword: string) => Promise<boolean>;
   logout: () => void;
   getUsers: () => void;
 }
@@ -32,11 +33,9 @@ export const useAuthStore = create<AuthStore>((set) => ({
     }
   },
   login: async (username: string, password: string) => {
-    console.log("username: " + username);
     try {
-        const foundUser = useAuthStore.getState().users.find(user => user);
+        const foundUser = useAuthStore.getState().users.find(user => user.username === username);
         if (foundUser && foundUser.username === username) {
-            console.log('Znaleziono użytkownika:', foundUser.username);
             if (foundUser.password === password) {
                 set({ 
                     user: {
@@ -55,6 +54,38 @@ export const useAuthStore = create<AuthStore>((set) => ({
         }
     } catch (error: any) {
       console.error('Błąd podczas logowania:', error.message);
+    }
+  },
+  register: async (username: string, password: string, confirmPassword: string) => {
+    try {
+        if (password !== confirmPassword) {
+            console.error('Hasło i potwierdzenie hasła są różne');
+            return false;
+        }
+
+        const users = useAuthStore.getState().users;
+        const userExistsResponse = users.find(i => i.username === username)
+        if (userExistsResponse) {
+          console.error('Użytkownik o podanej nazwie już istnieje');
+          return false;
+        }
+
+        await axios.post(`${API_URL}/users`, {
+            username: username,
+            password: password,
+        });
+        const maxId = users.reduce((max, user) => (user.id > max ? user.id : max), 0);
+        set({ 
+            user: {
+                username: username,
+                password: password,
+                id: maxId+1
+            }
+        });
+        return true;
+    } catch (error: any) {
+      console.error('Błąd podczas rejestracji:', error.message);
+      return false;
     }
   },
   logout: () => {
