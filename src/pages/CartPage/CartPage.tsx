@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import CartsItem from '../../components/CartItem';
-import ReservationForm from '../../components/ReservationForm';
+import ReservationForm from '../../forms/ReservationForm';
 import { ClientData, useCartStore } from '../../store/cartStore';
 import ProductItem from '../../components/ProductItem';
 import { useItemsActions, useItemsStore } from '../../store/itemsStore';

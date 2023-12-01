@@ -34,3 +34,14 @@
     }
   }
 }
+
+.login {
+  color: white;
+  width: 40px;
+  height: 40px;
+  margin-right: 20px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}

@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { CustomLink } from '../CustomLink';
-import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
+import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
 import styles from './AppBar.module.scss';
 
 export const AppBar = () => {
@@ -14,7 +14,9 @@ export const AppBar = () => {
         <CustomLink to="/menu">{t('header.menu')}</CustomLink>
         <CustomLink to="/cart">{t('header.cart')}</CustomLink>
       </div>
-      <LanguageSwitcher />
+      <CustomLink to="/login">
+        <LoginOutlinedIcon className={styles.login} />
+      </CustomLink>
     </header>
   );
 };

@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import logo from '../../assets/logo.png';
 import { CustomLink } from '../CustomLink';
 import styles from './Footer.module.scss';
+import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
 
 export const Footer = () => {
   const { t } = useTranslation();
@@ -28,6 +29,7 @@ export const Footer = () => {
           <div>PN-PT 11:00 - 23:00</div>
           <div>SB-ND 9:00 - 24:00</div>
         </div>
+        <LanguageSwitcher />
       </div>
     </>
   );
