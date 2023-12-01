@@ -4,6 +4,7 @@ import start from './pages/start.json';
 import menu from './pages/menu.json';
 import buttons from './buttons.json';
 import cart from './pages/cart.json';
+import login from './pages/login.json';
 
 export default {
     header,
@@ -12,6 +13,7 @@ export default {
         contactUs,
         start,
         menu,
-        cart
+        cart,
+        login
     }
 }

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useAuthStore } from '../../store/authStore';
+import { useTranslation } from 'react-i18next';
 import styles from './RegisterForm.module.scss';
 
 export const RegisterForm: React.FC = () => {
+  const { t } = useTranslation();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const authStore = useAuthStore();
@@ -15,23 +17,23 @@ export const RegisterForm: React.FC = () => {
     <form onSubmit={handleRegister} className={styles.registerForm}>
       <input
         type="text"
-        placeholder="Username"
+        placeholder={t('pages.login.userName')}
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
       <input
         type="password"
-        placeholder="Password"
+        placeholder={t('pages.login.password')}
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
       <input
         type="password"
-        placeholder="Password"
+        placeholder={t('pages.login.confirmPassword')}
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button type="submit">Register</button>
+      <button type="submit">{t('pages.login.register')}</button>
     </form>
   );
 };

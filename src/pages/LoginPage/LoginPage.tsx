@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import LoginForm from '../../forms/Login';
 import { RegisterForm } from '../../forms/Register';
+import { useTranslation } from 'react-i18next';
 import styles from './LoginPage.module.scss';
 
 export const LoginPage = () => {
+  const { t } = useTranslation();
   const [isAccount, setIsAccount] = useState(true);
 
   return (
@@ -13,7 +15,7 @@ export const LoginPage = () => {
           <div className={styles.infoWrapper}>
             <div className={styles.logo}>RADISH</div>
             <div className={styles.celebrate}>
-              {isAccount ? 'Zaloguj się' : 'Zarejestruj się'}
+              {isAccount ? t('pages.login.login') : t('pages.login.register')}
             </div>
           </div>
         </div>
@@ -22,16 +24,20 @@ export const LoginPage = () => {
             <div className={styles.contentWrapper}>
               <LoginForm />
               <div className={styles.askWrapper}>
-                Nie masz konta?{' '}
-                <b onClick={() => setIsAccount(false)}>Zarejestruj się</b>
+                {t('pages.login.hasNotAccount')}{' '}
+                <b onClick={() => setIsAccount(false)}>
+                  {t('pages.login.register')}
+                </b>
               </div>
             </div>
           ) : (
             <div className={styles.contentWrapper}>
               <RegisterForm />
               <div className={styles.askWrapper}>
-                Nie masz konta?{' '}
-                <b onClick={() => setIsAccount(true)}>Zaloguj się</b>
+                {t('pages.login.hasAccount')}{' '}
+                <b onClick={() => setIsAccount(true)}>
+                  {t('pages.login.login')}
+                </b>
               </div>
             </div>
           )}
