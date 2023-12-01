@@ -277,5 +277,25 @@
       },
       "id": 7
     }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "username": "janek123",
+      "password": "haslo123",
+      "email": "janek@gmail.com"
+    },
+    {
+      "id": 2,
+      "username": "kasia456",
+      "password": "silneHaslo",
+      "email": "kasia@gmail.com"
+    },
+    {
+      "id": 3,
+      "username": "adam789",
+      "password": "tajneHaslo",
+      "email": "adam@gmail.com"
+    }
   ]
 }

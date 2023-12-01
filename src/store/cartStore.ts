@@ -1,4 +1,4 @@
-import create from 'zustand';
+import { create } from 'zustand';
 import { Item } from './itemsStore';
 import { API_URL } from '../model/types';
 
