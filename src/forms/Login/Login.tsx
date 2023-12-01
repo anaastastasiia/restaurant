@@ -2,15 +2,20 @@ import React, { useState } from 'react';
 import { useAuthStore } from '../../store/authStore';
 import { useTranslation } from 'react-i18next';
 import styles from './Login.module.scss';
+import { useNavigate } from 'react-router-dom';
 
 export const LoginForm: React.FC = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const authStore = useAuthStore();
 
-  const handleLogin = () => {
-    authStore.login(username, password);
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    await authStore.getUsers();
+    await authStore.login(username, password);
+    navigate('/');
   };
 
   return (
