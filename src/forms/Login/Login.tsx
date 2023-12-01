@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useAuthStore } from '../../store/authStore';
 import { useTranslation } from 'react-i18next';
-import styles from './Login.module.scss';
 import { useNavigate } from 'react-router-dom';
+import styles from './Login.module.scss';
 
 export const LoginForm: React.FC = () => {
   const { t } = useTranslation();
