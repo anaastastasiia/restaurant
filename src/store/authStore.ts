@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { create } from 'zustand';
 import { API_URL } from '../model/types';
+import Notification from '../components/Notification';
 
 export interface User {
   id: number;
@@ -11,7 +12,7 @@ export interface User {
 interface AuthStore {
   user: User | null;
   users: User[];
-  login: (username: string, password: string) => void;
+  login: (username: string, password: string) => Promise<boolean>;
   register: (username: string, password: string, confirmPassword: string) => Promise<boolean>;
   logout: () => void;
   getUsers: () => void;
@@ -46,14 +47,18 @@ export const useAuthStore = create<AuthStore>((set) => ({
                 });
                 console.log('Hasło poprawne:', foundUser.password);
                 console.log('User:', useAuthStore.getState().user);
+                return true;
             } else {
                 console.error('Błędne hasło');
+                return false;
             }
         } else {
             console.log('Użytkownik o podanej nazwie nie został znaleziony.');
+            return false;
         }
     } catch (error: any) {
       console.error('Błąd podczas logowania:', error.message);
+      return false;
     }
   },
   register: async (username: string, password: string, confirmPassword: string) => {
