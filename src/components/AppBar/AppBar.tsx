@@ -12,10 +12,14 @@ export const AppBar = () => {
   return (
     <header className={styles.header}>
       <div className={styles.menuWrapper}>
-        <CustomLink to="/">{t('header.start')}</CustomLink>
-        <CustomLink to="/contact">{t('header.contact')}</CustomLink>
-        <CustomLink to="/menu">{t('header.menu')}</CustomLink>
-        <CustomLink to="/cart">{t('header.cart')}</CustomLink>
+        {(authStore.user?.role === 'client' || !authStore.user) && (
+          <>
+            <CustomLink to="/">{t('header.start')}</CustomLink>
+            <CustomLink to="/contact">{t('header.contact')}</CustomLink>
+            <CustomLink to="/menu">{t('header.menu')}</CustomLink>
+            <CustomLink to="/cart">{t('header.cart')}</CustomLink>
+          </>
+        )}
       </div>
       {authStore.user ? (
         <div className={styles.userWrapper}>

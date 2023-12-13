@@ -7,13 +7,21 @@ import { DeliveryPage } from './DeliveryPage/DeliveryPage';
 import { ContactPage } from './ContactPage';
 import { CartPage } from './CartPage';
 import { LoginPage } from './LoginPage';
+import MainAdminPage from './Admin/MainAdminPage';
+import { useAuthStore } from '../store/authStore';
 
 export const AppRoutes = () => {
+  const authStore = useAuthStore();
+
   return (
     <Routes>
       <Route path="/" element={<Root />} />
       <Route path="/" element={<MainLayout />}>
-        <Route index element={<MainPage />} />
+        {authStore.user?.role === 'client' || !authStore.user ? (
+          <Route index element={<MainPage />} />
+        ) : (
+          <Route index element={<MainAdminPage />} />
+        )}
       </Route>
       <Route path="/menu" element={<MenuPage />} />
       <Route path="/delivery" element={<DeliveryPage />} />

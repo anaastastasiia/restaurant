@@ -6,6 +6,7 @@ export interface User {
   id: number;
   username: string;
   password: string;
+  role: 'admin' | 'client';
 }
 
 interface AuthStore {
@@ -41,11 +42,13 @@ export const useAuthStore = create<AuthStore>((set) => ({
                     user: {
                         username: foundUser.username,
                         password: foundUser.password,
-                        id: foundUser.id
+                        id: foundUser.id,
+                        role: foundUser.role
                     }
                 });
                 console.log('Hasło poprawne:', foundUser.password);
                 console.log('User:', useAuthStore.getState().user);
+                console.log('Rola:', useAuthStore.getState().user?.role);
             } else {
                 console.error('Błędne hasło');
             }
@@ -79,7 +82,8 @@ export const useAuthStore = create<AuthStore>((set) => ({
             user: {
                 username: username,
                 password: password,
-                id: maxId+1
+                id: maxId+1,
+                role: 'client'
             }
         });
         return true;
