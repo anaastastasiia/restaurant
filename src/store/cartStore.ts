@@ -1,6 +1,8 @@
 import { create } from 'zustand';
 import { Item } from './itemsStore';
 import { API_URL } from '../model/types';
+import axios, { AxiosResponse } from 'axios';
+import { OrderStatus } from '../model/translations/en/enums';
 
 export interface CartItem {
   id: string;
@@ -19,28 +21,43 @@ export interface ClientData {
   date: string;
   time: string;
   numberOfPeople: number;
+  status: string;
+}
+
+export interface Order {
+  cartItems: CartItem[];
+  reservationDetails: ClientData;
+  id: number;
 }
 
 interface CartState {
   cartItems: CartItem[];
-  rezervationDetails: ClientData;
+  reservationDetails: ClientData;
+  id: number | null;
+  orders: Order[];
   addToCart: (item: Item) => void;
   clearCart: () => void;
   placeOrder: () => Promise<void>;
   updateItemCount: (itemId: string, newCount: number, newPrice: string) => void;
   removeFromCart: (itemId: string) => void;
   setRezervationDetails: (details: ClientData) => void;
+  setCartData: (orders: Order[]) => void;
+  getCartData: () => Promise<Order[]>;
+  updateOrderStatus: (orderId: string, newStatus: OrderStatus) => void;
 }
 
 export const useCartStore = create<CartState>((set, get) => ({
   cartItems: [],
-  rezervationDetails: {
+  id: null,
+  orders: [],
+  reservationDetails: {
     name: '',
     email: '',
     phoneNumber: '',
     date: '',
     time: '',
-    numberOfPeople: 0
+    numberOfPeople: 1,
+    status: OrderStatus.Pending
   },
   addToCart: (item: Item) => {
     const existingItem = get().cartItems.find((cartItem) => cartItem.id === item.id);
@@ -66,13 +83,14 @@ export const useCartStore = create<CartState>((set, get) => ({
   },
   setRezervationDetails: (details: ClientData) => {  
     set(() => ({
-      rezervationDetails: {
+      reservationDetails: {
         name: details.name,
         email: details.email,
         phoneNumber: details.phoneNumber,
         date: details.date,
         time: details.time,
-        numberOfPeople: details.numberOfPeople
+        numberOfPeople: Number(details.numberOfPeople),
+        status: OrderStatus.Pending
       }
     }));
   },
@@ -86,8 +104,9 @@ export const useCartStore = create<CartState>((set, get) => ({
         },
         body: JSON.stringify({ 
           cartItems: useCartStore.getState().cartItems,
-          rezervationDetails: useCartStore.getState().rezervationDetails
-         }),
+          reservationDetails: useCartStore.getState().reservationDetails,
+          id: useCartStore.getState().id
+         } as Order),
       });
 
       if (response.ok) {
@@ -118,4 +137,32 @@ export const useCartStore = create<CartState>((set, get) => ({
       cartItems: state.cartItems.filter((item) => item.id !== itemId),
     }));
   },
+  setOrderData: () => {},
+  setCartData: (orders) => set({ orders }),
+  getCartData: async (): Promise<Order[]> => {
+    try {
+      const res = (await axios.get(`${API_URL}/cart`)) as AxiosResponse<Order[]>;
+      console.log(res.data);
+      set(() => ({
+        orders: res.data
+      }));
+      console.log("state: ", useCartStore.getState().orders);
+      return useCartStore.getState().orders as Order[];
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      return [];
+    }
+  },
+  updateOrderStatus: (orderId: string, newStatus: OrderStatus) => {
+    set((state) => ({
+      orders: state.orders.map((order) =>
+        order.id.toString() === orderId ? { ...order, status: newStatus } : order
+      ),
+    }));
+   console.log("update orders: ",  useCartStore.getState().orders);
+  },
 }));
+
+
+//"username": "janek123",
+//"password": "haslo123",

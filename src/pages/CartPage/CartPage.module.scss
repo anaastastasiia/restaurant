@@ -1,39 +1,39 @@
 .wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  min-width: 100vw;
+  background-image: url('../../assets/background.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  .infoWrapper {
+    color: #fff;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 50vh;
-    min-width: 100vw;
-    background-image: url('../../assets/background.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-  
-    .infoWrapper {
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
+  }
 
-    .celebrate {
-        color: #D1CCE1;
-        font-family: PT Astra Sans;
-        font-size: 32px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: normal;
-      }
-    
-      .logo {
-        color: #D1CCE1;
-        font-family: PT Astra Sans;
-        font-size: 140px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: normal;
-      }
+  .celebrate {
+      color: #D1CCE1;
+      font-family: PT Astra Sans;
+      font-size: 32px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+    }
+  
+    .logo {
+      color: #D1CCE1;
+      font-family: PT Astra Sans;
+      font-size: 140px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+    }
 }
 
 .mapWrapper {

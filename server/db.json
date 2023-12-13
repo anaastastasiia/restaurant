@@ -144,160 +144,32 @@
     {
       "cartItems": [
         {
-          "namePL": "Burger",
-          "nameEN": "Burger",
-          "price": "23.99",
-          "id": "6",
-          "count": 1
-        },
-        {
-          "namePL": "Pasta",
-          "nameEN": "Paste",
-          "price": "33.99",
-          "id": "1",
-          "count": 1
-        }
-      ],
-      "id": 1
-    },
-    {
-      "cartItems": [
-        {
-          "namePL": "Burger",
-          "nameEN": "Burger",
-          "price": "23.99",
-          "id": "6",
-          "count": 2
-        },
-        {
-          "namePL": "Burger z podwójnym serem",
-          "nameEN": "Burger Double Cheese",
-          "price": "25.99",
-          "id": "10",
-          "count": 2
-        },
-        {
-          "namePL": "Borszcz",
-          "nameEN": "Borshch",
-          "price": "16.99",
-          "id": "4",
-          "count": 1
-        }
-      ],
-      "id": 2
-    },
-    {
-      "cartItems": [
-        {
-          "namePL": "Burger",
-          "nameEN": "Burger",
-          "price": "23.99",
-          "id": "6",
-          "count": 1,
-          "startPrice": "23.99"
-        }
-      ],
-      "id": 3
-    },
-    {
-      "cartItems": [
-        {
-          "namePL": "Burger",
-          "nameEN": "Burger",
-          "price": "383.84",
-          "id": "6",
-          "count": 8,
-          "startPrice": "47.98"
-        }
-      ],
-      "id": 4
-    },
-    {
-      "cartItems": [
-        {
-          "namePL": "Burger",
-          "nameEN": "Burger",
-          "price": "47.98",
-          "id": "6",
-          "count": 2,
-          "startPrice": "23.99"
-        }
-      ],
-      "id": 5
-    },
-    {
-      "cartItems": [
-        {
-          "namePL": "Stek wieprzowy",
-          "nameEN": "Pork steak",
-          "price": "19.99",
-          "id": "13",
-          "oldPrice": "28.99",
-          "count": 1,
-          "startPrice": "19.99"
-        }
-      ],
-      "rezervationDetails": {
-        "cartId": "",
-        "name": "",
-        "email": "",
-        "phoneNumber": "",
-        "date": "",
-        "time": "",
-        "numberOfPeople": 0
-      },
-      "id": 6
-    },
-    {
-      "cartItems": [
-        {
-          "namePL": "Stek wieprzowy",
-          "nameEN": "Pork steak",
-          "price": "39.98",
-          "id": "13",
-          "oldPrice": "28.99",
-          "count": 2,
-          "startPrice": "19.99"
-        },
-        {
           "namePL": "Borszcz",
           "nameEN": "Borshch",
           "price": "16.99",
           "id": "4",
           "count": 1,
           "startPrice": "16.99"
-        }
-      ],
-      "rezervationDetails": {
-        "email": "admin@gmail.com",
-        "phoneNumber": "000",
-        "date": "2023-11-24",
-        "time": "18:57",
-        "numberOfPeople": "2"
-      },
-      "id": 7
-    },
-    {
-      "cartItems": [
+        },
         {
-          "namePL": "Stek wieprzowy",
-          "nameEN": "Pork steak",
-          "price": "39.98",
-          "id": "13",
-          "oldPrice": "28.99",
-          "count": 2,
-          "startPrice": "19.99"
+          "namePL": "Burger",
+          "nameEN": "Burger",
+          "price": "23.99",
+          "id": "6",
+          "count": 1,
+          "startPrice": "23.99"
         }
       ],
-      "rezervationDetails": {
-        "name": "Anastasiia",
+      "reservationDetails": {
+        "name": "ffffff",
         "email": "admin@gmail.com",
-        "phoneNumber": "cccc",
+        "phoneNumber": "444555555",
         "date": "2023-12-13",
-        "time": "16:56",
-        "numberOfPeople": "2"
+        "time": "18:39",
+        "numberOfPeople": 4,
+        "status": "Pending"
       },
-      "id": 8
+      "id": 4
     }
   ],
   "users": [
@@ -305,44 +177,29 @@
       "id": 1,
       "username": "janek123",
       "password": "haslo123",
-      "email": "janek@gmail.com"
+      "email": "janek@gmail.com",
+      "role": "client"
     },
     {
       "id": 2,
       "username": "kasia456",
       "password": "silneHaslo",
-      "email": "kasia@gmail.com"
+      "email": "kasia@gmail.com",
+      "role": "client"
     },
     {
       "id": 3,
       "username": "adam789",
-      "password": "tajneHaslo",
-      "email": "adam@gmail.com"
+      "password": "tajne",
+      "email": "adam@gmail.com",
+      "role": "client"
     },
     {
-      "username": "test",
-      "password": "test321",
-      "id": 4
-    },
-    {
-      "username": "test1",
-      "password": "test1",
-      "id": 5
-    },
-    {
-      "username": "test2",
-      "password": "222",
-      "id": 6
-    },
-    {
-      "username": "rrr",
-      "password": "rrr",
-      "id": 7
-    },
-    {
-      "username": "rrrr",
-      "password": "eee",
-      "id": 8
+      "id": 4,
+      "username": "admin",
+      "password": "secret",
+      "email": "admin@admin.com",
+      "role": "admin"
     }
   ]
 }
