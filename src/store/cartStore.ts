@@ -162,7 +162,3 @@ export const useCartStore = create<CartState>((set, get) => ({
    console.log("update orders: ",  useCartStore.getState().orders);
   },
 }));
-
-
-//"username": "janek123",
-//"password": "haslo123",

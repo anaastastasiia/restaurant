@@ -3,13 +3,11 @@ import styles from './MainAdminPage.module.scss';
 import { Order, useCartStore } from '../../../store/cartStore';
 import { useEffect, useState } from 'react';
 import { OrderStatus } from '../../../model/translations/en/enums';
-import axios from 'axios';
-import { API_URL } from '../../../model/types';
 
 export const MainAdminPage = () => {
   const { t } = useTranslation();
   const ordersd = useCartStore((state) => state.orders) || [];
-  const { orders, getCartData, updateOrderStatus } = useCartStore();
+  const { orders, getCartData } = useCartStore();
   const [cartData, setCartData] = useState([] as Order[]);
   const [selectedStatusMap, setSelectedStatusMap] = useState<{
     [orderId: string]: OrderStatus;
@@ -19,7 +17,6 @@ export const MainAdminPage = () => {
     const fetchData = async () => {
       try {
         const res = await getCartData();
-        console.log('useeffect res: ', res);
         console.log('ordersd: ', ordersd);
         useCartStore.setState({ orders: res });
         setCartData(res);
@@ -35,7 +32,6 @@ export const MainAdminPage = () => {
 
   const handleStatusChange = async (orderId: string, status: OrderStatus) => {
     console.log('handleStatusChange orderId: ', orderId, ',status: ', status);
-    console.log('handleSelectChange START:', selectedStatusMap[orderId]);
 
     console.log('handleSelectChange START:', selectedStatusMap[orderId]);
 
@@ -56,7 +52,6 @@ export const MainAdminPage = () => {
     const updatedOrders: Order[] = [];
     orders.forEach((order) => {
       const orderId = order.id;
-      console.log('handleSave selectedStatusMap: ', selectedStatusMap[orderId]);
       const newStatus =
         selectedStatusMap[orderId] || order.reservationDetails.status;
       updatedOrders.push({
@@ -67,9 +62,7 @@ export const MainAdminPage = () => {
         },
       });
     });
-    console.log('handleSave updatedOrders: ', updatedOrders);
-    const response = await axios.put(`${API_URL}/cart`, updatedOrders);
-    console.log('handleSave response: ', response.data);
+    // const response = await axios.put(`${API_URL}/cart`, updatedOrders);
     //zostawiam tą funkcjonalność ponieważ takie rozwiązanie jak zostosowałam w projektcie nie pozwala na to
     //korzystam z serwera JSON dostarczanego przez narzędzie takie jak JSON Server, a nie mam kodu źródłowego serwera
     //to niestety nie jestem w stanie wykonywać operacji zapisu bez odpowiednich endpointów obsługujących te operacje.
