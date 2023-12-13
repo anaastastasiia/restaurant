@@ -33,4 +33,26 @@
       }
     }
   }
+
+  .userWrapper {
+    color: #FFF;
+    display: flex;
+    margin-right: 20px;
+    align-items: center;
+
+    b {
+      font-weight: 600;
+    }
+  }
+}
+
+.login {
+  color: white;
+  width: 40px;
+  height: 40px;
+  margin-right: 20px;
+
+  &:hover {
+    cursor: pointer;
+  }
 }

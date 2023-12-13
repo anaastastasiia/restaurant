@@ -3,5 +3,10 @@
   "contact": "Kontakt",
   "menu": "Menu",
   "cart": "Koszyk",
+<<<<<<< HEAD
   "orders": "Zamówenia"
+=======
+  "delivery": "Dostawa",
+  "welcome": "Witaj"
+>>>>>>> 31bc58d9bc93e339a6ea01d74ba202e774a11094
 }

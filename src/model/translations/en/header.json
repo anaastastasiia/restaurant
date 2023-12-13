@@ -3,6 +3,11 @@
   "contact": "Contact",
   "menu": "Menu",
   "cart": "Cart",
+<<<<<<< HEAD
   "orders": "Orders"
+=======
+  "delivery": "Delivery",
+  "welcome": "Welcome"
+>>>>>>> 31bc58d9bc93e339a6ea01d74ba202e774a11094
 }
   

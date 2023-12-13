@@ -14,7 +14,7 @@ import burger from '../../assets/burger.png';
 import frytki from '../../assets/frytki.png';
 import meat from '../../assets/meat.png';
 import { Item } from '../../store/itemsStore';
-import { useCartStoreTest } from '../../store/cartStore';
+import { useCartStore } from '../../store/cartStore';
 import styles from './ProductItem.module.scss';
 
 const images = [
@@ -78,7 +78,7 @@ const images = [
 
 export const ProductItem = (product: Item) => {
   const { t, i18n } = useTranslation();
-  const addToCart = useCartStoreTest((state) => state.addToCart);
+  const addToCart = useCartStore((state) => state.addToCart);
 
   const findImgForItem = (item: Item): string | undefined => {
     const imgMatch = images.find((img) => img.id === item.id);

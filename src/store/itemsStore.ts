@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import axios, { AxiosResponse} from 'axios';
+import { API_URL } from '../model/types';
 
 export type ProduceState<T> = (state: T) => void;
 
@@ -27,7 +28,7 @@ export const useItemsStore = create<ItemsState>(() => ({
 
 const getItems = async() => {
   try {
-    const res = (await axioss.get('http://localhost:3001/items')) as AxiosResponse<Item[]>;
+    const res = (await axioss.get(`${API_URL}/items`)) as AxiosResponse<Item[]>;
     useItemsStore.setState(() => ({
       item: res.data as Item[]
     }));
@@ -38,7 +39,7 @@ const getItems = async() => {
 
 const getMenuItems = async() => {
   try {
-    const res = (await axioss.get('http://localhost:3001/menu')) as AxiosResponse<Item[]>;
+    const res = (await axioss.get(`${API_URL}/menu`)) as AxiosResponse<Item[]>;
     useItemsStore.setState(() => ({
       menuItems: res.data as Item[]
     }));
@@ -49,7 +50,7 @@ const getMenuItems = async() => {
 
 const getHotPriceItems = async() => {
   try {
-    const res = (await axioss.get('http://localhost:3001/hotPrice')) as AxiosResponse<Item[]>;
+    const res = (await axioss.get(`${API_URL}/hotPrice`)) as AxiosResponse<Item[]>;
     useItemsStore.setState(() => ({
       hotPriceItems: res.data as Item[]
     }));

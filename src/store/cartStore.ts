@@ -1,28 +1,64 @@
-import create from 'zustand';
+import { create } from 'zustand';
 import { Item } from './itemsStore';
 import { API_URL } from '../model/types';
+import axios, { AxiosResponse } from 'axios';
+import { OrderStatus } from '../model/translations/en/enums';
 
 export interface CartItem {
-    id: string;
-    namePL: string;
-    nameEN: string;
-    price: string;
-    oldPrice?: string;
-    count: number;
-    startPrice?: string;
-  }
+  id: string;
+  namePL: string;
+  nameEN: string;
+  price: string;
+  oldPrice?: string;
+  count: number;
+  startPrice?: string;
+}
+
+export interface ClientData {
+  name: string;
+  email: string;
+  phoneNumber: string;
+  date: string;
+  time: string;
+  numberOfPeople: number;
+  status: string;
+}
+
+export interface Order {
+  cartItems: CartItem[];
+  reservationDetails: ClientData;
+  id: number;
+}
 
 interface CartState {
   cartItems: CartItem[];
+  reservationDetails: ClientData;
+  id: number | null;
+  orders: Order[];
   addToCart: (item: Item) => void;
   clearCart: () => void;
   placeOrder: () => Promise<void>;
   updateItemCount: (itemId: string, newCount: number, newPrice: string) => void;
   removeFromCart: (itemId: string) => void;
+  setRezervationDetails: (details: ClientData) => void;
+  setCartData: (orders: Order[]) => void;
+  getCartData: () => Promise<Order[]>;
+  updateOrderStatus: (orderId: string, newStatus: OrderStatus) => void;
 }
 
-export const useCartStoreTest = create<CartState>((set, get) => ({
+export const useCartStore = create<CartState>((set, get) => ({
   cartItems: [],
+  id: null,
+  orders: [],
+  reservationDetails: {
+    name: '',
+    email: '',
+    phoneNumber: '',
+    date: '',
+    time: '',
+    numberOfPeople: 1,
+    status: OrderStatus.Pending
+  },
   addToCart: (item: Item) => {
     const existingItem = get().cartItems.find((cartItem) => cartItem.id === item.id);
   
@@ -45,6 +81,19 @@ export const useCartStoreTest = create<CartState>((set, get) => ({
       }));
     }
   },
+  setRezervationDetails: (details: ClientData) => {  
+    set(() => ({
+      reservationDetails: {
+        name: details.name,
+        email: details.email,
+        phoneNumber: details.phoneNumber,
+        date: details.date,
+        time: details.time,
+        numberOfPeople: Number(details.numberOfPeople),
+        status: OrderStatus.Pending
+      }
+    }));
+  },
   clearCart: () => set({ cartItems: [] }),
   placeOrder: async () => {
     try {
@@ -53,11 +102,15 @@ export const useCartStoreTest = create<CartState>((set, get) => ({
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ cartItems: useCartStoreTest.getState().cartItems }),
+        body: JSON.stringify({ 
+          cartItems: useCartStore.getState().cartItems,
+          reservationDetails: useCartStore.getState().reservationDetails,
+          id: useCartStore.getState().id
+         } as Order),
       });
 
       if (response.ok) {
-        useCartStoreTest.getState().clearCart();
+        useCartStore.getState().clearCart();
       } else {
         console.error('Wystąpił błąd podczas składania zamówienia');
       }
@@ -83,5 +136,29 @@ export const useCartStoreTest = create<CartState>((set, get) => ({
     set((state) => ({
       cartItems: state.cartItems.filter((item) => item.id !== itemId),
     }));
+  },
+  setOrderData: () => {},
+  setCartData: (orders) => set({ orders }),
+  getCartData: async (): Promise<Order[]> => {
+    try {
+      const res = (await axios.get(`${API_URL}/cart`)) as AxiosResponse<Order[]>;
+      console.log(res.data);
+      set(() => ({
+        orders: res.data
+      }));
+      console.log("state: ", useCartStore.getState().orders);
+      return useCartStore.getState().orders as Order[];
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      return [];
+    }
+  },
+  updateOrderStatus: (orderId: string, newStatus: OrderStatus) => {
+    set((state) => ({
+      orders: state.orders.map((order) =>
+        order.id.toString() === orderId ? { ...order, status: newStatus } : order
+      ),
+    }));
+   console.log("update orders: ",  useCartStore.getState().orders);
   },
 }));

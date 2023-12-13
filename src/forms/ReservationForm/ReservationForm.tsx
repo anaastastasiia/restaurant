@@ -1,29 +1,23 @@
 import React, { useState } from 'react';
 import styles from './ReservationForm.module.scss';
+import { OrderStatus } from '../../model/translations/en/enums';
+import { ClientData } from '../../store/cartStore';
 
 interface ReservationFormProps {
-  onSubmit: (formData: ReservationFormData) => void;
-}
-
-interface ReservationFormData {
-  fullName: string;
-  email: string;
-  phoneNumber: string;
-  date: string;
-  time: string;
-  numberOfPeople: number;
+  onSubmit: (formData: ClientData) => void;
 }
 
 export const ReservationForm: React.FC<ReservationFormProps> = ({
   onSubmit,
 }) => {
-  const [formData, setFormData] = useState<ReservationFormData>({
-    fullName: '',
+  const [formData, setFormData] = useState<ClientData>({
+    name: '',
     email: '',
     phoneNumber: '',
     date: '',
     time: '',
     numberOfPeople: 1,
+    status: OrderStatus.Pending,
   });
 
   const handleChange = (
@@ -43,8 +37,8 @@ export const ReservationForm: React.FC<ReservationFormProps> = ({
       <div className={styles.inputName}>Nazwisko/Your name:</div>
       <input
         type="text"
-        name="fullName"
-        value={formData.fullName}
+        name="name"
+        value={formData.name}
         onChange={handleChange}
         required
       />
@@ -89,14 +83,14 @@ export const ReservationForm: React.FC<ReservationFormProps> = ({
       <input
         type="number"
         name="numberOfPeople"
-        value={formData.numberOfPeople}
+        value={Number(formData.numberOfPeople)}
         onChange={handleChange}
         min="1"
         max="8"
         required
       />
 
-      <button type="submit">Submit Reservation</button>
+      <button type="submit">Zamów</button>
     </form>
   );
 };

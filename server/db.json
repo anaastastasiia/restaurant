@@ -144,50 +144,13 @@
     {
       "cartItems": [
         {
-          "namePL": "Burger",
-          "nameEN": "Burger",
-          "price": "23.99",
-          "id": "6",
-          "count": 1
-        },
-        {
-          "namePL": "Pasta",
-          "nameEN": "Paste",
-          "price": "33.99",
-          "id": "1",
-          "count": 1
-        }
-      ],
-      "id": 1
-    },
-    {
-      "cartItems": [
-        {
-          "namePL": "Burger",
-          "nameEN": "Burger",
-          "price": "23.99",
-          "id": "6",
-          "count": 2
-        },
-        {
-          "namePL": "Burger z podwójnym serem",
-          "nameEN": "Burger Double Cheese",
-          "price": "25.99",
-          "id": "10",
-          "count": 2
-        },
-        {
           "namePL": "Borszcz",
           "nameEN": "Borshch",
           "price": "16.99",
           "id": "4",
-          "count": 1
-        }
-      ],
-      "id": 2
-    },
-    {
-      "cartItems": [
+          "count": 1,
+          "startPrice": "16.99"
+        },
         {
           "namePL": "Burger",
           "nameEN": "Burger",
@@ -197,33 +160,46 @@
           "startPrice": "23.99"
         }
       ],
-      "id": 3
-    },
-    {
-      "cartItems": [
-        {
-          "namePL": "Burger",
-          "nameEN": "Burger",
-          "price": "383.84",
-          "id": "6",
-          "count": 8,
-          "startPrice": "47.98"
-        }
-      ],
+      "reservationDetails": {
+        "name": "ffffff",
+        "email": "admin@gmail.com",
+        "phoneNumber": "444555555",
+        "date": "2023-12-13",
+        "time": "18:39",
+        "numberOfPeople": 4,
+        "status": "Pending"
+      },
       "id": 4
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "username": "janek123",
+      "password": "haslo123",
+      "email": "janek@gmail.com",
+      "role": "client"
     },
     {
-      "cartItems": [
-        {
-          "namePL": "Burger",
-          "nameEN": "Burger",
-          "price": "47.98",
-          "id": "6",
-          "count": 2,
-          "startPrice": "23.99"
-        }
-      ],
-      "id": 5
+      "id": 2,
+      "username": "kasia456",
+      "password": "silneHaslo",
+      "email": "kasia@gmail.com",
+      "role": "client"
+    },
+    {
+      "id": 3,
+      "username": "adam789",
+      "password": "tajne",
+      "email": "adam@gmail.com",
+      "role": "client"
+    },
+    {
+      "id": 4,
+      "username": "admin",
+      "password": "secret",
+      "email": "admin@admin.com",
+      "role": "admin"
     }
   ]
 }
