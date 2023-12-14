@@ -8,19 +8,21 @@ import styles from './AppBar.module.scss';
 export const AppBar = () => {
   const { t } = useTranslation();
   const authStore = useAuthStore();
+  console.log('rolw: ', authStore.user?.role);
 
   return (
     <header className={styles.header}>
       <div className={styles.menuWrapper}>
-<<<<<<< HEAD
-        <CustomLink to="/">{t('header.start')}</CustomLink>
-        <CustomLink to="/contact">{t('header.contact')}</CustomLink>
-        <CustomLink to="/menu">{t('header.menu')}</CustomLink>
-        {/* Do zrobienia jeśli będzie czas na to */}
-        {/* <CustomLink to="/orders">{t('header.orders')}</CustomLink> */}
-        <CustomLink to="/cart">{t('header.cart')}</CustomLink>
-=======
-        {(authStore.user?.role === 'client' || !authStore.user) && (
+        {authStore.user?.role === 'client' && (
+          <>
+            <CustomLink to="/">{t('header.start')}</CustomLink>
+            <CustomLink to="/contact">{t('header.contact')}</CustomLink>
+            <CustomLink to="/menu">{t('header.menu')}</CustomLink>
+            <CustomLink to="/orders">{t('header.orders')}</CustomLink>
+            <CustomLink to="/cart">{t('header.cart')}</CustomLink>
+          </>
+        )}
+        {(authStore.user?.role === 'guest' || !authStore.user?.role) && (
           <>
             <CustomLink to="/">{t('header.start')}</CustomLink>
             <CustomLink to="/contact">{t('header.contact')}</CustomLink>
@@ -28,9 +30,8 @@ export const AppBar = () => {
             <CustomLink to="/cart">{t('header.cart')}</CustomLink>
           </>
         )}
->>>>>>> 31bc58d9bc93e339a6ea01d74ba202e774a11094
       </div>
-      {authStore.user ? (
+      {authStore.user && authStore.user?.id > 0 ? (
         <div className={styles.userWrapper}>
           <div>
             {t('header.welcome')}, <b>{authStore.user.username}</b>

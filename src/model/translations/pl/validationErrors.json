@@ -1,0 +1,8 @@
+{
+    "required": "Pole jest wymagane",
+    "min8": "Hasło musi mieć co najmniej 8 znaków",
+    "badPasswords": "Hasło jest niepoprawne",
+    "specialChar": "Hasło musi zawierać conajmniej jeden znak specjalny",
+    "noSpace": "Hasło nie może zawierać spacji",
+    "uppercase": "Hasło musi zawierać conajmniej jedną dużą literę"
+}

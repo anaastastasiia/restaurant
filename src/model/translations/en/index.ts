@@ -5,10 +5,12 @@ import menu from './pages/menu.json';
 import buttons from './buttons.json';
 import cart from './pages/cart.json';
 import login from './pages/login.json';
+import validationErrors from './validationErrors.json';
 
 export default {
     header,
     buttons,
+    validationErrors,
     pages: {
         contactUs,
         start,

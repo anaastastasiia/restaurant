@@ -17,7 +17,9 @@ export const AppRoutes = () => {
     <Routes>
       <Route path="/" element={<Root />} />
       <Route path="/" element={<MainLayout />}>
-        {authStore.user?.role === 'client' || !authStore.user ? (
+        {authStore.user?.role === 'client' ||
+        authStore.user?.role === 'guest' ||
+        authStore.user?.id === 0 ? (
           <Route index element={<MainPage />} />
         ) : (
           <Route index element={<MainAdminPage />} />
