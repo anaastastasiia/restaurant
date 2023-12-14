@@ -4,5 +4,7 @@
     "badPasswords": "Invalid password",
     "specialChar": "Password must contain at least one special character",
     "noSpace": "Password cannot contain spaces",
-    "uppercase": "Password must contain at least one uppercase letter"
+    "uppercase": "Password must contain at least one uppercase letter",
+    "invalidEmail": "Invalid email address",
+    "phoneLenght": "Phone number must be exactly 9 digits"
 }
