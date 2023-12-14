@@ -17,12 +17,10 @@ export const AppRoutes = () => {
     <Routes>
       <Route path="/" element={<Root />} />
       <Route path="/" element={<MainLayout />}>
-        {authStore.user?.role === 'client' ||
-        authStore.user?.role === 'guest' ||
-        authStore.user?.id === 0 ? (
-          <Route index element={<MainPage />} />
-        ) : (
+        {authStore.user?.role === 'admin' ? (
           <Route index element={<MainAdminPage />} />
+        ) : (
+          <Route index element={<MainPage />} />
         )}
       </Route>
       <Route path="/menu" element={<MenuPage />} />

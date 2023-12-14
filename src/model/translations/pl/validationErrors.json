@@ -4,5 +4,7 @@
     "badPasswords": "Hasło jest niepoprawne",
     "specialChar": "Hasło musi zawierać conajmniej jeden znak specjalny",
     "noSpace": "Hasło nie może zawierać spacji",
-    "uppercase": "Hasło musi zawierać conajmniej jedną dużą literę"
+    "uppercase": "Hasło musi zawierać conajmniej jedną dużą literę",
+    "invalidEmail": "Niepoprawny adres email",
+    "phoneLenght": "Numer telefonu musi mieć dokładnie 9 cyfr"
 }
