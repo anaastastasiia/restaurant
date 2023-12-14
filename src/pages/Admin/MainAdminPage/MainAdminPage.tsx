@@ -1,11 +1,9 @@
-import { useTranslation } from 'react-i18next';
 import styles from './MainAdminPage.module.scss';
 import { Order, useCartStore } from '../../../store/cartStore';
 import { useEffect, useState } from 'react';
 import { OrderStatus } from '../../../model/translations/en/enums';
 
 export const MainAdminPage = () => {
-  const { t } = useTranslation();
   const ordersd = useCartStore((state) => state.orders) || [];
   const { orders, getCartData } = useCartStore();
   const [cartData, setCartData] = useState([] as Order[]);

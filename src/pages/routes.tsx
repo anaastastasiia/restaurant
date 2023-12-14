@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import { MenuPage } from './MenuPage/MenuPage';
 import { MainLayout } from '../layout/MainLayout';
 import { MainPage } from './MainPage';
-import { DeliveryPage } from './DeliveryPage/DeliveryPage';
+import { OrdersPage } from './OrdersPage/OrdersPage';
 import { ContactPage } from './ContactPage';
 import { CartPage } from './CartPage';
 import { LoginPage } from './LoginPage';
@@ -17,14 +17,16 @@ export const AppRoutes = () => {
     <Routes>
       <Route path="/" element={<Root />} />
       <Route path="/" element={<MainLayout />}>
-        {authStore.user?.role === 'client' || !authStore.user ? (
+        {authStore.user?.role === 'client' ||
+        authStore.user?.role === 'guest' ||
+        authStore.user?.id === 0 ? (
           <Route index element={<MainPage />} />
         ) : (
           <Route index element={<MainAdminPage />} />
         )}
       </Route>
       <Route path="/menu" element={<MenuPage />} />
-      <Route path="/delivery" element={<DeliveryPage />} />
+      <Route path="/orders" element={<OrdersPage />} />
       <Route path="/contact" element={<ContactPage />} />
       <Route path="/cart" element={<CartPage />} />
       <Route path="/login" element={<LoginPage />} />

@@ -6,13 +6,13 @@ export interface User {
   id: number;
   username: string;
   password: string;
-  role: 'admin' | 'client';
+  role: 'admin' | 'client' | 'guest';
 }
 
 interface AuthStore {
   user: User | null;
   users: User[];
-  login: (username: string, password: string) => void;
+  login: (username: string, password: string) => Promise<boolean>;
   register: (username: string, password: string, confirmPassword: string) => Promise<boolean>;
   logout: () => void;
   getUsers: () => void;
@@ -35,28 +35,29 @@ export const useAuthStore = create<AuthStore>((set) => ({
   },
   login: async (username: string, password: string) => {
     try {
-        const foundUser = useAuthStore.getState().users.find(user => user.username === username);
-        if (foundUser && foundUser.username === username) {
-            if (foundUser.password === password) {
-                set({ 
-                    user: {
-                        username: foundUser.username,
-                        password: foundUser.password,
-                        id: foundUser.id,
-                        role: foundUser.role
-                    }
-                });
-                console.log('Hasło poprawne:', foundUser.password);
-                console.log('User:', useAuthStore.getState().user);
-                console.log('Rola:', useAuthStore.getState().user?.role);
-            } else {
-                console.error('Błędne hasło');
+      const foundUser = useAuthStore.getState().users.find(user => user.username === username);
+      if (foundUser && foundUser.username === username) {
+        if (foundUser.password === password) {
+          set({ 
+            user: {
+              username: foundUser.username,
+              password: foundUser.password,
+              id: foundUser.id,
+              role: foundUser.role
             }
+          });
+          return true;
         } else {
-            console.log('Użytkownik o podanej nazwie nie został znaleziony.');
+          console.error('Błędne hasło');
+          return false;
         }
+      } else {
+        console.log('Użytkownik o podanej nazwie nie został znaleziony.');
+        return false;
+      }
     } catch (error: any) {
       console.error('Błąd podczas logowania:', error.message);
+      return false;
     }
   },
   register: async (username: string, password: string, confirmPassword: string) => {
@@ -76,6 +77,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
         await axios.post(`${API_URL}/users`, {
             username: username,
             password: password,
+            role: 'client'
         });
         const maxId = users.reduce((max, user) => (user.id > max ? user.id : max), 0);
         set({ 
@@ -94,6 +96,13 @@ export const useAuthStore = create<AuthStore>((set) => ({
   },
   logout: () => {
     console.log(" log out");
-    set({ user: null });
+    set({ 
+      user: {
+        id: 0,
+        password: '',
+        username: '',
+        role: 'guest'
+      }
+    });
   },
 }));

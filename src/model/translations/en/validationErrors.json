@@ -1,0 +1,8 @@
+{
+    "required": "Field is required",
+    "min8": "Password must be at least 8 characters long",
+    "badPasswords": "Invalid password",
+    "specialChar": "Password must contain at least one special character",
+    "noSpace": "Password cannot contain spaces",
+    "uppercase": "Password must contain at least one uppercase letter"
+}
