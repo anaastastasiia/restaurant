@@ -1,6 +1,6 @@
 .header {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-evenly;
   align-items: center;
   width: 100%;
   top: 0;
@@ -8,6 +8,27 @@
   right: 0;
   position: fixed;
   background-color: rgba(0, 0, 0, 0.5);
+
+  .logoWrapper {
+    display: flex;
+    align-items: center;
+    width: 230px !important;
+
+    a {
+      color: #FFF;
+      font-family: 'Bert Sans' ,sans-serif;
+      font-size: 22px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal; 
+      text-decoration: none;
+      margin: 20px 30px;
+  
+      &:hover {
+        color: rgb(180, 180, 180) !important;
+      }
+    }
+  }
   
   .menuWrapper {
     display: flex;
@@ -39,11 +60,27 @@
     display: flex;
     margin-right: 20px;
     align-items: center;
-
+    width: 230px !important;
+    justify-content: flex-end;
+    
     b {
       font-weight: 600;
     }
+
+    .welcome {
+      margin-right: 20px !important;
+
+      div {
+        font-size: 20px;
+      }
+    }
   }
+}
+
+.loginWrapper {
+  width: 230px;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .login {

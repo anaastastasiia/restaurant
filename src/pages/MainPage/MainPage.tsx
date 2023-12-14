@@ -36,11 +36,11 @@ export const MainPage = () => {
           <a href="./#showMore">{t('pages.start.showMore')}</a>
         </div>
       </div>
-      <div className="contactUsWrapper">
-        <ContactUs />
-      </div>
 
       <div id="showMore">
+        <div className="contactUsWrapper">
+          <ContactUs />
+        </div>
         <div className="contentWrapper">
           <h1>{t('pages.start.popularDishes')}</h1>
           <div className="scrollWrapper text-center">
