@@ -5,5 +5,6 @@
     "login": "Zaloguj się",
     "register": "Zarejestruj się",
     "hasAccount": "Masz już konto?",
-    "hasNotAccount": "Nie masz konta?"
+    "hasNotAccount": "Nie masz konta?",
+    "invalidData": "Niepoprawny login lub hasło"
 }

@@ -176,28 +176,28 @@
     {
       "id": 1,
       "username": "janek123",
-      "password": "haslo123",
+      "password": "Haslo123!",
       "email": "janek@gmail.com",
       "role": "client"
     },
     {
       "id": 2,
       "username": "kasia456",
-      "password": "silneHaslo",
+      "password": "silneHaslo1!",
       "email": "kasia@gmail.com",
       "role": "client"
     },
     {
       "id": 3,
       "username": "adam789",
-      "password": "tajne",
+      "password": "Tajne34@",
       "email": "adam@gmail.com",
       "role": "client"
     },
     {
       "id": 4,
       "username": "admin",
-      "password": "secret",
+      "password": "Secret1!",
       "email": "admin@admin.com",
       "role": "admin"
     }
