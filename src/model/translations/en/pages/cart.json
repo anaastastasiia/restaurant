@@ -1,5 +1,13 @@
 {
     "title": "Your shopping cart is waiting for you",
     "emptyCart": "Your shopping cart is empty",
-    "offers": "Check out our offers"
+    "offers": "Check out our offers",
+    "name": "Name",
+    "email": "Email",
+    "phoneNumber": "Phone number",
+    "date": "Date",
+    "time": "Time",
+    "numberOfPeople": "Number of people",
+    "createOrder": "Create order",
+    "total": "Total"
 }

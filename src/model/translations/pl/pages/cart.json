@@ -1,5 +1,13 @@
 {
     "title": "Twój koszyk czeka na Ciebie",
     "emptyCart": "Twój koszyk jest pusty",
-    "offers": "Zapoznaj się z naszymi ofertami"
+    "offers": "Zapoznaj się z naszymi ofertami",
+    "name": "Imię",
+    "email": "Email",
+    "phoneNumber": "Numer telefonu",
+    "date": "Data",
+    "time": "Czas",
+    "numberOfPeople": "Ilość osób",
+    "createOrder": "Zamów",
+    "total": "Razem"
 }

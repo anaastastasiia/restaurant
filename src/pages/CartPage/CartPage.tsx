@@ -68,15 +68,18 @@ export const CartPage = () => {
                 })}
                 <div className={styles.summary}>
                   <div>
-                    Razem:{' '}
+                    {t('pages.cart.total')}:{' '}
                     <b>
                       {cartItems
                         .map((i) => Number(i.price))
                         .reduce((suma, cena) => suma + cena, 0)
                         .toFixed(2)}
-                    </b>
+                    </b>{' '}
+                    PLN
                   </div>
-                  <button onClick={onCLick}>Zamów</button>
+                  <button onClick={onCLick}>
+                    {t('pages.cart.createOrder')}
+                  </button>
                 </div>
               </>
             )}

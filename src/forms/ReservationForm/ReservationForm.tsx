@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import reservationSchema from '../../schemas/ReservationSchema';
@@ -31,31 +31,9 @@ export const ReservationForm: React.FC<ReservationFormProps> = ({
     },
   });
 
-  // const [formData, setFormData] = useState<ClientData>({
-  //   name: '',
-  //   email: '',
-  //   phoneNumber: '',
-  //   date: '',
-  //   time: '',
-  //   numberOfPeople: 1,
-  //   status: OrderStatus.Pending,
-  // });
-
-  // const handleChange = (
-  //   e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  // ) => {
-  //   const { name, value } = e.target;
-  //   setFormData((prevData) => ({ ...prevData, [name]: value }));
-  // };
-
-  // const handleSubmit = (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   onSubmit(formData);
-  // };
-
   return (
     <form className={styles.reservationForm} onSubmit={formik.handleSubmit}>
-      <div className={styles.inputName}>Nazwisko/Your name:</div>
+      <div className={styles.inputName}>{t('pages.cart.name')}:</div>
       <input
         type="text"
         name="name"
@@ -70,7 +48,7 @@ export const ReservationForm: React.FC<ReservationFormProps> = ({
         <div className={styles.errorText}>{t(formik.errors.name)}</div>
       )}
 
-      <div className={styles.inputName}>Email:</div>
+      <div className={styles.inputName}>{t('pages.cart.email')}:</div>
       <input
         type="email"
         name="email"
@@ -85,7 +63,7 @@ export const ReservationForm: React.FC<ReservationFormProps> = ({
         <div className={styles.errorText}>{t(formik.errors.email)}</div>
       )}
 
-      <div className={styles.inputName}>Numer telefonu/Phone Number:</div>
+      <div className={styles.inputName}>{t('pages.cart.phoneNumber')}:</div>
       <input
         type="tel"
         name="phoneNumber"
@@ -102,7 +80,7 @@ export const ReservationForm: React.FC<ReservationFormProps> = ({
         <div className={styles.errorText}>{t(formik.errors.phoneNumber)}</div>
       )}
 
-      <div className={styles.inputName}>Data/Date:</div>
+      <div className={styles.inputName}>{t('pages.cart.date')}:</div>
       <input
         type="date"
         name="date"
@@ -117,7 +95,7 @@ export const ReservationForm: React.FC<ReservationFormProps> = ({
         <div className={styles.errorText}>{t(formik.errors.date)}</div>
       )}
 
-      <div className={styles.inputName}>Czas/Time:</div>
+      <div className={styles.inputName}>{t('pages.cart.time')}:</div>
       <input
         type="time"
         name="time"
@@ -132,7 +110,7 @@ export const ReservationForm: React.FC<ReservationFormProps> = ({
         <div className={styles.errorText}>{t(formik.errors.time)}</div>
       )}
 
-      <div className={styles.inputName}>Ilość osób/Number of People:</div>
+      <div className={styles.inputName}>{t('pages.cart.numberOfPeople')}:</div>
       <input
         type="number"
         name="numberOfPeople"
@@ -153,7 +131,7 @@ export const ReservationForm: React.FC<ReservationFormProps> = ({
         </div>
       )}
 
-      <button type="submit">Zamów</button>
+      <button type="submit">{t('pages.cart.createOrder')}</button>
     </form>
   );
 };
