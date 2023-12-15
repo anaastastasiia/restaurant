@@ -9,7 +9,7 @@ import styles from './AppBar.module.scss';
 export const AppBar = () => {
   const { t } = useTranslation();
   const authStore = useAuthStore();
-  console.log('rolw: ', authStore.user?.role);
+  console.log('app bar us:', authStore.user);
 
   return (
     <header className={styles.header}>
@@ -32,6 +32,9 @@ export const AppBar = () => {
         )}
         {(authStore.user?.role === 'guest' || !authStore.user?.role) && (
           <>
+            <CustomLink to="/orders">
+              Do usunięcia {t('header.orders')}
+            </CustomLink>
             <CustomLink to="/menu">{t('header.menu')}</CustomLink>
             <CustomLink to="/contact">{t('header.contact')}</CustomLink>
             <CustomLink to="/cart">{t('header.cart')}</CustomLink>

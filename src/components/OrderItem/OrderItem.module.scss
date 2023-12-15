@@ -1,0 +1,30 @@
+.wrapper {
+    width: 100%;
+    color: rgba(255, 255, 255, 0.50);;
+    border: 1px #342f2f solid;
+    margin-bottom: 30px;
+
+    .content {
+        border-left: 1px #fff solid;
+        margin: 20px;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        width: 70%;
+
+        .productDescriptionWrapper, .totalPriceWrapper {
+            display: flex;
+            flex-direction: column;
+    
+            .status, .totalPrice {
+                color: #fff; 
+                padding: 0 10px 20px 10px;
+            }
+    
+            .order, .total {
+                padding: 0 10px 10px 10px;
+            }
+        }
+    }
+   
+}
