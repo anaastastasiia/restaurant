@@ -35,6 +35,7 @@ interface CartState {
   reservationDetails: ClientData;
   id: number | null;
   orders: Order[];
+  orderForUser: Order[];
   addToCart: (item: Item) => void;
   clearCart: () => void;
   placeOrder: () => Promise<void>;
@@ -44,6 +45,7 @@ interface CartState {
   setCartData: (orders: Order[]) => void;
   getCartData: () => Promise<Order[]>;
   updateOrderStatus: (orderId: string, newStatus: OrderStatus) => void;
+  getCartDataForUser: (userName: string) => Promise<Order[]>;
 }
 
 export const useCartStore = create<CartState>((set, get) => ({
@@ -59,6 +61,7 @@ export const useCartStore = create<CartState>((set, get) => ({
     numberOfPeople: 1,
     status: OrderStatus.Pending
   },
+  orderForUser: [],
   addToCart: (item: Item) => {
     const existingItem = get().cartItems.find((cartItem) => cartItem.id === item.id);
   
@@ -160,5 +163,24 @@ export const useCartStore = create<CartState>((set, get) => ({
       ),
     }));
    console.log("update orders: ",  useCartStore.getState().orders);
+  },
+  getCartDataForUser: async (userName: string): Promise<Order[]> => {
+    try {
+      const res = (await axios.get(`${API_URL}/cart`)) as AxiosResponse<Order[]>;
+      console.log(res.data);
+      
+      const orders = res.data.filter(
+        (i) => i.reservationDetails.name === userName
+      );
+      console.log("orders in store: " , orders)
+      set(() => ({
+        orderForUser: orders
+      }));
+      console.log("state orderForUser: ", useCartStore.getState().orderForUser);
+      return useCartStore.getState().orderForUser as Order[];
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      return [];
+    }
   },
 }));
