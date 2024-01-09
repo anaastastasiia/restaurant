@@ -31,9 +31,6 @@ export const AppBar = () => {
         )}
         {(authStore.user?.role === 'guest' || !authStore.user?.role) && (
           <>
-            <CustomLink to="/orders">
-              Do usunięcia {t('header.orders')}
-            </CustomLink>
             <CustomLink to="/menu">{t('header.menu')}</CustomLink>
             <CustomLink to="/contact">{t('header.contact')}</CustomLink>
             <CustomLink to="/cart">{t('header.cart')}</CustomLink>
