@@ -1,0 +1,10 @@
+{
+    "yourOrders": "Your orders",
+    "order": "Order",
+    "total": "Total",
+    "filter": {
+        "all": "All",
+        "month": "This month",
+        "year": "This year"
+    }
+}

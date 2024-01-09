@@ -1,0 +1,10 @@
+{
+    "yourOrders": "Twoje zamówienia",
+    "order": "Zamówienie",
+    "total": "Razem",
+    "filter": {
+        "all": "Wszystkie",
+        "month": "W tym miesiącu",
+        "year": "W tym roku"
+    }
+}
