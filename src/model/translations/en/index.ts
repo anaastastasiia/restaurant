@@ -5,6 +5,7 @@ import menu from './pages/menu.json';
 import buttons from './buttons.json';
 import cart from './pages/cart.json';
 import login from './pages/login.json';
+import orders from './pages/orders.json';
 import validationErrors from './validationErrors.json';
 
 export default {
@@ -16,6 +17,7 @@ export default {
         start,
         menu,
         cart,
-        login
+        login,
+        orders
     }
 }

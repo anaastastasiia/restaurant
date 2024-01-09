@@ -9,7 +9,6 @@ import styles from './AppBar.module.scss';
 export const AppBar = () => {
   const { t } = useTranslation();
   const authStore = useAuthStore();
-  console.log('app bar us:', authStore.user);
 
   return (
     <header className={styles.header}>
