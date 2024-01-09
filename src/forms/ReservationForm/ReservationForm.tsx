@@ -38,8 +38,6 @@ export const ReservationForm: React.FC<ReservationFormProps> = ({
     },
   });
 
-  console.log('USER: ', authStore.user);
-
   return (
     <form className={styles.reservationForm} onSubmit={formik.handleSubmit}>
       <div className={styles.inputName}>{t('pages.cart.name')}:</div>

@@ -30,7 +30,7 @@ export const MainAdminPage = () => {
   };
 
   useEffect(() => {
-    console.log('');
+    console.info('');
   }, [selectedStatusMap]);
 
   const handleSave = async () => {

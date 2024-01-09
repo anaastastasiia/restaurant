@@ -56,7 +56,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
           return false;
         }
       } else {
-        console.log('Użytkownik o podanej nazwie nie został znaleziony.');
+        console.info('Użytkownik o podanej nazwie nie został znaleziony.');
         return false;
       }
     } catch (error: any) {
@@ -103,7 +103,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
     }
   },
   logout: () => {
-    console.log(" log out");
+    console.info(" log out");
     set({ 
       user: {
         id: 0,
