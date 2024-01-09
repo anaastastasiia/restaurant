@@ -10,7 +10,7 @@ const registrationSchema = (t: any) => yup.object().shape({
     .matches(/[A-Z]/, t('validationErrors.uppercase'))
     .matches(/[!@#$%^&*(),.?":{}|<>]/, t('validationErrors.specialChar'))
     .matches(/\S/, t('validationErrors.noSpace')),
-  confirmPassword: yup.string().required(t('validationErrors.required')).oneOf([yup.ref('password'), null], t('validationErrors.badPasswords')),
+  confirmPassword: yup.string().required(t('validationErrors.required')).oneOf([yup.ref('password'), ""], t('validationErrors.badPasswords')),
 });
 
 export default registrationSchema;
