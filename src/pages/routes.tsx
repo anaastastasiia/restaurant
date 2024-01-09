@@ -1,5 +1,5 @@
 import { Root } from '../app/Root';
-import { Route, Routes } from 'react-router-dom';
+import { Outlet, Route, Routes } from 'react-router-dom';
 import { MenuPage } from './MenuPage/MenuPage';
 import { MainLayout } from '../layout/MainLayout';
 import { MainPage } from './MainPage';
@@ -16,7 +16,14 @@ export const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Root />} />
-      <Route path="/" element={<MainLayout />}>
+      <Route
+        path="/"
+        element={
+          <MainLayout>
+            <Outlet />
+          </MainLayout>
+        }
+      >
         {authStore.user?.role === 'admin' ? (
           <Route index element={<MainAdminPage />} />
         ) : (
