@@ -1,9 +1,9 @@
-import { Outlet } from 'react-router-dom';
+import { ReactNode } from 'react';
 
-export const MainLayout = () => {
-  return (
-    <main>
-      <Outlet />
-    </main>
-  );
+interface MainLayoutProps {
+  children: ReactNode;
+}
+
+export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
+  return <main>{children}</main>;
 };
