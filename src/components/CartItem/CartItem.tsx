@@ -1,9 +1,9 @@
 import { useTranslation } from 'react-i18next';
 import { CartItem } from '../../store/cartStore';
 import { useEffect, useState } from 'react';
-import styles from './CartItem.module.scss';
 import { useCartStore } from '../../store/cartStore';
 import { images } from '../../model/imagesList';
+import styles from './CartItem.module.scss';
 
 const MAX_QUANTITY = 8;
 const DEFAULT_QUANTITY = 1;
