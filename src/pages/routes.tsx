@@ -16,14 +16,7 @@ export const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Root />} />
-      <Route
-        path="/"
-        element={
-          <MainLayout>
-            <Outlet />
-          </MainLayout>
-        }
-      >
+      <Route path="/" element={<MainLayout children={<Outlet />} />}>
         {authStore.user?.role === 'admin' ? (
           <Route index element={<MainAdminPage />} />
         ) : (
