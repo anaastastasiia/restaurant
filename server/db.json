@@ -369,6 +369,36 @@
         "status": "Pending"
       },
       "id": 12
+    },
+    {
+      "cartItems": [
+        {
+          "namePL": "Borszcz",
+          "nameEN": "Borshch",
+          "price": "16.99",
+          "id": "4",
+          "count": 1,
+          "startPrice": "16.99"
+        },
+        {
+          "namePL": "Burger",
+          "nameEN": "Burger",
+          "price": "23.99",
+          "id": "6",
+          "count": 1,
+          "startPrice": "23.99"
+        }
+      ],
+      "reservationDetails": {
+        "name": "test",
+        "email": "test@t",
+        "phoneNumber": "111222111",
+        "date": "2024-01-10",
+        "time": "22:09",
+        "numberOfPeople": 2,
+        "status": "Pending"
+      },
+      "id": 13
     }
   ],
   "users": [
@@ -399,6 +429,20 @@
       "password": "Secret1!",
       "email": "admin@admin.com",
       "role": "admin"
+    },
+    {
+      "username": "nowy",
+      "password": "Nowy321!",
+      "role": "client",
+      "id": 5
+    },
+    {
+      "username": "test",
+      "password": "Test222@",
+      "role": "client",
+      "email": "test@t",
+      "phoneNumber": "111222111",
+      "id": 6
     }
   ]
 }

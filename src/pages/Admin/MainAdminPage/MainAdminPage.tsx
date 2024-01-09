@@ -6,7 +6,6 @@ import { OrderStatus } from '../../../model/translations/en/enums';
 export const MainAdminPage = () => {
   const ordersd = useCartStore((state) => state.orders) || [];
   const { orders, getCartData } = useCartStore();
-  const [cartData, setCartData] = useState([] as Order[]);
   const [selectedStatusMap, setSelectedStatusMap] = useState<{
     [orderId: string]: OrderStatus;
   }>({});
@@ -16,7 +15,6 @@ export const MainAdminPage = () => {
       try {
         const res = await getCartData();
         useCartStore.setState({ orders: res });
-        setCartData(res);
       } catch (error) {
         console.error('Error fetching data:', error);
       }

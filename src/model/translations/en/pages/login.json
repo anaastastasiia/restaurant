@@ -6,5 +6,7 @@
     "register": "Sign up",
     "hasAccount": "Do you already have an account?",
     "hasNotAccount": "Don't have an account?",
-    "invalidData": "Invalid username or password"
+    "invalidData": "Invalid username or password",
+    "email": "Email",
+    "phoneNumber": "Phone number"
 }

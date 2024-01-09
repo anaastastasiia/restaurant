@@ -7,12 +7,14 @@ import ProductItem from '../../components/ProductItem';
 import { useItemsActions, useItemsStore } from '../../store/itemsStore';
 import emptyCart from '../../assets/add-to-cart.png';
 import styles from './CartPage.module.scss';
+import { useAuthStore } from '../../store/authStore';
 
 export const CartPage = () => {
   const { t } = useTranslation();
   const [showStep1, setShowStep1] = useState(false);
   const [showStep2, setShowStep2] = useState(false);
   const cartItems = useCartStore((state) => state.cartItems);
+  const authStore = useAuthStore();
   const createOrder = useCartStore((state) => state.placeOrder);
   const setRezervationDetails = useCartStore(
     (state) => state.setRezervationDetails
@@ -36,7 +38,24 @@ export const CartPage = () => {
   };
 
   const handleReservationSubmit = (formData: ClientData) => {
-    setRezervationDetails(formData);
+    setRezervationDetails({
+      name:
+        authStore.user && authStore.user.username
+          ? authStore.user.username
+          : formData.name,
+      email:
+        authStore.user && authStore.user.email
+          ? authStore.user.email
+          : formData.email,
+      phoneNumber:
+        authStore.user && authStore.user.phoneNumber
+          ? authStore.user.phoneNumber
+          : formData.phoneNumber,
+      date: formData.date,
+      numberOfPeople: formData.numberOfPeople,
+      status: formData.status,
+      time: formData.time,
+    });
     createOrder();
   };
 

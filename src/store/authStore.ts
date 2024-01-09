@@ -7,13 +7,15 @@ export interface User {
   username: string;
   password: string;
   role: 'admin' | 'client' | 'guest';
+  email: string;
+  phoneNumber: string;
 }
 
 interface AuthStore {
   user: User | null;
   users: User[];
   login: (username: string, password: string) => Promise<boolean>;
-  register: (username: string, password: string, confirmPassword: string) => Promise<boolean>;
+  register: (username: string, password: string, confirmPassword: string, email: string, phoneNumber: string) => Promise<boolean>;
   logout: () => void;
   getUsers: () => void;
 }
@@ -43,7 +45,9 @@ export const useAuthStore = create<AuthStore>((set) => ({
               username: foundUser.username,
               password: foundUser.password,
               id: foundUser.id,
-              role: foundUser.role
+              role: foundUser.role,
+              email: foundUser.email,
+              phoneNumber: foundUser.phoneNumber
             }
           });
           return true;
@@ -60,7 +64,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
       return false;
     }
   },
-  register: async (username: string, password: string, confirmPassword: string) => {
+  register: async (username: string, password: string, confirmPassword: string, email: string, phoneNumber: string) => {
     try {
         if (password !== confirmPassword) {
             console.error('Hasło i potwierdzenie hasła są różne');
@@ -77,13 +81,17 @@ export const useAuthStore = create<AuthStore>((set) => ({
         await axios.post(`${API_URL}/users`, {
             username: username,
             password: password,
-            role: 'client'
+            role: 'client',
+            email: email,
+            phoneNumber: phoneNumber,
         });
         const maxId = users.reduce((max, user) => (user.id > max ? user.id : max), 0);
         set({ 
             user: {
                 username: username,
                 password: password,
+                email: email,
+                phoneNumber: phoneNumber,
                 id: maxId+1,
                 role: 'client'
             }
@@ -101,7 +109,9 @@ export const useAuthStore = create<AuthStore>((set) => ({
         id: 0,
         password: '',
         username: '',
-        role: 'guest'
+        role: 'guest',
+        email: '',
+        phoneNumber: ''
       }
     });
   },

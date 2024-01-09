@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-const reservationSchema = (t: any) =>
+export const reservationSchema = (t: any) =>
   yup.object().shape({
     name: yup.string().required(t('validationErrors.required')),
     email: yup.string().email(t('validationErrors.invalidEmail')).required(t('validationErrors.required')),
@@ -9,4 +9,8 @@ const reservationSchema = (t: any) =>
     time: yup.string().required(t('validationErrors.required')),
 });
 
-export default reservationSchema;
+export const reservationUserSchema = (t: any) =>
+yup.object().shape({
+  date: yup.string().required(t('validationErrors.required')),
+  time: yup.string().required(t('validationErrors.required')),
+});
