@@ -145,11 +145,9 @@ export const useCartStore = create<CartState>((set, get) => ({
   getCartData: async (): Promise<Order[]> => {
     try {
       const res = (await axios.get(`${API_URL}/cart`)) as AxiosResponse<Order[]>;
-      console.log(res.data);
       set(() => ({
         orders: res.data
       }));
-      console.log("state: ", useCartStore.getState().orders);
       return useCartStore.getState().orders as Order[];
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -162,21 +160,17 @@ export const useCartStore = create<CartState>((set, get) => ({
         order.id.toString() === orderId ? { ...order, status: newStatus } : order
       ),
     }));
-   console.log("update orders: ",  useCartStore.getState().orders);
   },
   getCartDataForUser: async (userName: string): Promise<Order[]> => {
     try {
       const res = (await axios.get(`${API_URL}/cart`)) as AxiosResponse<Order[]>;
-      console.log(res.data);
       
       const orders = res.data.filter(
         (i) => i.reservationDetails.name === userName
       );
-      console.log("orders in store: " , orders)
       set(() => ({
         orderForUser: orders
       }));
-      console.log("state orderForUser: ", useCartStore.getState().orderForUser);
       return useCartStore.getState().orderForUser as Order[];
     } catch (error) {
       console.error('Error fetching data:', error);

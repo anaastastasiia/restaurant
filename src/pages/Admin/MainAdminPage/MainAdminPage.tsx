@@ -15,34 +15,24 @@ export const MainAdminPage = () => {
     const fetchData = async () => {
       try {
         const res = await getCartData();
-        console.log('ordersd: ', ordersd);
         useCartStore.setState({ orders: res });
         setCartData(res);
-        console.log('cartData: ', cartData);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
 
     fetchData();
-    console.log('orders: ', orders);
   }, []);
 
   const handleStatusChange = async (orderId: string, status: OrderStatus) => {
-    console.log('handleStatusChange orderId: ', orderId, ',status: ', status);
-
-    console.log('handleSelectChange START:', selectedStatusMap[orderId]);
-
     const updatedMap = { ...selectedStatusMap, [orderId]: status };
     setSelectedStatusMap(updatedMap);
-
-    console.log('handleSelectChange SETTING STATE:', updatedMap);
-    console.log('handleSelectChange END:', updatedMap[orderId]);
     // updateOrderStatus(orderId.toString(), newStatus);
   };
 
   useEffect(() => {
-    console.log('handleSelectChange END:', selectedStatusMap[1]);
+    console.log('');
   }, [selectedStatusMap]);
 
   const handleSave = async () => {

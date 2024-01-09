@@ -19,7 +19,6 @@ export const RegisterForm: React.FC = () => {
     },
     validationSchema: registrationSchema(t),
     onSubmit: async (values) => {
-      console.log('Submit clicked', values);
       try {
         const res = await authStore.register(
           values.username,

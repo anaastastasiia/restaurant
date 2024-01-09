@@ -16,7 +16,6 @@ export const OrdersPage = () => {
     cartStore.getCartDataForUser(user ?? '');
   }, []);
 
-  console.log('cartStore.orderForUser: ', cartStore.orderForUser);
   const filterOrders = () => {
     switch (filter) {
       case 'month':
