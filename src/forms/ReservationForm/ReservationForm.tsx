@@ -1,9 +1,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
-import reservationSchema from '../../schemas/ReservationSchema';
+import {
+  reservationSchema,
+  reservationUserSchema,
+} from '../../schemas/ReservationSchema';
 import { OrderStatus } from '../../model/translations/en/enums';
 import { ClientData } from '../../store/cartStore';
+import { useAuthStore } from '../../store/authStore';
 import styles from './ReservationForm.module.scss';
 
 interface ReservationFormProps {
@@ -14,6 +18,7 @@ export const ReservationForm: React.FC<ReservationFormProps> = ({
   onSubmit,
 }) => {
   const { t } = useTranslation();
+  const authStore = useAuthStore();
 
   const formik = useFormik({
     initialValues: {
@@ -25,7 +30,9 @@ export const ReservationForm: React.FC<ReservationFormProps> = ({
       numberOfPeople: 1,
       status: OrderStatus.Pending,
     },
-    validationSchema: reservationSchema(t),
+    validationSchema: authStore.user
+      ? reservationUserSchema(t)
+      : reservationSchema(t),
     onSubmit: (values) => {
       onSubmit(values);
     },
@@ -34,50 +41,73 @@ export const ReservationForm: React.FC<ReservationFormProps> = ({
   return (
     <form className={styles.reservationForm} onSubmit={formik.handleSubmit}>
       <div className={styles.inputName}>{t('pages.cart.name')}:</div>
-      <input
-        type="text"
-        name="name"
-        value={formik.values.name}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        className={
-          formik.touched.name && formik.errors.name ? styles.errorInput : ''
-        }
-      />
-      {formik.touched.name && formik.errors.name && (
-        <div className={styles.errorText}>{t(formik.errors.name)}</div>
+      {authStore.user && authStore.user.username ? (
+        <div className={styles.userData}>{authStore.user.username}</div>
+      ) : (
+        <>
+          <input
+            type="text"
+            name="name"
+            value={formik.values.name}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            className={
+              formik.touched.name && formik.errors.name ? styles.errorInput : ''
+            }
+          />
+          {formik.touched.name && formik.errors.name && (
+            <div className={styles.errorText}>{t(formik.errors.name)}</div>
+          )}
+        </>
       )}
 
       <div className={styles.inputName}>{t('pages.cart.email')}:</div>
-      <input
-        type="email"
-        name="email"
-        value={formik.values.email}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        className={
-          formik.touched.email && formik.errors.email ? styles.errorInput : ''
-        }
-      />
-      {formik.touched.email && formik.errors.email && (
-        <div className={styles.errorText}>{t(formik.errors.email)}</div>
+
+      {authStore.user && authStore.user.email ? (
+        <div className={styles.userData}>{authStore.user.email}</div>
+      ) : (
+        <>
+          <input
+            type="email"
+            name="email"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            className={
+              formik.touched.email && formik.errors.email
+                ? styles.errorInput
+                : ''
+            }
+          />
+          {formik.touched.email && formik.errors.email && (
+            <div className={styles.errorText}>{t(formik.errors.email)}</div>
+          )}
+        </>
       )}
 
       <div className={styles.inputName}>{t('pages.cart.phoneNumber')}:</div>
-      <input
-        type="tel"
-        name="phoneNumber"
-        value={formik.values.phoneNumber}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        className={
-          formik.touched.phoneNumber && formik.errors.phoneNumber
-            ? styles.errorInput
-            : ''
-        }
-      />
-      {formik.touched.phoneNumber && formik.errors.phoneNumber && (
-        <div className={styles.errorText}>{t(formik.errors.phoneNumber)}</div>
+      {authStore.user && authStore.user.phoneNumber ? (
+        <div className={styles.userData}>{authStore.user.phoneNumber}</div>
+      ) : (
+        <>
+          <input
+            type="tel"
+            name="phoneNumber"
+            value={formik.values.phoneNumber}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            className={
+              formik.touched.phoneNumber && formik.errors.phoneNumber
+                ? styles.errorInput
+                : ''
+            }
+          />
+          {formik.touched.phoneNumber && formik.errors.phoneNumber && (
+            <div className={styles.errorText}>
+              {t(formik.errors.phoneNumber)}
+            </div>
+          )}
+        </>
       )}
 
       <div className={styles.inputName}>{t('pages.cart.date')}:</div>

@@ -14,6 +14,8 @@ export const RegisterForm: React.FC = () => {
   const formik = useFormik({
     initialValues: {
       username: '',
+      email: '',
+      phoneNumber: '',
       password: '',
       confirmPassword: '',
     },
@@ -23,7 +25,9 @@ export const RegisterForm: React.FC = () => {
         const res = await authStore.register(
           values.username,
           values.password,
-          values.confirmPassword
+          values.confirmPassword,
+          values.email,
+          values.phoneNumber
         );
         if (res) {
           navigate('/');
@@ -52,6 +56,36 @@ export const RegisterForm: React.FC = () => {
         />
         {formik.touched.username && formik.errors.username && (
           <div className={styles.errorText}>{formik.errors.username}</div>
+        )}
+        <input
+          type="email"
+          name="email"
+          placeholder={t('pages.login.email')}
+          value={formik.values.email}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          className={
+            formik.touched.email && formik.errors.email ? styles.errorInput : ''
+          }
+        />
+        {formik.touched.email && formik.errors.email && (
+          <div className={styles.errorText}>{t(formik.errors.email)}</div>
+        )}
+        <input
+          type="tel"
+          name="phoneNumber"
+          placeholder={t('pages.login.phoneNumber')}
+          value={formik.values.phoneNumber}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          className={
+            formik.touched.phoneNumber && formik.errors.phoneNumber
+              ? styles.errorInput
+              : ''
+          }
+        />
+        {formik.touched.phoneNumber && formik.errors.phoneNumber && (
+          <div className={styles.errorText}>{t(formik.errors.phoneNumber)}</div>
         )}
         <input
           type="password"
