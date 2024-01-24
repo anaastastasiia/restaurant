@@ -65,7 +65,11 @@ export const CartsItem = (product: CartItem) => {
     <div className={styles.wrapper}>
       <div className={styles.productItemWrapper}>
         <div>
-          <img src={imgForItem ?? ''} width={'250px'} height={'250px'} />
+          <img
+            src={imgForItem?.toString() ?? ''}
+            width={'250px'}
+            height={'250px'}
+          />
         </div>
         <div className={styles.cartItemDetails}>
           <p className={styles.productsName}>

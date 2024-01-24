@@ -35,7 +35,6 @@ export const useAuthStore = create<AuthStore>((set) => ({
     }
   },
   login: async (username: string, password: string) => {
-    console.log('username: ', username + ', pas: ', password);
     try {
       const response = await axios.post(`http://localhost:3001/api/login`, { username, password }, {
         headers: {

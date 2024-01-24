@@ -5,11 +5,11 @@ import axios, { AxiosResponse } from 'axios';
 import { OrderStatus } from '../model/translations/en/enums';
 
 export interface CartItem {
-  id: string;
+  id: number;
   namePL: string;
   nameEN: string;
   price: string;
-  oldPrice?: string;
+  hotprice?: string;
   count: number;
   startPrice?: string;
 }
@@ -39,8 +39,8 @@ interface CartState {
   addToCart: (item: Item) => void;
   clearCart: () => void;
   placeOrder: () => Promise<void>;
-  updateItemCount: (itemId: string, newCount: number, newPrice: string) => void;
-  removeFromCart: (itemId: string) => void;
+  updateItemCount: (itemId: number, newCount: number, newPrice: string) => void;
+  removeFromCart: (itemId: number) => void;
   setRezervationDetails: (details: ClientData) => void;
   setCartData: (orders: Order[]) => void;
   getCartData: () => Promise<Order[]>;
@@ -121,7 +121,7 @@ export const useCartStore = create<CartState>((set, get) => ({
       console.error('Wystąpił błąd podczas składania zamówienia:', error);
     }
   },
-  updateItemCount: (itemId: string, newCount: number, newPrice: string) => {
+  updateItemCount: (itemId: number, newCount: number, newPrice: string) => {
     set((state) => ({
       cartItems: state.cartItems.map((item) =>
         item.id === itemId
@@ -135,7 +135,7 @@ export const useCartStore = create<CartState>((set, get) => ({
     }));
   },
   
-  removeFromCart: (itemId: string) => {
+  removeFromCart: (itemId: number) => {
     set((state) => ({
       cartItems: state.cartItems.filter((item) => item.id !== itemId),
     }));

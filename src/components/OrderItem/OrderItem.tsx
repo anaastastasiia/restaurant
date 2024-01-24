@@ -7,11 +7,13 @@ export const OrderItem = (order: Order) => {
   const { t } = useTranslation();
   const findImgForItem = (item: string[]): string[] => {
     return item.map((item) => {
-      const imgMatch = images.find((img) => img.id === item);
+      const imgMatch = images.find((img) => img.id.toString() === item);
       return imgMatch?.img || '';
     });
   };
-  const imgForItem = findImgForItem(order.cartItems.map((item) => item.id));
+  const imgForItem = findImgForItem(
+    order.cartItems.map((item) => item.id.toString())
+  );
 
   return (
     <div className={styles.wrapper}>

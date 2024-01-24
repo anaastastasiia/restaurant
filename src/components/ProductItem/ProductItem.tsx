@@ -22,15 +22,19 @@ export const ProductItem = (product: Item) => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.productItemWrapper}>
-        <img src={imgForItem ?? ''} width={'250px'} height={'250px'} />
+        <img
+          src={imgForItem?.toString() ?? ''}
+          width={'250px'}
+          height={'250px'}
+        />
         <p className={styles.productsName}>
           {i18n.language === 'pl' ? product.namePL : product.nameEN}
         </p>
-        {product.oldPrice ? (
+        {product.hotprice ? (
           <div className={styles.pricesWrapper}>
-            <div>{product.price} PLN</div>
+            <div>{product.hotprice} PLN</div>
             <div style={{ textDecoration: 'line-through', padding: '10px' }}>
-              {product.oldPrice} PLN
+              {product.price} PLN
             </div>
           </div>
         ) : (

@@ -80,7 +80,7 @@ export const CartPage = () => {
                       nameEN={i.nameEN}
                       price={i.price}
                       id={i.id}
-                      oldPrice={i.oldPrice}
+                      hotprice={i.hotprice}
                       count={i.count ? i.count : 1}
                     />
                   );
@@ -128,7 +128,7 @@ export const CartPage = () => {
                         nameEN={i.nameEN}
                         price={i.price}
                         id={i.id}
-                        oldPrice={i.oldPrice}
+                        hotprice={i.hotprice}
                       />
                     );
                   })}

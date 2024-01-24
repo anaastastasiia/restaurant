@@ -59,6 +59,15 @@ export const getUserByUsername = async (username) => {
   }
 };
 
+const getMenu = async () => {
+  try {
+    const [rows] = await connection.query('SELECT * FROM menu');
+    return rows;
+  } catch (error) {
+    console.error('Błąd zapytania do bazy danych:', error);
+    throw error;
+  }
+};
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'http://localhost:5173'); 
@@ -67,6 +76,7 @@ app.use((req, res, next) => {
   next();
 });
 
+//USERS
 app.get('/api/users', async (req, res) => {
   try {
     const users = await getUsers();
@@ -125,6 +135,28 @@ app.post('/api/register', async (req, res) => {
   } catch (error) {
     console.error('Błąd podczas rejestracji:', error.message);
     return res.status(500).json({ error: 'Błąd podczas rejestracji' });
+  }
+});
+
+//ITEMS
+app.get('/api/menu', async (req, res) => {
+  try {
+    const users = await getMenu();
+    res.json(users);
+  } catch (error) {
+    console.error('Błąd podczas pobierania danych dla menu:', error);
+    res.status(500).send('Błąd pobierania menu');
+  }
+});
+
+app.get('/api/hotprice', async (req, res) => {
+  try {
+    const query = `SELECT * FROM menu WHERE hotprice IS NOT NULL;`;
+    const [results] = await connection.query(query);
+    res.json(results);
+  } catch (error) {
+    console.error('Błąd podczas pobierania danych z hotprice:', error);
+    res.status(500).json({ error: 'Błąd podczas pobierania danych z hotprice' });
   }
 });
 
