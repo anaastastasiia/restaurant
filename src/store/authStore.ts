@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { create } from 'zustand';
-import { API_URL_DB } from '../model/types';
 
 export interface User {
   id: number;
