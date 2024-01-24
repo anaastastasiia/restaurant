@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { create } from 'zustand';
-import { API_URL } from '../model/types';
+import { API_URL_DB } from '../model/types';
 
 export interface User {
   id: number;
@@ -25,7 +25,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
   users: [],
   getUsers: async () => {
     try {
-      const response = await axios.get(`${API_URL}/users`);
+      const response = await axios.get(`http://localhost:3001/api/users`);
       set(() => ({
         users: response.data
       }));
@@ -36,27 +36,18 @@ export const useAuthStore = create<AuthStore>((set) => ({
     }
   },
   login: async (username: string, password: string) => {
+    console.log('username: ', username + ', pas: ', password);
     try {
-      const foundUser = useAuthStore.getState().users.find(user => user.username === username);
-      if (foundUser && foundUser.username === username) {
-        if (foundUser.password === password) {
-          set({ 
-            user: {
-              username: foundUser.username,
-              password: foundUser.password,
-              id: foundUser.id,
-              role: foundUser.role,
-              email: foundUser.email,
-              phoneNumber: foundUser.phoneNumber
-            }
-          });
-          return true;
-        } else {
-          console.error('Błędne hasło');
-          return false;
-        }
+      const response = await axios.post(`http://localhost:3001/api/login`, { username, password }, {
+        headers: {
+          'Content-Type': 'application/json',
+        }});
+  
+      if (response.status === 200) {
+        set({ user: response.data.user });
+        return true;
       } else {
-        console.info('Użytkownik o podanej nazwie nie został znaleziony.');
+        console.error('Błędne hasło lub użytkownik nie istnieje.');
         return false;
       }
     } catch (error: any) {
@@ -66,41 +57,46 @@ export const useAuthStore = create<AuthStore>((set) => ({
   },
   register: async (username: string, password: string, confirmPassword: string, email: string, phoneNumber: string) => {
     try {
-        if (password !== confirmPassword) {
-            console.error('Hasło i potwierdzenie hasła są różne');
-            return false;
-        }
+      if (password !== confirmPassword) {
+        console.error('Hasło i potwierdzenie hasła są różne');
+        return false;
+      }
+      const response = await axios.post(`http://localhost:3001/api/register`, {
+          username,
+          password,
+          confirmPassword,
+          email,
+          phoneNumber,
+      });
 
-        const users = useAuthStore.getState().users;
-        const userExistsResponse = users.find(i => i.username === username)
-        if (userExistsResponse) {
-          console.error('Użytkownik o podanej nazwie już istnieje');
+      if (response.status === 201) {
+          const { success, userId } = response.data;
+
+          if (success) {
+              const newUser: User = {
+                  username,
+                  password,
+                  email,
+                  phoneNumber,
+                  id: userId,
+                  role: 'client',
+              };
+
+              set({ user: newUser });
+
+              return true;
+          } else {
+              console.error('Błąd podczas rejestracji:', response.data.error);
+              return false;
+          }
+      } else {
+          console.error('Błąd podczas rejestracji. Nieprawidłowy status odpowiedzi:', response.status);
           return false;
-        }
-
-        await axios.post(`${API_URL}/users`, {
-            username: username,
-            password: password,
-            role: 'client',
-            email: email,
-            phoneNumber: phoneNumber,
-        });
-        const maxId = users.reduce((max, user) => (user.id > max ? user.id : max), 0);
-        set({ 
-            user: {
-                username: username,
-                password: password,
-                email: email,
-                phoneNumber: phoneNumber,
-                id: maxId+1,
-                role: 'client'
-            }
-        });
-        return true;
-    } catch (error: any) {
+      }
+  } catch (error: any) {
       console.error('Błąd podczas rejestracji:', error.message);
       return false;
-    }
+  }
   },
   logout: () => {
     console.info(" log out");
