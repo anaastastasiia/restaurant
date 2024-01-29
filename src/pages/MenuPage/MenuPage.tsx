@@ -9,11 +9,12 @@ export const MenuPage = () => {
   const { t, i18n } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('nameAsc');
-  const { getMenuItems } = useItemsActions;
-  const { menuItems } = useItemsStore();
+  const { getMenuItems, getHotPriceItems } = useItemsActions;
+  const { menuItems, hotPriceItems } = useItemsStore();
 
   useEffect(() => {
     getMenuItems();
+    getHotPriceItems();
   }, []);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,27 +32,29 @@ export const MenuPage = () => {
         : item.nameEN.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const sortedData = filteredData.sort((a, b) => {
-      if (sortBy === 'nameAsc') {
-        if (i18n.language === 'pl') {
-          return a.namePL.localeCompare(b.namePL);
-        } else {
-          return a.nameEN.localeCompare(b.nameEN);
+    const sortedData = filteredData
+      .filter((i) => i.hotprice == null)
+      .sort((a, b) => {
+        if (sortBy === 'nameAsc') {
+          if (i18n.language === 'pl') {
+            return a.namePL.localeCompare(b.namePL);
+          } else {
+            return a.nameEN.localeCompare(b.nameEN);
+          }
+        } else if (sortBy === 'nameDesc') {
+          if (i18n.language === 'pl') {
+            return b.namePL.localeCompare(a.namePL);
+          } else {
+            return b.nameEN.localeCompare(a.nameEN);
+          }
+        } else if (sortBy === 'priceAsc') {
+          return Number(a.price) - Number(b.price);
+        } else if (sortBy === 'priceDesc') {
+          return Number(b.price) - Number(a.price);
         }
-      } else if (sortBy === 'nameDesc') {
-        if (i18n.language === 'pl') {
-          return b.namePL.localeCompare(a.namePL);
-        } else {
-          return b.nameEN.localeCompare(a.nameEN);
-        }
-      } else if (sortBy === 'priceAsc') {
-        return Number(a.price) - Number(b.price);
-      } else if (sortBy === 'priceDesc') {
-        return Number(b.price) - Number(a.price);
-      }
 
-      return 0;
-    });
+        return 0;
+      });
 
     return (
       <div className={styles.contentWrapper}>
@@ -83,6 +86,7 @@ export const MenuPage = () => {
                   nameEN={i.nameEN}
                   price={i.price}
                   id={i.id}
+                  hotprice={i.hotprice}
                 />
               );
             })
@@ -101,6 +105,24 @@ export const MenuPage = () => {
         </div>
       </div>
       <div style={{ width: '100vw' }}>{renderSearchResults()}</div>
+      <div className={styles.lowPricesWrapper}>
+        <div className={styles.hotPriceTitle}>{t('pages.cart.offers')}</div>
+        <div className={styles.hotPriceContentWrapper}>
+          <div className={styles.hotPriceContent}>
+            {hotPriceItems.map((i) => {
+              return (
+                <ProductItem
+                  namePL={i.namePL}
+                  nameEN={i.nameEN}
+                  price={i.price}
+                  id={i.id}
+                  hotprice={i.hotprice}
+                />
+              );
+            })}
+          </div>
+        </div>
+      </div>
     </>
   );
 };

@@ -1,23 +1,26 @@
 import { create } from 'zustand';
 import { Item } from './itemsStore';
-import { API_URL } from '../model/types';
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { OrderStatus } from '../model/translations/en/enums';
 
-export interface CartItem {
-  id: number;
+export interface CartItemForm {
+  idMenu: number;
   namePL: string;
   nameEN: string;
-  price: string;
-  hotprice?: string;
+  price: number;
+  hotprice?: number;
   count: number;
-  startPrice?: string;
+}
+
+export interface CartItem {
+  idMenu: number;
+  count: number;
 }
 
 export interface ClientData {
   name: string;
   email: string;
-  phoneNumber: string;
+  phoneNumber: number;
   date: string;
   time: string;
   numberOfPeople: number;
@@ -32,6 +35,7 @@ export interface Order {
 
 interface CartState {
   cartItems: CartItem[];
+  cartItemsForm: CartItemForm[];
   reservationDetails: ClientData;
   id: number | null;
   orders: Order[];
@@ -50,12 +54,13 @@ interface CartState {
 
 export const useCartStore = create<CartState>((set, get) => ({
   cartItems: [],
+  cartItemsForm: [],
   id: null,
   orders: [],
   reservationDetails: {
     name: '',
     email: '',
-    phoneNumber: '',
+    phoneNumber: 0,
     date: '',
     time: '',
     numberOfPeople: 1,
@@ -63,26 +68,43 @@ export const useCartStore = create<CartState>((set, get) => ({
   },
   orderForUser: [],
   addToCart: (item: Item) => {
-    const existingItem = get().cartItems.find((cartItem) => cartItem.id === item.id);
-  
+    console.log(" item id : ", item.id);
+    const existingItem = get().cartItems.find((cartItem) => cartItem.idMenu === item.id);
+    console.log(" existingItem : ", existingItem);
     if (existingItem) {
-    set((state) => ({
-        cartItems: state.cartItems.map((cartItem) =>
-          cartItem.id === item.id
-            ? {
-                ...cartItem,
-                count: cartItem.count + 1,
-                startPrice: cartItem.price,
-                price: (parseFloat(cartItem.price) * (cartItem.count + 1)).toFixed(2),
-              }
-            : cartItem
-        ),
+      set((state) => ({
+          cartItems: state.cartItems.map((cartItem) =>
+            cartItem.idMenu === item.id
+              ? {
+                  ...cartItem,
+                  count: cartItem.count + 1,
+                }
+              : cartItem
+          ),
+          cartItemsForm: state.cartItemsForm.map(formItem => 
+            formItem.idMenu === item.id ? {
+              ...formItem,
+              count: formItem.count + 1,
+              price: (formItem.price * (formItem.count + 1)),
+            } : formItem)
       }));
     } else {
       set((state) => ({
-        cartItems: [...state.cartItems, { ...item, count: 1, price: item.price, startPrice: item.price, }],
+        cartItems: [...state.cartItems, { idMenu: item.id, count: 1, }],
+        cartItemsForm: [...state.cartItemsForm, 
+          {
+            idMenu: item.id,
+            count: 1,
+            nameEN: item.nameEN, 
+            namePL: item.namePL,
+            price: item.price,
+            hotprice: item.hotprice
+          }
+        ]
       }));
     }
+    console.log("dodane cartItems: ", useCartStore.getState().cartItems);
+    console.log("dodane cartItemsForm: ", useCartStore.getState().cartItemsForm);
   },
   setRezervationDetails: (details: ClientData) => {  
     set(() => ({
@@ -92,59 +114,62 @@ export const useCartStore = create<CartState>((set, get) => ({
         phoneNumber: details.phoneNumber,
         date: details.date,
         time: details.time,
-        numberOfPeople: Number(details.numberOfPeople),
+        numberOfPeople: details.numberOfPeople,
         status: OrderStatus.Pending
       }
     }));
   },
-  clearCart: () => set({ cartItems: [] }),
+  clearCart: () => set({ cartItems: [], cartItemsForm: [] }),
   placeOrder: async () => {
     try {
-      const response = await fetch(`${API_URL}/cart`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ 
-          cartItems: useCartStore.getState().cartItems,
-          reservationDetails: useCartStore.getState().reservationDetails,
-          id: useCartStore.getState().id
-         } as Order),
-      });
+      const cartItems = useCartStore.getState().cartItemsForm;
+      const reservationDetails = useCartStore.getState().reservationDetails;
+      const response = await axios.post('http://localhost:3001/api/createOrder', {
+        reservationDetails, cartItems
+      }, { headers: {
+          'Content-Type': 'application/json'
+          }
+        }
+      );
 
-      if (response.ok) {
+      if (response.status === 200 || response.status === 201) {
         useCartStore.getState().clearCart();
       } else {
-        console.error('Wystąpił błąd podczas składania zamówienia');
+        console.error('Wystąpił błąd podczas składania zamówienia!');
       }
-    } catch (error) {
-      console.error('Wystąpił błąd podczas składania zamówienia:', error);
+    } catch (error: any) {
+      console.error('Wystąpił błąd podczas składania zamówienia, error:', error, ", details: ", error.message);
     }
   },
   updateItemCount: (itemId: number, newCount: number, newPrice: string) => {
+    console.log("itemId: ", itemId + ", newCount: " , newCount + ", newPrice: ", newPrice)
+    console.log(useCartStore.getState().cartItemsForm.map(item => item.idMenu));
     set((state) => ({
-      cartItems: state.cartItems.map((item) =>
-        item.id === itemId
-          ? {
-              ...item,
-              count: newCount,
-              price: newPrice,
-            }
-          : item
+      cartItemsForm: state.cartItemsForm.map(item =>
+        item.idMenu === itemId ? {
+          count: newCount,
+          price: newPrice,
+          idMenu: itemId,
+          nameEN: item.nameEN,
+          namePL: item.namePL,
+        } : item
       ),
-    }));
+    }) as Partial<CartState>);
+  
+    console.log("CART ITEMS cartItemsForm: ", useCartStore.getState().cartItemsForm)
   },
   
   removeFromCart: (itemId: number) => {
     set((state) => ({
-      cartItems: state.cartItems.filter((item) => item.id !== itemId),
+      cartItems: state.cartItems.filter((item) => item.idMenu !== itemId),
+      cartItemsForm: state.cartItemsForm.filter((item) => item.idMenu !== itemId),
     }));
   },
   setOrderData: () => {},
   setCartData: (orders) => set({ orders }),
   getCartData: async (): Promise<Order[]> => {
     try {
-      const res = (await axios.get(`${API_URL}/cart`)) as AxiosResponse<Order[]>;
+      const res = await axios.get('http://localhost:3001/api/orders');
       set(() => ({
         orders: res.data
       }));
@@ -163,13 +188,13 @@ export const useCartStore = create<CartState>((set, get) => ({
   },
   getCartDataForUser: async (userName: string): Promise<Order[]> => {
     try {
-      const res = (await axios.get(`${API_URL}/cart`)) as AxiosResponse<Order[]>;
-      
-      const orders = res.data.filter(
-        (i) => i.reservationDetails.name === userName
-      );
+      const res = await axios.post(`http://localhost:3001/api/ordersForUser`, { userName }, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
       set(() => ({
-        orderForUser: orders
+        orderForUser: res.data
       }));
       return useCartStore.getState().orderForUser as Order[];
     } catch (error) {

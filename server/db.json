@@ -429,6 +429,29 @@
         "status": "Pending"
       },
       "id": 14
+    },
+    {
+      "cartItems": [
+        {
+          "namePL": "Stek wieprzowy",
+          "nameEN": "Pork steak",
+          "price": "19.99",
+          "id": "13",
+          "oldPrice": "28.99",
+          "count": 1,
+          "startPrice": "19.99"
+        }
+      ],
+      "reservationDetails": {
+        "name": "Anastasiia",
+        "email": "admin@gmail.com",
+        "phoneNumber": "000555666",
+        "date": "2024-02-02",
+        "time": "17:19",
+        "numberOfPeople": 2,
+        "status": "Pending"
+      },
+      "id": 15
     }
   ],
   "users": [

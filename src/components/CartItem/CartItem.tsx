@@ -1,35 +1,39 @@
 import { useTranslation } from 'react-i18next';
-import { CartItem } from '../../store/cartStore';
+import { CartItemForm } from '../../store/cartStore';
 import { useEffect, useState } from 'react';
 import { useCartStore } from '../../store/cartStore';
+import { useItemsStore } from '../../store/itemsStore';
 import { images } from '../../model/imagesList';
 import styles from './CartItem.module.scss';
 
 const MAX_QUANTITY = 8;
 const DEFAULT_QUANTITY = 1;
 
-export const CartsItem = (product: CartItem) => {
+export const CartsItem = (product: CartItemForm) => {
   const { t, i18n } = useTranslation();
-  const [price, setPrice] = useState('');
+  const [price, setPrice] = useState(0);
   const [count, setCount] = useState(1);
   const updateItemCount = useCartStore((state) => state.updateItemCount);
   const removeFromCart = useCartStore((state) => state.removeFromCart);
+  const { menuItems, hotPriceItems } = useItemsStore();
 
+  let hotPrice: number | undefined = 0;
+  let menuPrice: number | undefined = 0;
   useEffect(() => {
-    setPrice(product.price);
+    setPrice(product.hotprice ? product.hotprice : product.price);
     setCount(product.count);
   }, []);
 
-  const firstPrice = useCartStore((state) =>
-    state.cartItems.map((i) => {
-      if (i.id === product.id) {
-        return i.startPrice;
-      }
-    })
-  )[0];
+  hotPrice = useItemsStore(() =>
+    hotPriceItems.filter((i) => i.id === product.idMenu)
+  )[0]?.hotprice;
 
-  const findImgForItem = (item: CartItem): string | undefined => {
-    const imgMatch = images.find((img) => img.id === item.id);
+  menuPrice = useItemsStore(() =>
+    menuItems.filter((i) => i.id === product.idMenu)
+  )[0]?.price;
+
+  const findImgForItem = (item: CartItemForm): string | undefined => {
+    const imgMatch = images.find((img) => img.id === item.idMenu);
     return imgMatch?.img;
   };
 
@@ -39,26 +43,29 @@ export const CartsItem = (product: CartItem) => {
     if (count > 0) {
       const newQuantity = count - 1;
       setCount(newQuantity);
-      const price = calculatePrice(firstPrice, newQuantity);
-      setPrice(price.toFixed(2));
-      updateItemCount(product.id, newQuantity, price.toFixed(2));
+      const price = calculatePrice(
+        hotPrice ? hotPrice : menuPrice,
+        newQuantity
+      );
+      setPrice(price);
+      updateItemCount(product.idMenu, newQuantity, price.toFixed(2));
     }
   };
 
   const handleAddQuantity = () => {
     const newQuantity = Math.min(count + 1, MAX_QUANTITY);
     setCount(newQuantity);
-    const price = calculatePrice(firstPrice, newQuantity);
-    setPrice(price.toFixed(2));
-    updateItemCount(product.id, newQuantity, price.toFixed(2));
+    const price = calculatePrice(hotPrice ? hotPrice : menuPrice, newQuantity);
+    setPrice(price);
+    updateItemCount(product.idMenu, newQuantity, price.toFixed(2));
   };
 
-  const deleteItem = (item: CartItem) => {
-    removeFromCart(item.id);
+  const deleteItem = (item: CartItemForm) => {
+    removeFromCart(item.idMenu);
   };
 
-  const calculatePrice = (firstPrice: string | undefined, quantity: number) => {
-    return firstPrice ? parseFloat(firstPrice) * quantity : 0;
+  const calculatePrice = (firstPrice: number | undefined, quantity: number) => {
+    return firstPrice ? firstPrice * quantity : 0;
   };
 
   return (

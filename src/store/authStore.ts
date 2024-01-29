@@ -7,14 +7,14 @@ export interface User {
   password: string;
   role: 'admin' | 'client' | 'guest';
   email: string;
-  phoneNumber: string;
+  phoneNumber: number;
 }
 
 interface AuthStore {
   user: User | null;
   users: User[];
   login: (username: string, password: string) => Promise<boolean>;
-  register: (username: string, password: string, confirmPassword: string, email: string, phoneNumber: string) => Promise<boolean>;
+  register: (username: string, password: string, confirmPassword: string, email: string, phoneNumber: number) => Promise<boolean>;
   logout: () => void;
   getUsers: () => void;
 }
@@ -53,7 +53,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
       return false;
     }
   },
-  register: async (username: string, password: string, confirmPassword: string, email: string, phoneNumber: string) => {
+  register: async (username: string, password: string, confirmPassword: string, email: string, phoneNumber: number) => {
     try {
       if (password !== confirmPassword) {
         console.error('Hasło i potwierdzenie hasła są różne');
@@ -105,7 +105,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
         username: '',
         role: 'guest',
         email: '',
-        phoneNumber: ''
+        phoneNumber: 0
       }
     });
   },

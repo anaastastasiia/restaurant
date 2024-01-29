@@ -7,8 +7,8 @@ export interface Item {
   id: number;
   namePL: string;
   nameEN: string;
-  price: string;
-  hotprice?: string;
+  price: number;
+  hotprice?: number;
 }
 
 interface ItemsState {

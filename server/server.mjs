@@ -4,6 +4,7 @@ import cors from 'cors';
 
 const app = express();
 const port = 3001;
+const router = express.Router();
 app.use(cors());
 app.options('*', cors());
 app.use(express.json());
@@ -51,7 +52,7 @@ const getUsers = async () => {
 
 export const getUserByUsername = async (username) => {
   try {
-    const [rows, fields] = await connection.query('SELECT * FROM users WHERE username = ?', [username]);
+    const [rows] = await connection.query('SELECT * FROM users WHERE username = ?', [username]);
     return rows.length ? rows[0] : null;
   } catch (error) {
     console.error('Błąd zapytania do bazy danych:', error);
@@ -62,6 +63,26 @@ export const getUserByUsername = async (username) => {
 const getMenu = async () => {
   try {
     const [rows] = await connection.query('SELECT * FROM menu');
+    return rows;
+  } catch (error) {
+    console.error('Błąd zapytania do bazy danych:', error);
+    throw error;
+  }
+};
+
+const getOrders = async () => {
+  try {
+    const [rows] = await connection.query('SELECT * FROM orders');
+    return rows;
+  } catch (error) {
+    console.error('Błąd zapytania do bazy danych:', error);
+    throw error;
+  }
+};
+
+const getOrdersForUser = async (customerName) => {
+  try {
+    const [rows] = await connection.query('SELECT * FROM orders WHERE name = ?', [customerName]);
     return rows;
   } catch (error) {
     console.error('Błąd zapytania do bazy danych:', error);
@@ -157,6 +178,76 @@ app.get('/api/hotprice', async (req, res) => {
   } catch (error) {
     console.error('Błąd podczas pobierania danych z hotprice:', error);
     res.status(500).json({ error: 'Błąd podczas pobierania danych z hotprice' });
+  }
+});
+
+app.get('/api/hotprice', async (req, res) => {
+  try {
+    const query = `SELECT * FROM menu WHERE hotprice IS NOT NULL;`;
+    const [results] = await connection.query(query);
+    res.json(results);
+  } catch (error) {
+    console.error('Błąd podczas pobierania danych z hotprice:', error);
+    res.status(500).json({ error: 'Błąd podczas pobierania danych z hotprice' });
+  }
+});
+
+
+//ORDER
+app.post('/api/createOrder', async (req, res) => {
+  try {
+    const { reservationDetails, cartItems } = req.body;
+    const { name, email, phoneNumber, date, time, numberOfPeople, status } = reservationDetails;
+    const [cartResult] = await connection.query('INSERT INTO cart (totalPrice) VALUES (0)');
+    const cartId = cartResult.insertId;
+
+    let totalPrice = 0;
+    for (const cartItem of cartItems) {
+      const { idMenu, count, price } = cartItem;
+
+      const [cartItemResult] = await connection.query(
+        'INSERT INTO cartItems (idItemMenu, count) VALUES (?, ?)',
+        [idMenu, count]
+      );
+
+      const cartItemId = cartItemResult.insertId;
+      await connection.query('INSERT INTO cart_cartItems (idCart, idCartItem) VALUES (?, ?)', [cartId, cartItemId]);
+
+      totalPrice += parseFloat(String(price)).toFixed(2);
+    }
+
+    await connection.query('UPDATE cart SET totalPrice = ? WHERE id = ?', [totalPrice, cartId]);
+    const [orderResult] = await connection.query(
+      'INSERT INTO orders (idCart, name, email, phoneNumber, date, time, numberOfPeople, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+      [cartId, name, email, phoneNumber, date, time, numberOfPeople, status]
+    );
+
+    const orderId = orderResult.insertId;
+    return res.status(201).json({ success: true, orderId });
+  } catch (error) {
+    console.error('Błąd podczas realizacji zamówienia:', error);
+    return res.status(500).json({ error: 'Błąd podczas realizacji zamówienia', details: error.message });
+  }
+});
+
+app.get('/api/orders', async (req, res) => {
+  try {
+    const users = await getOrders();
+    res.json(users);
+  } catch (error) {
+    console.error('Błąd podczas pobierania danych zamówień:', error);
+    res.status(500).send('Błąd pobierania zamówień');
+  }
+});
+
+app.get('/api/ordersForUser', async (req, res) => {
+  const { name } = req.body;
+  try {
+    const users = await getOrdersForUser(name);
+    res.json(users);
+  } catch (error) {
+    console.error('Błąd podczas pobierania danych zamówień dla klienta: ',name + ", error: ", error);
+    res.status(500).send('Błąd pobierania zamówień dla klienta: ', name);
   }
 });
 
