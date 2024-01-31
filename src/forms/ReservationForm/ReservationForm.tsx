@@ -24,7 +24,7 @@ export const ReservationForm: React.FC<ReservationFormProps> = ({
     initialValues: {
       name: '',
       email: '',
-      phoneNumber: '',
+      phoneNumber: 0,
       date: '',
       time: '',
       numberOfPeople: 1,

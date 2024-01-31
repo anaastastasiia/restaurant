@@ -14,11 +14,10 @@ import './MainPage.modue.scss';
 
 export const MainPage = () => {
   const { t } = useTranslation();
-  const { getItems, getHotPriceItems } = useItemsActions;
+  const { getHotPriceItems } = useItemsActions;
   const { hotPriceItems } = useItemsStore();
 
   useEffect(() => {
-    getItems();
     getHotPriceItems();
   }, []);
 
@@ -74,7 +73,7 @@ export const MainPage = () => {
                     nameEN={i.nameEN}
                     price={i.price}
                     id={i.id}
-                    oldPrice={i.oldPrice}
+                    hotprice={i.hotprice}
                   />
                 );
               })}

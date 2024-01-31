@@ -1,23 +1,26 @@
 import { create } from 'zustand';
 import { Item } from './itemsStore';
-import { API_URL } from '../model/types';
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { OrderStatus } from '../model/translations/en/enums';
 
-export interface CartItem {
-  id: string;
+export interface CartItemForm {
+  idMenu: number;
   namePL: string;
   nameEN: string;
-  price: string;
-  oldPrice?: string;
+  price: number;
+  hotprice?: number;
   count: number;
-  startPrice?: string;
+}
+
+export interface CartItem {
+  idMenu: number;
+  count: number;
 }
 
 export interface ClientData {
   name: string;
   email: string;
-  phoneNumber: string;
+  phoneNumber: number;
   date: string;
   time: string;
   numberOfPeople: number;
@@ -25,13 +28,20 @@ export interface ClientData {
 }
 
 export interface Order {
-  cartItems: CartItem[];
-  reservationDetails: ClientData;
+  date: string;
+  email: string;
   id: number;
+  idCart: number;
+  name: string;
+  numberOfPeople: number;
+  phoneNumber: number;
+  status: string;
+  time: string;
 }
 
 interface CartState {
   cartItems: CartItem[];
+  cartItemsForm: CartItemForm[];
   reservationDetails: ClientData;
   id: number | null;
   orders: Order[];
@@ -39,48 +49,71 @@ interface CartState {
   addToCart: (item: Item) => void;
   clearCart: () => void;
   placeOrder: () => Promise<void>;
-  updateItemCount: (itemId: string, newCount: number, newPrice: string) => void;
-  removeFromCart: (itemId: string) => void;
+  updateItemCount: (itemId: number, newCount: number, newPrice: string) => void;
+  removeFromCart: (itemId: number) => void;
   setRezervationDetails: (details: ClientData) => void;
   setCartData: (orders: Order[]) => void;
   getCartData: () => Promise<Order[]>;
-  updateOrderStatus: (orderId: string, newStatus: OrderStatus) => void;
-  getCartDataForUser: (userName: string) => Promise<Order[]>;
+
 }
 
 export const useCartStore = create<CartState>((set, get) => ({
   cartItems: [],
+  cartItemsForm: [],
   id: null,
   orders: [],
   reservationDetails: {
     name: '',
     email: '',
-    phoneNumber: '',
+    phoneNumber: 0,
     date: '',
     time: '',
     numberOfPeople: 1,
     status: OrderStatus.Pending
   },
+  orderDetails: {
+    count: 0,
+    id: 0,
+    nameEN: '',
+    namePL: '',
+    price: 0,
+    totalPrice: 0,
+    hotprice: 0
+  },
+  orderDetails1: [],
   orderForUser: [],
   addToCart: (item: Item) => {
-    const existingItem = get().cartItems.find((cartItem) => cartItem.id === item.id);
-  
+    const existingItem = get().cartItems.find((cartItem) => cartItem.idMenu === item.id);
     if (existingItem) {
-    set((state) => ({
-        cartItems: state.cartItems.map((cartItem) =>
-          cartItem.id === item.id
-            ? {
-                ...cartItem,
-                count: cartItem.count + 1,
-                startPrice: cartItem.price,
-                price: (parseFloat(cartItem.price) * (cartItem.count + 1)).toFixed(2),
-              }
-            : cartItem
-        ),
+      set((state) => ({
+          cartItems: state.cartItems.map((cartItem) =>
+            cartItem.idMenu === item.id
+              ? {
+                  ...cartItem,
+                  count: cartItem.count + 1,
+                }
+              : cartItem
+          ),
+          cartItemsForm: state.cartItemsForm.map(formItem => 
+            formItem.idMenu === item.id ? {
+              ...formItem,
+              count: formItem.count + 1,
+              price: (formItem.price * (formItem.count + 1)),
+            } : formItem)
       }));
     } else {
       set((state) => ({
-        cartItems: [...state.cartItems, { ...item, count: 1, price: item.price, startPrice: item.price, }],
+        cartItems: [...state.cartItems, { idMenu: item.id, count: 1, }],
+        cartItemsForm: [...state.cartItemsForm, 
+          {
+            idMenu: item.id,
+            count: 1,
+            nameEN: item.nameEN, 
+            namePL: item.namePL,
+            price: item.price,
+            hotprice: item.hotprice
+          }
+        ]
       }));
     }
   },
@@ -92,86 +125,62 @@ export const useCartStore = create<CartState>((set, get) => ({
         phoneNumber: details.phoneNumber,
         date: details.date,
         time: details.time,
-        numberOfPeople: Number(details.numberOfPeople),
+        numberOfPeople: details.numberOfPeople,
         status: OrderStatus.Pending
       }
     }));
   },
-  clearCart: () => set({ cartItems: [] }),
+  clearCart: () => set({ cartItems: [], cartItemsForm: [] }),
   placeOrder: async () => {
     try {
-      const response = await fetch(`${API_URL}/cart`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ 
-          cartItems: useCartStore.getState().cartItems,
-          reservationDetails: useCartStore.getState().reservationDetails,
-          id: useCartStore.getState().id
-         } as Order),
-      });
+      const cartItems = useCartStore.getState().cartItemsForm;
+      const reservationDetails = useCartStore.getState().reservationDetails;
+      const response = await axios.post('http://localhost:3001/api/createOrder', {
+        reservationDetails, cartItems
+      }, { headers: {
+          'Content-Type': 'application/json'
+          }
+        }
+      );
 
-      if (response.ok) {
+      if (response.status === 200 || response.status === 201) {
         useCartStore.getState().clearCart();
       } else {
-        console.error('Wystąpił błąd podczas składania zamówienia');
+        console.error('Wystąpił błąd podczas składania zamówienia!');
       }
-    } catch (error) {
-      console.error('Wystąpił błąd podczas składania zamówienia:', error);
+    } catch (error: any) {
+      console.error('Wystąpił błąd podczas składania zamówienia, error:', error, ", details: ", error.message);
     }
   },
-  updateItemCount: (itemId: string, newCount: number, newPrice: string) => {
+  updateItemCount: (itemId: number, newCount: number, newPrice: string) => {
     set((state) => ({
-      cartItems: state.cartItems.map((item) =>
-        item.id === itemId
-          ? {
-              ...item,
-              count: newCount,
-              price: newPrice,
-            }
-          : item
+      cartItemsForm: state.cartItemsForm.map(item =>
+        item.idMenu === itemId ? {
+          count: newCount,
+          price: newPrice,
+          idMenu: itemId,
+          nameEN: item.nameEN,
+          namePL: item.namePL,
+        } : item
       ),
-    }));
+    }) as Partial<CartState>);
   },
   
-  removeFromCart: (itemId: string) => {
+  removeFromCart: (itemId: number) => {
     set((state) => ({
-      cartItems: state.cartItems.filter((item) => item.id !== itemId),
+      cartItems: state.cartItems.filter((item) => item.idMenu !== itemId),
+      cartItemsForm: state.cartItemsForm.filter((item) => item.idMenu !== itemId),
     }));
   },
   setOrderData: () => {},
   setCartData: (orders) => set({ orders }),
   getCartData: async (): Promise<Order[]> => {
     try {
-      const res = (await axios.get(`${API_URL}/cart`)) as AxiosResponse<Order[]>;
+      const res = await axios.get('http://localhost:3001/api/orders');
       set(() => ({
         orders: res.data
       }));
       return useCartStore.getState().orders as Order[];
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      return [];
-    }
-  },
-  updateOrderStatus: (orderId: string, newStatus: OrderStatus) => {
-    set((state) => ({
-      orders: state.orders.map((order) =>
-        order.id.toString() === orderId ? { ...order, status: newStatus } : order
-      ),
-    }));
-  },
-  getCartDataForUser: async (userName: string): Promise<Order[]> => {
-    try {
-      const res = (await axios.get(`${API_URL}/cart`)) as AxiosResponse<Order[]>;
-      
-      const orders = res.data.filter(
-        (i) => i.reservationDetails.name === userName
-      );
-      set(() => ({
-        orderForUser: orders
-      }));
-      return useCartStore.getState().orderForUser as Order[];
     } catch (error) {
       console.error('Error fetching data:', error);
       return [];

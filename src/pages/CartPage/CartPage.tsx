@@ -2,26 +2,26 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import CartsItem from '../../components/CartItem';
 import ReservationForm from '../../forms/ReservationForm';
-import { ClientData, useCartStore } from '../../store/cartStore';
+import { CartItemForm, ClientData, useCartStore } from '../../store/cartStore';
 import ProductItem from '../../components/ProductItem';
 import { useItemsActions, useItemsStore } from '../../store/itemsStore';
+import { useAuthStore } from '../../store/authStore';
 import emptyCart from '../../assets/add-to-cart.png';
 import styles from './CartPage.module.scss';
-import { useAuthStore } from '../../store/authStore';
 
 export const CartPage = () => {
   const { t } = useTranslation();
   const [showStep1, setShowStep1] = useState(false);
   const [showStep2, setShowStep2] = useState(false);
-  const cartItems = useCartStore((state) => state.cartItems);
-  const authStore = useAuthStore();
+
+  const { getHotPriceItems } = useItemsActions;
+  const { hotPriceItems, menuItems } = useItemsStore();
+  const { cartItemsForm, cartItems } = useCartStore();
   const createOrder = useCartStore((state) => state.placeOrder);
   const setRezervationDetails = useCartStore(
     (state) => state.setRezervationDetails
   );
-
-  const { getHotPriceItems } = useItemsActions;
-  const { hotPriceItems } = useItemsStore();
+  const authStore = useAuthStore();
 
   useEffect(() => {
     getHotPriceItems();
@@ -59,6 +59,20 @@ export const CartPage = () => {
     createOrder();
   };
 
+  const calculateTotalPrice = (cartItems: CartItemForm[]) => {
+    let totalPrice = 0;
+    cartItems.forEach((item) => {
+      const itemPrice =
+        item.hotprice !== null && item.hotprice !== undefined
+          ? parseFloat(item.hotprice.toString())
+          : parseFloat(item.price.toString());
+      totalPrice += itemPrice;
+    });
+    return totalPrice.toFixed(2);
+  };
+
+  const totalPrice = calculateTotalPrice(cartItemsForm);
+
   return (
     <>
       <div className={styles.wrapper}>
@@ -73,28 +87,44 @@ export const CartPage = () => {
           <>
             {showStep1 && (
               <>
-                {cartItems.map((i) => {
-                  return (
-                    <CartsItem
-                      namePL={i.namePL}
-                      nameEN={i.nameEN}
-                      price={i.price}
-                      id={i.id}
-                      oldPrice={i.oldPrice}
-                      count={i.count ? i.count : 1}
-                    />
+                {cartItemsForm.map((i) => {
+                  const fromHotPrices = hotPriceItems.filter(
+                    (el) => el.id === i.idMenu
                   );
+                  if (fromHotPrices.length > 0) {
+                    return fromHotPrices.map((j) => {
+                      return (
+                        <CartsItem
+                          idMenu={j.id}
+                          count={i.count ? i.count : 1}
+                          hotprice={j.hotprice}
+                          namePL={j.namePL}
+                          nameEN={j.nameEN}
+                          price={j.price}
+                        />
+                      );
+                    });
+                  } else {
+                    const fromMenu = menuItems.filter(
+                      (el) => el.id === i.idMenu
+                    );
+                    return fromMenu.map((j) => {
+                      return (
+                        <CartsItem
+                          idMenu={j.id}
+                          count={i.count ? i.count : 1}
+                          hotprice={j.hotprice}
+                          namePL={j.namePL}
+                          nameEN={j.nameEN}
+                          price={j.price}
+                        />
+                      );
+                    });
+                  }
                 })}
                 <div className={styles.summary}>
                   <div>
-                    {t('pages.cart.total')}:{' '}
-                    <b>
-                      {cartItems
-                        .map((i) => Number(i.price))
-                        .reduce((suma, cena) => suma + cena, 0)
-                        .toFixed(2)}
-                    </b>{' '}
-                    PLN
+                    {t('pages.cart.total')}: <b>{totalPrice}</b> PLN
                   </div>
                   <button onClick={onCLick}>
                     {t('pages.cart.createOrder')}
@@ -128,7 +158,7 @@ export const CartPage = () => {
                         nameEN={i.nameEN}
                         price={i.price}
                         id={i.id}
-                        oldPrice={i.oldPrice}
+                        hotprice={i.hotprice}
                       />
                     );
                   })}

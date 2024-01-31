@@ -105,3 +105,37 @@
     }
   }
 }
+
+
+.lowPricesWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: black;
+  min-width: 100vw;
+
+  .hotPriceTitle {
+    padding-top: 40px;
+    color: #b4b4b4;
+    font-size: 30px;
+  }
+
+  .hotPriceContentWrapper {
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    padding: 20px 100px 100px 100px;
+    color: #b4b4b4;
+    flex-direction: column;
+    align-items: center;
+    
+    .hotPriceContent {
+      background-color: black;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center; 
+      margin: -8px; 
+    }
+  } 
+
+}

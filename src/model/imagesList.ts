@@ -15,59 +15,59 @@ import meat from '../assets/meat.png';
 
 export const images = [
     {
-      id: '1',
+      id: 1,
       img: Rectangle7,
     },
     {
-      id: '2',
+      id: 2,
       img: Rectangle8,
     },
     {
-      id: '3',
+      id: 3,
       img: Rectangle9,
     },
     {
-      id: '4',
+      id: 4,
       img: Rectangle10,
     },
     {
-      id: '5',
+      id: 5,
       img: Rectangle11,
     },
     {
-      id: '6',
+      id: 6,
       img: Rectangle12,
     },
     {
-      id: '7',
+      id: 7,
       img: Rectangle13,
     },
     {
-      id: '8',
+      id: 8,
       img: Rectangle14,
     },
     {
-      id: '9',
+      id: 9,
       img: Rectangle1,
     },
     {
-      id: '10',
+      id: 10,
       img: Rectangle2,
     },
     {
-      id: '11',
+      id: 11,
       img: Rectangle3,
     },
     {
-      id: '12',
+      id: 12,
       img: burger,
     },
     {
-      id: '13',
+      id: 13,
       img: frytki,
     },
     {
-      id: '14',
+      id: 14,
       img: meat,
     },
   ];
