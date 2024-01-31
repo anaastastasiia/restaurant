@@ -1,20 +1,21 @@
 import { useTranslation } from 'react-i18next';
-import { Order, OrderData } from '../../store/ordersStore';
+import { Order, OrderData, useOrdersStore } from '../../store/ordersStore';
 import { images } from '../../model/imagesList';
 import styles from './OrderItem.module.scss';
+import { useEffect, useState } from 'react';
 
 export const OrderItem = ({
   order,
   orderResult,
-  totalPrice,
+  idCart,
 }: {
   order: Order;
   orderResult: OrderData[];
-  totalPrice: number;
+  idCart: number;
 }) => {
   const { t } = useTranslation();
-
-  console.log('RESULT ITEM: ', orderResult);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const { getTotalCartPrice } = useOrdersStore();
 
   const findImgForItem = (item: number[]): string[] => {
     return item.map((item) => {
@@ -29,9 +30,23 @@ export const OrderItem = ({
 
   const imgForItem = findImgForItem(extractedIds);
 
-  // let totalOrderPrice: number;
-  // const firstOrder = Object.values(orderDetails)[0];
-  // totalOrderPrice = firstOrder?.totalPrice || 0;
+  // console.log('PRICE: ', price);
+  // setTotalPrice(price);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const price = await getTotalCartPrice(idCart);
+        console.log('PRICE EFEECT: ', price);
+        setTotalPrice(price);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  console.log('TOTAL PRICE : ', totalPrice);
 
   return (
     <div className={styles.wrapper}>

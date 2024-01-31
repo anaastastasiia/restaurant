@@ -48,7 +48,7 @@ interface OrdersState {
   getOrderDataForUser: (userName: string) => Promise<Order[]>;
   getOrderDetailsForUser: (idCart: number) => Promise<OrderDetails[]>;
   setOrdersResult: (details: OrderResult[]) => void;
-  getTotalCartPrice: (idCart: number) => Promise<number[]>;
+  getTotalCartPrice: (idCart: number) => Promise<number>;
   setTotalPrice: (price: number) => void;
 }
 
@@ -91,16 +91,16 @@ export const useOrdersStore = create<OrdersState>((set, get) => ({
       ordersResult: details,
     }))
   },
-  getTotalCartPrice: async (idCart: number): Promise<number[]> => {
+  getTotalCartPrice: async (idCart: number): Promise<number> => {
     try {
       const res = await axios.get(`http://localhost:3001/api/totalCartPrice?idCart=${idCart}`);
       set(() => ({
         totalPrice: res.data
       }));
-      return Array.isArray(res.data) ? res.data.map((row) => row.totalPrice) : [];
+      return res.data;
     } catch (error) {
       console.error('Error fetching data:', error);
-      return [];
+      return 0;
     }
   },
   setTotalPrice: (price: number) => {

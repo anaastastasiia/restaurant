@@ -90,7 +90,6 @@ const getCartDetailsForUser = async (name) => {
       JOIN MENU M ON CI.idItemMenu = M.id
       WHERE C.id = ?; 
     `, [name]);
-    console.log("ROW: ", rows);
     const groupedData = rows.reduce((acc, row) => {
       if (!acc[row.idCart]) {
         acc[row.idCart] = { idCart: row.idCart, orderData: [] };
@@ -108,7 +107,6 @@ const getCartDetailsForUser = async (name) => {
       return acc;
     }, {});
     const resultArray = Object.values(groupedData);
-    console.log("Result: ", resultArray);
     return resultArray;
   } catch (error) {
     console.error('Błąd zapytania do bazy danych:', error);
@@ -119,7 +117,9 @@ const getCartDetailsForUser = async (name) => {
 const getTotalPriceForCart = async (idCart) => {
   try {
     const [rows] = await connection.query('SELECT totalPrice FROM cart WHERE id = ?', [idCart]);
-    return rows;
+    console.log("rows: ", rows);
+    console.log("row[0]: ", rows[0].totalPrice);
+    return rows[0].totalPrice;
   } catch (error) {
     console.error('Błąd zapytania do bazy danych:', error);
     throw error;
@@ -129,7 +129,6 @@ const getTotalPriceForCart = async (idCart) => {
 const getOrdersForUser = async (customerName) => {
   try {
     const [rows] = await connection.query('SELECT * FROM orders WHERE name = ?', [customerName]);
-    console.log("orders or user: ", rows);
     return rows;
   } catch (error) {
     console.error('Błąd zapytania do bazy danych:', error);

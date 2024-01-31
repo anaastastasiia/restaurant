@@ -11,22 +11,14 @@ export const OrdersPage = () => {
   const orderStore = useOrdersStore();
   const authStore = useAuthStore();
 
-  const {
-    getOrderDetailsForUser,
-    setTotalPrice,
-    setOrdersResult,
-    ordersResult,
-    getTotalCartPrice,
-    totalPrice,
-  } = useOrdersStore();
+  const { getOrderDetailsForUser, setOrdersResult, ordersResult } =
+    useOrdersStore();
 
   useEffect(() => {
     const user = authStore.user?.username;
     const fetchData = async () => {
       try {
-        console.log('WPADA');
         const data = await orderStore.getOrderDataForUser(user ?? '');
-        console.log('orderForUser: ', data);
         if (data.length > 0) {
           const arr = await Promise.all(
             data.map(async (i) => {
@@ -35,17 +27,7 @@ export const OrdersPage = () => {
             })
           );
           setOrdersResult(arr as OrderResult[]);
-          console.log('arr: ', arr);
         }
-
-        // const price = await Promise.all(
-        //   data.map(async (i) => {
-        //     const price = await getTotalCartPrice(i.idCart);
-        //     return price;
-        //   })
-        // );
-        // console.log('PRICE: ', price);
-        // setTotalPrice(price);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -53,33 +35,6 @@ export const OrdersPage = () => {
     console.log('ordersResult: ', ordersResult);
     fetchData();
   }, []);
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     console.log('orderForUser: ', orderForUser);
-  //     try {
-  //       const arr = await Promise.all(
-  //         orderForUser.map(async (i) => {
-  //           const details = await getOrderDetailsForUser(i.idCart);
-  //           return { id: i.idCart, orderData: details };
-  //         })
-  //       );
-  //       console.log('arr: ', arr);
-  //       // await Promise.all(
-  //       //   orderForUser.map(async (i) => {
-  //       //     const price = await getTotalCartPrice(i.idCart);
-  //       //     return price;
-  //       //   })
-  //       // );
-  //       setOrdersResult(arr as OrderResult[]);
-  //       console.log('Result: ', arr);
-  //     } catch (error) {
-  //       console.error('Error fetching data:', error);
-  //     }
-  //   };
-  //   console.log('ordersResult: ', ordersResult);
-  //   fetchData();
-  // }, [orderForUser]);
 
   const filterOrders = () => {
     switch (filter) {
@@ -155,7 +110,7 @@ export const OrdersPage = () => {
                 const result = ordersResult.filter(
                   (i) => i.id === order.idCart
                 );
-                console.log('html reault: ', result);
+
                 return (
                   <OrderItem
                     order={order}
@@ -167,7 +122,7 @@ export const OrdersPage = () => {
                         : []
                     }
                     key={order.idCart}
-                    totalPrice={totalPrice}
+                    idCart={order.idCart}
                   />
                 );
               })
