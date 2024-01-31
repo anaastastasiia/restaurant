@@ -1,20 +1,60 @@
-import styles from './MainAdminPage.module.scss';
-import { Order, useCartStore } from '../../../store/cartStore';
 import { useEffect, useState } from 'react';
 import { OrderStatus } from '../../../model/translations/en/enums';
+import { useOrdersStore, Order, OrderData } from '../../../store/ordersStore';
+import styles from './MainAdminPage.module.scss';
+
+interface OrdersForm {
+  id: number;
+  details: OrderData[];
+  resData: Order;
+  totalPrice: number;
+}
 
 export const MainAdminPage = () => {
-  const ordersd = useCartStore((state) => state.orders) || [];
-  const { orders, getCartData } = useCartStore();
+  const {
+    getAllOrders,
+    getOrderDetailsForUser,
+    getTotalCartPrice,
+    updateOrderStatus,
+    updateStatusInAPi,
+  } = useOrdersStore();
   const [selectedStatusMap, setSelectedStatusMap] = useState<{
     [orderId: string]: OrderStatus;
   }>({});
+  const [orders, setOrders] = useState([] as Order[]);
+  const [details, setDetails] = useState([] as OrdersForm[]);
+  const [disable, setDisable] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await getCartData();
-        useCartStore.setState({ orders: res });
+        const res = await getAllOrders();
+        setOrders(res);
+
+        const promises = res.map(async (i) => {
+          const details = await getOrderDetailsForUser(i.idCart);
+          const price = await getTotalCartPrice(i.idCart);
+          return {
+            id: i.idCart,
+            details: details[0].orderData,
+            resData: {
+              date: i.date,
+              email: i.email,
+              id: i.id,
+              idCart: i.idCart,
+              name: i.name,
+              numberOfPeople: i.numberOfPeople,
+              phoneNumber: i.phoneNumber,
+              status: i.status,
+              time: i.time,
+            },
+            totalPrice: price,
+          };
+        });
+
+        const data = await Promise.all(promises);
+        setDetails(data);
+        console.log('data: ', data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -26,15 +66,15 @@ export const MainAdminPage = () => {
   const handleStatusChange = async (orderId: string, status: OrderStatus) => {
     const updatedMap = { ...selectedStatusMap, [orderId]: status };
     setSelectedStatusMap(updatedMap);
-    // updateOrderStatus(orderId.toString(), newStatus);
+    console.log('status: ', status);
+    updateOrderStatus(orderId.toString(), status);
   };
 
   useEffect(() => {
-    console.info('');
+    setDisable(false);
   }, [selectedStatusMap]);
 
   const handleSave = async () => {
-    // const updatedOrders = useCartStore.getState().orders;
     const updatedOrders: Order[] = [];
     orders.forEach((order) => {
       const orderId = order.id;
@@ -43,18 +83,9 @@ export const MainAdminPage = () => {
         ...order,
         status: newStatus,
       });
+      updateStatusInAPi(orderId, newStatus);
     });
-    // const response = await axios.put(`${API_URL}/cart`, updatedOrders);
-    //zostawiam tą funkcjonalność ponieważ takie rozwiązanie jak zostosowałam w projektcie nie pozwala na to
-    //korzystam z serwera JSON dostarczanego przez narzędzie takie jak JSON Server, a nie mam kodu źródłowego serwera
-    //to niestety nie jestem w stanie wykonywać operacji zapisu bez odpowiednich endpointów obsługujących te operacje.
-
-    // Typowy serwer JSON Server nie obsługuje zapisu (zapytań typu PUT, POST, PATCH itp.) w bezpieczny sposób.
-    //Jest to narzędzie służące do prostego dostarczania danych, a nie do obsługi pełnego API z operacjami zapisu.
-
-    // Jeśli chciałąbym testować i rozwijać funkcje związane z operacjami zapisu,
-    //konieczne będzie użycie bardziej zaawansowanego rozwiązania do obsługi backendu,
-    //na przykład Express.js w połączeniu z MongoDB, czy innym systemem zarządzania bazą danych.
+    setDisable(true);
   };
 
   return (
@@ -64,37 +95,61 @@ export const MainAdminPage = () => {
           <div className={styles.adminText}>All orders</div>
         </div>
       </div>
-      <div className={styles.contentWrapper}>
-        <div style={{ width: '70%', display: 'flex', alignItems: 'ce' }}>
+      <div className={styles.contentWrapper} onChange={() => setDisable(false)}>
+        <div
+          style={{
+            width: '70%',
+            display: 'flex',
+            alignItems: 'ce',
+            marginTop: '30px',
+          }}
+        >
           <div className={styles.content}>
             <table>
               <thead>
                 <tr>
-                  <th>Order ID</th>
-                  <th>Phone Number</th>
+                  <th>ID</th>
+                  <th>Numer telefonu</th>
                   <th>Email</th>
-                  <th>Date</th>
-                  <th>Time</th>
-                  <th>Number of People</th>
+                  <th>Data</th>
+                  <th>Czas</th>
+                  <th>Ilość osób</th>
+                  <th>Szczegóły zamówienia</th>
+                  <th>Suma</th>
                   <th>Status</th>
                 </tr>
               </thead>
               <tbody>
-                {ordersd &&
-                  ordersd.map((order: Order) => (
-                    <tr key={order.id}>
-                      <td>{order.id}</td>
-                      <td>{order ? order.phoneNumber : ''}</td>
-                      <td>{order ? order.email : ''}</td>
-                      <td>{order ? order.date : ''}</td>
-                      <td>{order ? order.time : ''}</td>
-                      <td>{order ? order.numberOfPeople : ''}</td>
+                {details &&
+                  details.map((item: any) => (
+                    <tr key={item.id}>
+                      <td>{item.resData.id}</td>
+                      <td>{item ? item.resData.phoneNumber : ''}</td>
+                      <td>{item ? item.resData.email : ''}</td>
+                      <td>{item ? item.resData.date : ''}</td>
+                      <td>{item ? item.resData.time : ''}</td>
+                      <td>{item ? item.resData.numberOfPeople : ''}</td>
+                      <td>
+                        <ol>
+                          {item.details.map((i: any) => {
+                            return (
+                              <li>
+                                {i.namePL} - {i.count}
+                              </li>
+                            );
+                          })}
+                        </ol>
+                      </td>
+                      <td>{item ? item.totalPrice.toFixed(2) : 0} PLN</td>
                       <td>
                         <select
-                          value={selectedStatusMap[order.id] || order.status}
+                          value={
+                            selectedStatusMap[item.resData.id] ||
+                            item.resData.status
+                          }
                           onChange={(e) =>
                             handleStatusChange(
-                              order.id.toString(),
+                              item.resData.id.toString(),
                               e.target.value as OrderStatus
                             )
                           }
@@ -111,7 +166,9 @@ export const MainAdminPage = () => {
               </tbody>
             </table>
             <div className={styles.saveButtonWrapper}>
-              <button onClick={handleSave}>Save</button>
+              <button onClick={handleSave} disabled={disable}>
+                Zapisz
+              </button>
             </div>
           </div>
         </div>

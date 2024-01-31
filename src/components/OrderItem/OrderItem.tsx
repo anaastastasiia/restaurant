@@ -30,9 +30,6 @@ export const OrderItem = ({
 
   const imgForItem = findImgForItem(extractedIds);
 
-  // console.log('PRICE: ', price);
-  // setTotalPrice(price);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -45,8 +42,6 @@ export const OrderItem = ({
     };
     fetchData();
   }, []);
-
-  console.log('TOTAL PRICE : ', totalPrice);
 
   return (
     <div className={styles.wrapper}>

@@ -54,7 +54,7 @@ interface CartState {
   setRezervationDetails: (details: ClientData) => void;
   setCartData: (orders: Order[]) => void;
   getCartData: () => Promise<Order[]>;
-  updateOrderStatus: (orderId: string, newStatus: OrderStatus) => void;
+
 }
 
 export const useCartStore = create<CartState>((set, get) => ({
@@ -186,11 +186,4 @@ export const useCartStore = create<CartState>((set, get) => ({
       return [];
     }
   },
-  updateOrderStatus: (orderId: string, newStatus: OrderStatus) => {
-    set((state) => ({
-      orders: state.orders.map((order) =>
-        order.id.toString() === orderId ? { ...order, status: newStatus } : order
-      ),
-    }));
-  }
 }));

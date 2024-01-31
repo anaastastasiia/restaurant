@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import axios from 'axios';
+import { OrderStatus } from '../model/translations/en/enums';
 
 export interface Order {
   date: string;
@@ -43,10 +44,14 @@ interface OrdersState {
   ordersResult: OrderResult[];
   ordersData: OrderState[];
   totalPrice: number;
+  allOrders: Order[];
   getOrderDataForUser: (userName: string) => Promise<Order[]>;
   getOrderDetailsForUser: (idCart: number) => Promise<OrderDetails[]>;
   setOrdersResult: (details: OrderResult[]) => void;
   getTotalCartPrice: (idCart: number) => Promise<number>;
+  getAllOrders: () => Promise<Order[]>;
+  updateOrderStatus: (orderId: string, newStatus: OrderStatus) => void;
+  updateStatusInAPi: (orderId: number, newStatus: OrderStatus) => void;
 }
 
 export const useOrdersStore = create<OrdersState>((set) => ({
@@ -56,6 +61,7 @@ export const useOrdersStore = create<OrdersState>((set) => ({
   orderForUser: [],
   ordersData: [],
   ordersResult: [],
+  allOrders: [],
   getOrderDataForUser: async (name: string): Promise<Order[]> => {
     try {
       const res = await axios.get(`http://localhost:3001/api/ordersForUser?name=${name}`);
@@ -96,6 +102,35 @@ export const useOrdersStore = create<OrdersState>((set) => ({
     } catch (error) {
       console.error('Error fetching data:', error);
       return 0;
+    }
+  },
+  getAllOrders: async (): Promise<Order[]> => {
+    try {
+      const res = await axios.get('http://localhost:3001/api/allOrdersWithDetails');
+      set(() => ({
+        allOrders: res.data
+      }));
+      console.log("get orders: ", res.data);
+      return res.data;
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      return [];
+    }
+  },
+  updateOrderStatus: (orderId: string, newStatus: OrderStatus) => {
+    set((state) => ({
+      orders: state.orders.map((order) =>
+        order.id.toString() === orderId ? { ...order, status: newStatus } : order
+      ),
+    }));
+  },
+  updateStatusInAPi: async (orderId: number, newStatus: OrderStatus) => {
+    try {
+      await axios.post(`http://localhost:3001/api/updateStatus/${orderId}`, {
+        newStatus: newStatus,
+      });
+    } catch (error) {
+      console.error('Error postring data:', error);
     }
   }
 }))

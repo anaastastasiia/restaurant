@@ -80,6 +80,16 @@ const getOrders = async () => {
   }
 };
 
+const getAllOrdersWithDetails = async () => {
+  try {
+    const [rows] = await connection.query('SELECT * FROM orders');
+    return rows;
+  } catch (error) {
+    console.error('Błąd zapytania do bazy danych:', error);
+    throw error;
+  }
+};
+
 const getCartDetailsForUser = async (name) => {
   try {
     const [rows] = await connection.query(`
@@ -306,6 +316,31 @@ app.get('/api/totalCartPrice', async (req, res) => {
     res.status(500).send('Błąd pobierania ceny dla idCart: ' + idCart);
   }
 })
+
+app.get('/api/allOrdersWithDetails', async (req, res) => {
+  try {
+    const users = await getAllOrdersWithDetails();
+    res.json(users);
+  } catch (error) {
+    console.error('Błąd podczas pobierania danych zamówień:', error);
+    res.status(500).send('Błąd pobierania zamówień');
+  }
+});
+
+app.post('/api/updateStatus/:orderId', async (req, res) => {
+  const orderId = req.params.orderId;
+  const { newStatus } = req.body;
+
+  try {
+    const updateQuery = 'UPDATE orders SET status = ? WHERE id = ?';
+    await connection.execute(updateQuery, [newStatus, orderId]);
+
+    res.status(200).json({ message: 'Status updated successfully.' });
+  } catch (error) {
+    console.error('Error updating status:', error);
+    res.status(500).json({ message: 'Error updating status.' });
+  }
+});
 
 app.use(express.json());
 
