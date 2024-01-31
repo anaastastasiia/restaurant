@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import { CustomLink } from '../CustomLink';
 import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
@@ -8,7 +9,13 @@ import styles from './AppBar.module.scss';
 
 export const AppBar = () => {
   const { t } = useTranslation();
+  const naviate = useNavigate();
   const authStore = useAuthStore();
+
+  const logOut = () => {
+    authStore.logout();
+    naviate('/');
+  };
 
   return (
     <header className={styles.header}>
@@ -43,7 +50,7 @@ export const AppBar = () => {
             <div>{t('header.welcome')},</div>
             <b>{authStore.user.username}</b>
           </div>
-          <div onClick={authStore.logout}>
+          <div onClick={logOut}>
             <LogoutOutlinedIcon />
           </div>
         </div>
