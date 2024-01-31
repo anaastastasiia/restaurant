@@ -80,9 +80,56 @@ const getOrders = async () => {
   }
 };
 
+const getCartDetailsForUser = async (name) => {
+  try {
+    const [rows] = await connection.query(`
+      SELECT M.*, CI.count, C.id AS idCart
+      FROM CART C
+      JOIN CART_CARTITEMS CC ON C.id = CC.idCart
+      JOIN CARTITEMS CI ON CC.idCartItem = CI.id
+      JOIN MENU M ON CI.idItemMenu = M.id
+      WHERE C.id = ?; 
+    `, [name]);
+    console.log("ROW: ", rows);
+    const groupedData = rows.reduce((acc, row) => {
+      if (!acc[row.idCart]) {
+        acc[row.idCart] = { idCart: row.idCart, orderData: [] };
+      }
+
+      acc[row.idCart].orderData.push({
+        id: row.id,
+        namePL: row.namePL,
+        nameEN: row.nameEN,
+        price: row.price,
+        hotprice: row.hotprice,
+        count: row.count,
+      });
+
+      return acc;
+    }, {});
+    const resultArray = Object.values(groupedData);
+    console.log("Result: ", resultArray);
+    return resultArray;
+  } catch (error) {
+    console.error('Błąd zapytania do bazy danych:', error);
+    throw error;
+  }
+};
+
+const getTotalPriceForCart = async (idCart) => {
+  try {
+    const [rows] = await connection.query('SELECT totalPrice FROM cart WHERE id = ?', [idCart]);
+    return rows;
+  } catch (error) {
+    console.error('Błąd zapytania do bazy danych:', error);
+    throw error;
+  }
+};
+
 const getOrdersForUser = async (customerName) => {
   try {
     const [rows] = await connection.query('SELECT * FROM orders WHERE name = ?', [customerName]);
+    console.log("orders or user: ", rows);
     return rows;
   } catch (error) {
     console.error('Błąd zapytania do bazy danych:', error);
@@ -181,18 +228,6 @@ app.get('/api/hotprice', async (req, res) => {
   }
 });
 
-app.get('/api/hotprice', async (req, res) => {
-  try {
-    const query = `SELECT * FROM menu WHERE hotprice IS NOT NULL;`;
-    const [results] = await connection.query(query);
-    res.json(results);
-  } catch (error) {
-    console.error('Błąd podczas pobierania danych z hotprice:', error);
-    res.status(500).json({ error: 'Błąd podczas pobierania danych z hotprice' });
-  }
-});
-
-
 //ORDER
 app.post('/api/createOrder', async (req, res) => {
   try {
@@ -241,15 +276,37 @@ app.get('/api/orders', async (req, res) => {
 });
 
 app.get('/api/ordersForUser', async (req, res) => {
-  const { name } = req.body;
+  const { name } = req.query;
   try {
-    const users = await getOrdersForUser(name);
-    res.json(users);
+    const orders = await getOrdersForUser(name);
+    res.json(orders);
   } catch (error) {
-    console.error('Błąd podczas pobierania danych zamówień dla klienta: ',name + ", error: ", error);
-    res.status(500).send('Błąd pobierania zamówień dla klienta: ', name);
+    console.error('Błąd podczas pobierania danych zamówień dla klienta: ', name + ", error: ", error);
+    res.status(500).send('Błąd pobierania zamówień dla klienta: ' + name);
   }
 });
+
+app.get('/api/userOrdersDetails', async (req, res) => {
+  const { idCart } = req.query;
+  try {
+    const orders = await getCartDetailsForUser(idCart);
+    res.json(orders);
+  } catch (error) {
+    console.error('Błąd podczas pobierania szczegółów zamówień dla idCart: ', idCart + ", error: ", error);
+    res.status(500).send('Błąd pobierania szczegółów zamówień dla idCart: ' + idCart);
+  }
+});
+
+app.get('/api/totalCartPrice', async (req, res) => {
+  const { idCart } = req.query;
+  try {
+    const price = await getTotalPriceForCart(idCart);
+    res.json(price);
+  } catch (error) {
+    console.error('Błąd podczas pobierania ceny dla idCart: ', idCart + ", error: ", error);
+    res.status(500).send('Błąd pobierania ceny dla idCart: ' + idCart);
+  }
+})
 
 app.use(express.json());
 

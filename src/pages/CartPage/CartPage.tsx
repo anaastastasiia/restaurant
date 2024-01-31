@@ -68,7 +68,6 @@ export const CartPage = () => {
           : parseFloat(item.price.toString());
       totalPrice += itemPrice;
     });
-    console.log('total: ', totalPrice);
     return totalPrice.toFixed(2);
   };
 

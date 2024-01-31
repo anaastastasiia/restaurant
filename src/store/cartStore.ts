@@ -28,9 +28,15 @@ export interface ClientData {
 }
 
 export interface Order {
-  cartItems: CartItem[];
-  reservationDetails: ClientData;
+  date: string;
+  email: string;
   id: number;
+  idCart: number;
+  name: string;
+  numberOfPeople: number;
+  phoneNumber: number;
+  status: string;
+  time: string;
 }
 
 interface CartState {
@@ -49,7 +55,6 @@ interface CartState {
   setCartData: (orders: Order[]) => void;
   getCartData: () => Promise<Order[]>;
   updateOrderStatus: (orderId: string, newStatus: OrderStatus) => void;
-  getCartDataForUser: (userName: string) => Promise<Order[]>;
 }
 
 export const useCartStore = create<CartState>((set, get) => ({
@@ -66,11 +71,19 @@ export const useCartStore = create<CartState>((set, get) => ({
     numberOfPeople: 1,
     status: OrderStatus.Pending
   },
+  orderDetails: {
+    count: 0,
+    id: 0,
+    nameEN: '',
+    namePL: '',
+    price: 0,
+    totalPrice: 0,
+    hotprice: 0
+  },
+  orderDetails1: [],
   orderForUser: [],
   addToCart: (item: Item) => {
-    console.log(" item id : ", item.id);
     const existingItem = get().cartItems.find((cartItem) => cartItem.idMenu === item.id);
-    console.log(" existingItem : ", existingItem);
     if (existingItem) {
       set((state) => ({
           cartItems: state.cartItems.map((cartItem) =>
@@ -103,8 +116,6 @@ export const useCartStore = create<CartState>((set, get) => ({
         ]
       }));
     }
-    console.log("dodane cartItems: ", useCartStore.getState().cartItems);
-    console.log("dodane cartItemsForm: ", useCartStore.getState().cartItemsForm);
   },
   setRezervationDetails: (details: ClientData) => {  
     set(() => ({
@@ -142,8 +153,6 @@ export const useCartStore = create<CartState>((set, get) => ({
     }
   },
   updateItemCount: (itemId: number, newCount: number, newPrice: string) => {
-    console.log("itemId: ", itemId + ", newCount: " , newCount + ", newPrice: ", newPrice)
-    console.log(useCartStore.getState().cartItemsForm.map(item => item.idMenu));
     set((state) => ({
       cartItemsForm: state.cartItemsForm.map(item =>
         item.idMenu === itemId ? {
@@ -155,8 +164,6 @@ export const useCartStore = create<CartState>((set, get) => ({
         } : item
       ),
     }) as Partial<CartState>);
-  
-    console.log("CART ITEMS cartItemsForm: ", useCartStore.getState().cartItemsForm)
   },
   
   removeFromCart: (itemId: number) => {
@@ -185,21 +192,5 @@ export const useCartStore = create<CartState>((set, get) => ({
         order.id.toString() === orderId ? { ...order, status: newStatus } : order
       ),
     }));
-  },
-  getCartDataForUser: async (userName: string): Promise<Order[]> => {
-    try {
-      const res = await axios.post(`http://localhost:3001/api/ordersForUser`, { userName }, {
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      });
-      set(() => ({
-        orderForUser: res.data
-      }));
-      return useCartStore.getState().orderForUser as Order[];
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      return [];
-    }
-  },
+  }
 }));

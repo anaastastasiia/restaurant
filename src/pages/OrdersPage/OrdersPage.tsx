@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
-import { Order, useCartStore } from '../../store/cartStore';
+import { useOrdersStore, Order, OrderResult } from '../../store/ordersStore';
 import { useAuthStore } from '../../store/authStore';
 import OrderItem from '../../components/OrderItem';
 import styles from './OrdersPage.module.scss';
@@ -8,19 +8,84 @@ import styles from './OrdersPage.module.scss';
 export const OrdersPage = () => {
   const { t } = useTranslation();
   const [filter, setFilter] = useState('all');
-  const cartStore = useCartStore();
+  const orderStore = useOrdersStore();
   const authStore = useAuthStore();
+
+  const {
+    getOrderDetailsForUser,
+    setTotalPrice,
+    setOrdersResult,
+    ordersResult,
+    getTotalCartPrice,
+    totalPrice,
+  } = useOrdersStore();
 
   useEffect(() => {
     const user = authStore.user?.username;
-    cartStore.getCartDataForUser(user ?? '');
+    const fetchData = async () => {
+      try {
+        console.log('WPADA');
+        const data = await orderStore.getOrderDataForUser(user ?? '');
+        console.log('orderForUser: ', data);
+        if (data.length > 0) {
+          const arr = await Promise.all(
+            data.map(async (i) => {
+              const details = await getOrderDetailsForUser(i.idCart);
+              return { id: i.idCart, orderData: details };
+            })
+          );
+          setOrdersResult(arr as OrderResult[]);
+          console.log('arr: ', arr);
+        }
+
+        // const price = await Promise.all(
+        //   data.map(async (i) => {
+        //     const price = await getTotalCartPrice(i.idCart);
+        //     return price;
+        //   })
+        // );
+        // console.log('PRICE: ', price);
+        // setTotalPrice(price);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    console.log('ordersResult: ', ordersResult);
+    fetchData();
   }, []);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     console.log('orderForUser: ', orderForUser);
+  //     try {
+  //       const arr = await Promise.all(
+  //         orderForUser.map(async (i) => {
+  //           const details = await getOrderDetailsForUser(i.idCart);
+  //           return { id: i.idCart, orderData: details };
+  //         })
+  //       );
+  //       console.log('arr: ', arr);
+  //       // await Promise.all(
+  //       //   orderForUser.map(async (i) => {
+  //       //     const price = await getTotalCartPrice(i.idCart);
+  //       //     return price;
+  //       //   })
+  //       // );
+  //       setOrdersResult(arr as OrderResult[]);
+  //       console.log('Result: ', arr);
+  //     } catch (error) {
+  //       console.error('Error fetching data:', error);
+  //     }
+  //   };
+  //   console.log('ordersResult: ', ordersResult);
+  //   fetchData();
+  // }, [orderForUser]);
 
   const filterOrders = () => {
     switch (filter) {
       case 'month':
-        return cartStore.orderForUser.filter((order) => {
-          const orderDate = new Date(order.reservationDetails.date);
+        return orderStore.orderForUser.filter((order) => {
+          const orderDate = new Date(order.date);
           const currentDate = new Date();
           return (
             orderDate.getMonth() === currentDate.getMonth() &&
@@ -28,13 +93,13 @@ export const OrdersPage = () => {
           );
         });
       case 'year':
-        return cartStore.orderForUser.filter((order) => {
-          const orderDate = new Date(order.reservationDetails.date);
+        return orderStore.orderForUser.filter((order) => {
+          const orderDate = new Date(order.date);
           const currentDate = new Date();
           return orderDate.getFullYear() === currentDate.getFullYear();
         });
       default:
-        return cartStore.orderForUser;
+        return orderStore.orderForUser;
     }
   };
 
@@ -53,7 +118,7 @@ export const OrdersPage = () => {
         </div>
       </div>
       <div className={styles.contentWrapper}>
-        {cartStore.orderForUser.length > 0 ? (
+        {orderStore.orderForUser.length > 0 ? (
           <div className={styles.orderItemWrapper}>
             <h2>{t('pages.orders.yourOrders')}</h2>
             <div className={styles.buttonsWrapper}>
@@ -85,15 +150,30 @@ export const OrdersPage = () => {
                 {t('pages.orders.filter.year')}
               </button>
             </div>
-            {filteredOrders.map((order: Order) => {
-              return (
-                <OrderItem
-                  id={order.id}
-                  cartItems={order.cartItems}
-                  reservationDetails={order.reservationDetails}
-                />
-              );
-            })}
+            {ordersResult.length > 0 ? (
+              filteredOrders.map((order: Order) => {
+                const result = ordersResult.filter(
+                  (i) => i.id === order.idCart
+                );
+                console.log('html reault: ', result);
+                return (
+                  <OrderItem
+                    order={order}
+                    orderResult={
+                      result
+                        ? result
+                            .map((i) => i.orderData)[0]
+                            .map((i: any) => i.orderData)
+                        : []
+                    }
+                    key={order.idCart}
+                    totalPrice={totalPrice}
+                  />
+                );
+              })
+            ) : (
+              <div>Loading...</div>
+            )}
           </div>
         ) : (
           ''
