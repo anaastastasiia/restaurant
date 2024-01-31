@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { OrderStatus } from '../../../model/translations/en/enums';
+import { OrderStatus } from '../../../model/translations/pl/enums';
 import { useOrdersStore, Order, OrderData } from '../../../store/ordersStore';
 import styles from './MainAdminPage.module.scss';
 

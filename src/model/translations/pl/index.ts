@@ -7,6 +7,7 @@ import cart from './pages/cart.json';
 import login from './pages/login.json';
 import orders from './pages/orders.json';
 import validationErrors from './validationErrors.json';
+import enums from './enums.json';
 
 export default {
     header,
@@ -19,5 +20,6 @@ export default {
         cart,
         login,
         orders
-    }
+    },
+    enums
 }

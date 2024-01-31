@@ -50,7 +50,9 @@ export const OrderItem = ({
           <div className={styles.order}>
             {t('pages.orders.order')} № {order.id}, {order.date} {order.time}
           </div>
-          <div className={styles.status}>{order.status}</div>
+          <div className={styles.status}>
+            {t(`enums.OrderStatus.${order.status}`)}
+          </div>
         </div>
         <div className={styles.totalPriceWrapper}>
           <div className={styles.total}>{t('pages.orders.total')}</div>
