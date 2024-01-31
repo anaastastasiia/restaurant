@@ -24,13 +24,11 @@ export interface OrderData {
 
 export interface OrderDetails {
   orderData: OrderData[];
-  // totalPrice: number;
   id: number;
 }
 
 export interface OrderResult {
   orderData: [];
-  // totalPrice: number;
   id: number;
 }
 
@@ -49,10 +47,9 @@ interface OrdersState {
   getOrderDetailsForUser: (idCart: number) => Promise<OrderDetails[]>;
   setOrdersResult: (details: OrderResult[]) => void;
   getTotalCartPrice: (idCart: number) => Promise<number>;
-  setTotalPrice: (price: number) => void;
 }
 
-export const useOrdersStore = create<OrdersState>((set, get) => ({
+export const useOrdersStore = create<OrdersState>((set) => ({
   orders: [],
   totalPrice: 0,
   orderDetails: [],
@@ -75,11 +72,9 @@ export const useOrdersStore = create<OrdersState>((set, get) => ({
     console.log("WPADA");
     try {
       const res = await axios.get(`http://localhost:3001/api/userOrdersDetails?idCart=${idCart}`);
-    //   console.log("RES DATA: ", res.data);
       set(() => ({
         orderDetails: res.data
       }));
-      console.log("DETAILS: ", useOrdersStore.getState().orderDetails);
       return res.data;
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -102,10 +97,5 @@ export const useOrdersStore = create<OrdersState>((set, get) => ({
       console.error('Error fetching data:', error);
       return 0;
     }
-  },
-  setTotalPrice: (price: number) => {
-    set(() => ({
-      totalPrice: price,
-    }))
-  },
+  }
 }))
