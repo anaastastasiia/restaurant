@@ -38,14 +38,10 @@ export const MainAdminPage = () => {
     const updatedOrders: Order[] = [];
     orders.forEach((order) => {
       const orderId = order.id;
-      const newStatus =
-        selectedStatusMap[orderId] || order.reservationDetails.status;
+      const newStatus = selectedStatusMap[orderId] || order.status;
       updatedOrders.push({
         ...order,
-        reservationDetails: {
-          ...order.reservationDetails,
-          status: newStatus,
-        },
+        status: newStatus,
       });
     });
     // const response = await axios.put(`${API_URL}/cart`, updatedOrders);
@@ -88,37 +84,14 @@ export const MainAdminPage = () => {
                   ordersd.map((order: Order) => (
                     <tr key={order.id}>
                       <td>{order.id}</td>
-                      <td>
-                        {order.reservationDetails
-                          ? order.reservationDetails.phoneNumber
-                          : ''}
-                      </td>
-                      <td>
-                        {order.reservationDetails
-                          ? order.reservationDetails.email
-                          : ''}
-                      </td>
-                      <td>
-                        {order.reservationDetails
-                          ? order.reservationDetails.date
-                          : ''}
-                      </td>
-                      <td>
-                        {order.reservationDetails
-                          ? order.reservationDetails.time
-                          : ''}
-                      </td>
-                      <td>
-                        {order.reservationDetails
-                          ? order.reservationDetails.numberOfPeople
-                          : ''}
-                      </td>
+                      <td>{order ? order.phoneNumber : ''}</td>
+                      <td>{order ? order.email : ''}</td>
+                      <td>{order ? order.date : ''}</td>
+                      <td>{order ? order.time : ''}</td>
+                      <td>{order ? order.numberOfPeople : ''}</td>
                       <td>
                         <select
-                          value={
-                            selectedStatusMap[order.id] ||
-                            order.reservationDetails.status
-                          }
+                          value={selectedStatusMap[order.id] || order.status}
                           onChange={(e) =>
                             handleStatusChange(
                               order.id.toString(),
