@@ -13,9 +13,9 @@ export const CartsItem = (product: CartItemForm) => {
   const { t, i18n } = useTranslation();
   const [price, setPrice] = useState(0);
   const [count, setCount] = useState(1);
-  const updateItemCount = useCartStore((state) => state.updateItemCount);
-  const removeFromCart = useCartStore((state) => state.removeFromCart);
   const { menuItems, hotPriceItems } = useItemsStore();
+  const { setProductTotalPrice, updateItemCount, removeFromCart } =
+    useCartStore();
 
   let hotPrice: number | undefined = 0;
   let menuPrice: number | undefined = 0;
@@ -48,6 +48,7 @@ export const CartsItem = (product: CartItemForm) => {
         newQuantity
       );
       setPrice(price);
+      setProductTotalPrice(price);
       updateItemCount(product.idMenu, newQuantity, price.toFixed(2));
     }
   };
@@ -57,6 +58,7 @@ export const CartsItem = (product: CartItemForm) => {
     setCount(newQuantity);
     const price = calculatePrice(hotPrice ? hotPrice : menuPrice, newQuantity);
     setPrice(price);
+    setProductTotalPrice(price);
     updateItemCount(product.idMenu, newQuantity, price.toFixed(2));
   };
 

@@ -1,0 +1,8 @@
+{
+  "OrderStatus": {
+    "Pending": "Pending",
+    "Confirmed": "Confirmed",
+    "Done": "Done"
+  }
+}
+  

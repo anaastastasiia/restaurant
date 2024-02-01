@@ -6,5 +6,6 @@
     "noSpace": "Hasło nie może zawierać spacji",
     "uppercase": "Hasło musi zawierać conajmniej jedną dużą literę",
     "invalidEmail": "Niepoprawny adres email",
-    "phoneLenght": "Numer telefonu musi mieć dokładnie 9 cyfr"
+    "phoneLenght": "Numer telefonu musi mieć dokładnie 9 cyfr",
+    "invalidDate": "Data nie może być wcześniejsza niż dzisiaj"
 }

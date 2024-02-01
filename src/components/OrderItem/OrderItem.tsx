@@ -34,7 +34,6 @@ export const OrderItem = ({
     const fetchData = async () => {
       try {
         const price = await getTotalCartPrice(idCart);
-        console.log('PRICE EFEECT: ', price);
         setTotalPrice(price);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -50,7 +49,9 @@ export const OrderItem = ({
           <div className={styles.order}>
             {t('pages.orders.order')} № {order.id}, {order.date} {order.time}
           </div>
-          <div className={styles.status}>{order.status}</div>
+          <div className={styles.status}>
+            {t(`enums.OrderStatus.${order.status}`)}
+          </div>
         </div>
         <div className={styles.totalPriceWrapper}>
           <div className={styles.total}>{t('pages.orders.total')}</div>

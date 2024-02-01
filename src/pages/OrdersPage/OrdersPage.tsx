@@ -32,7 +32,6 @@ export const OrdersPage = () => {
         console.error('Error fetching data:', error);
       }
     };
-    console.log('ordersResult: ', ordersResult);
     fetchData();
   }, []);
 

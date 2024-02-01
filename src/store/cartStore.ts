@@ -46,6 +46,8 @@ interface CartState {
   id: number | null;
   orders: Order[];
   orderForUser: Order[];
+  productTotalPrice: number;
+  totalCartPrice: number;
   addToCart: (item: Item) => void;
   clearCart: () => void;
   placeOrder: () => Promise<void>;
@@ -54,7 +56,8 @@ interface CartState {
   setRezervationDetails: (details: ClientData) => void;
   setCartData: (orders: Order[]) => void;
   getCartData: () => Promise<Order[]>;
-
+  setProductTotalPrice: (price: number) => void;
+  setTotalCartPrice: (price: number) => void;
 }
 
 export const useCartStore = create<CartState>((set, get) => ({
@@ -62,6 +65,8 @@ export const useCartStore = create<CartState>((set, get) => ({
   cartItemsForm: [],
   id: null,
   orders: [],
+  productTotalPrice: 0,
+  totalCartPrice: 0,
   reservationDetails: {
     name: '',
     email: '',
@@ -91,14 +96,14 @@ export const useCartStore = create<CartState>((set, get) => ({
               ? {
                   ...cartItem,
                   count: cartItem.count + 1,
-                }
+            }
               : cartItem
           ),
           cartItemsForm: state.cartItemsForm.map(formItem => 
             formItem.idMenu === item.id ? {
               ...formItem,
               count: formItem.count + 1,
-              price: (formItem.price * (formItem.count + 1)),
+              price: ((formItem.hotprice ? formItem.hotprice : formItem.price) * (formItem.count + 1)),
             } : formItem)
       }));
     } else {
@@ -135,8 +140,9 @@ export const useCartStore = create<CartState>((set, get) => ({
     try {
       const cartItems = useCartStore.getState().cartItemsForm;
       const reservationDetails = useCartStore.getState().reservationDetails;
+      const totalPrice = useCartStore.getState().totalCartPrice;
       const response = await axios.post('http://localhost:3001/api/createOrder', {
-        reservationDetails, cartItems
+        reservationDetails, cartItems, totalPrice
       }, { headers: {
           'Content-Type': 'application/json'
           }
@@ -165,14 +171,12 @@ export const useCartStore = create<CartState>((set, get) => ({
       ),
     }) as Partial<CartState>);
   },
-  
   removeFromCart: (itemId: number) => {
     set((state) => ({
       cartItems: state.cartItems.filter((item) => item.idMenu !== itemId),
       cartItemsForm: state.cartItemsForm.filter((item) => item.idMenu !== itemId),
     }));
   },
-  setOrderData: () => {},
   setCartData: (orders) => set({ orders }),
   getCartData: async (): Promise<Order[]> => {
     try {
@@ -186,4 +190,6 @@ export const useCartStore = create<CartState>((set, get) => ({
       return [];
     }
   },
+  setProductTotalPrice: (price: number) => set({productTotalPrice: price}),
+  setTotalCartPrice: (price: number) => set({totalCartPrice: price}),
 }));
