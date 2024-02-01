@@ -54,7 +54,6 @@ export const MainAdminPage = () => {
 
         const data = await Promise.all(promises);
         setDetails(data);
-        console.log('data: ', data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -66,7 +65,6 @@ export const MainAdminPage = () => {
   const handleStatusChange = async (orderId: string, status: OrderStatus) => {
     const updatedMap = { ...selectedStatusMap, [orderId]: status };
     setSelectedStatusMap(updatedMap);
-    console.log('status: ', status);
     updateOrderStatus(orderId.toString(), status);
   };
 

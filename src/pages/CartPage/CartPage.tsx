@@ -16,7 +16,7 @@ export const CartPage = () => {
 
   const { getHotPriceItems } = useItemsActions;
   const { hotPriceItems, menuItems } = useItemsStore();
-  const { cartItemsForm, cartItems } = useCartStore();
+  const { cartItemsForm, cartItems, setTotalCartPrice } = useCartStore();
   const createOrder = useCartStore((state) => state.placeOrder);
   const setRezervationDetails = useCartStore(
     (state) => state.setRezervationDetails
@@ -56,6 +56,7 @@ export const CartPage = () => {
       status: formData.status,
       time: formData.time,
     });
+    setTotalCartPrice(Number(totalPrice));
     createOrder();
   };
 
@@ -97,10 +98,10 @@ export const CartPage = () => {
                         <CartsItem
                           idMenu={j.id}
                           count={i.count ? i.count : 1}
-                          hotprice={j.hotprice}
+                          hotprice={i.hotprice}
                           namePL={j.namePL}
                           nameEN={j.nameEN}
-                          price={j.price}
+                          price={i.price}
                         />
                       );
                     });
@@ -113,10 +114,10 @@ export const CartPage = () => {
                         <CartsItem
                           idMenu={j.id}
                           count={i.count ? i.count : 1}
-                          hotprice={j.hotprice}
+                          hotprice={i.hotprice}
                           namePL={j.namePL}
                           nameEN={j.nameEN}
-                          price={j.price}
+                          price={i.price}
                         />
                       );
                     });

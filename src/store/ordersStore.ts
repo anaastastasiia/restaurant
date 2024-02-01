@@ -75,7 +75,6 @@ export const useOrdersStore = create<OrdersState>((set) => ({
     }
   },
   getOrderDetailsForUser: async (idCart: number): Promise<OrderDetails[]> => {
-    console.log("WPADA");
     try {
       const res = await axios.get(`http://localhost:3001/api/userOrdersDetails?idCart=${idCart}`);
       set(() => ({
@@ -110,7 +109,6 @@ export const useOrdersStore = create<OrdersState>((set) => ({
       set(() => ({
         allOrders: res.data
       }));
-      console.log("get orders: ", res.data);
       return res.data;
     } catch (error) {
       console.error('Error fetching data:', error);

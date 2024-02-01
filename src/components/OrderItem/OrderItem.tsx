@@ -34,7 +34,6 @@ export const OrderItem = ({
     const fetchData = async () => {
       try {
         const price = await getTotalCartPrice(idCart);
-        console.log('PRICE EFEECT: ', price);
         setTotalPrice(price);
       } catch (error) {
         console.error('Error fetching data:', error);

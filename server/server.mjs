@@ -127,8 +127,6 @@ const getCartDetailsForUser = async (name) => {
 const getTotalPriceForCart = async (idCart) => {
   try {
     const [rows] = await connection.query('SELECT totalPrice FROM cart WHERE id = ?', [idCart]);
-    console.log("rows: ", rows);
-    console.log("row[0]: ", rows[0].totalPrice);
     return rows[0].totalPrice;
   } catch (error) {
     console.error('Błąd zapytania do bazy danych:', error);
@@ -165,11 +163,7 @@ app.get('/api/users', async (req, res) => {
 });
 
 app.post('/api/login', async (req, res) => {
-  console.error(' logowania req.body:', req.body);
   const { username, password } = req.body;
-  console.error(' logowania username:', username);
-  console.error(' logowania password:', password);
-
   try {
     const [rows] = await connection.query('SELECT * FROM users WHERE username = ? AND password = ?', [username, password]);
 
@@ -240,12 +234,11 @@ app.get('/api/hotprice', async (req, res) => {
 //ORDER
 app.post('/api/createOrder', async (req, res) => {
   try {
-    const { reservationDetails, cartItems } = req.body;
+    const { reservationDetails, cartItems, totalPrice } = req.body;
     const { name, email, phoneNumber, date, time, numberOfPeople, status } = reservationDetails;
     const [cartResult] = await connection.query('INSERT INTO cart (totalPrice) VALUES (0)');
     const cartId = cartResult.insertId;
 
-    let totalPrice = 0;
     for (const cartItem of cartItems) {
       const { idMenu, count, price } = cartItem;
 
@@ -256,8 +249,6 @@ app.post('/api/createOrder', async (req, res) => {
 
       const cartItemId = cartItemResult.insertId;
       await connection.query('INSERT INTO cart_cartItems (idCart, idCartItem) VALUES (?, ?)', [cartId, cartItemId]);
-
-      totalPrice += parseFloat(String(price)).toFixed(2);
     }
 
     await connection.query('UPDATE cart SET totalPrice = ? WHERE id = ?', [totalPrice, cartId]);
