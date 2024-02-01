@@ -13,14 +13,25 @@ export const CartsItem = (product: CartItemForm) => {
   const { t, i18n } = useTranslation();
   const [price, setPrice] = useState(0);
   const [count, setCount] = useState(1);
-  const updateItemCount = useCartStore((state) => state.updateItemCount);
-  const removeFromCart = useCartStore((state) => state.removeFromCart);
   const { menuItems, hotPriceItems } = useItemsStore();
+  const {
+    setProductTotalPrice,
+    updateItemCount,
+    removeFromCart,
+    productTotalPrice,
+  } = useCartStore();
 
   let hotPrice: number | undefined = 0;
   let menuPrice: number | undefined = 0;
   useEffect(() => {
-    setPrice(product.hotprice ? product.hotprice : product.price);
+    const productPrice = productTotalPrice
+      ? productTotalPrice
+      : product.hotprice
+      ? product.hotprice
+      : product.price;
+    console.log('us product pr: ', productPrice);
+    setPrice(productPrice);
+    setProductTotalPrice(productPrice);
     setCount(product.count);
   }, []);
 
@@ -48,6 +59,7 @@ export const CartsItem = (product: CartItemForm) => {
         newQuantity
       );
       setPrice(price);
+      setProductTotalPrice(price);
       updateItemCount(product.idMenu, newQuantity, price.toFixed(2));
     }
   };
@@ -57,6 +69,7 @@ export const CartsItem = (product: CartItemForm) => {
     setCount(newQuantity);
     const price = calculatePrice(hotPrice ? hotPrice : menuPrice, newQuantity);
     setPrice(price);
+    setProductTotalPrice(price);
     updateItemCount(product.idMenu, newQuantity, price.toFixed(2));
   };
 
@@ -103,7 +116,9 @@ export const CartsItem = (product: CartItemForm) => {
               {t('buttons.delete')}
             </button>
           </div>
-          <p className={styles.price}>{Number(price).toFixed(2)} PLN</p>
+          <p className={styles.price}>
+            {Number(productTotalPrice).toFixed(2)} PLN
+          </p>
         </div>
       </div>
     </div>

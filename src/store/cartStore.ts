@@ -46,6 +46,7 @@ interface CartState {
   id: number | null;
   orders: Order[];
   orderForUser: Order[];
+  productTotalPrice: number;
   addToCart: (item: Item) => void;
   clearCart: () => void;
   placeOrder: () => Promise<void>;
@@ -54,7 +55,7 @@ interface CartState {
   setRezervationDetails: (details: ClientData) => void;
   setCartData: (orders: Order[]) => void;
   getCartData: () => Promise<Order[]>;
-
+  setProductTotalPrice: (price: number) => void;
 }
 
 export const useCartStore = create<CartState>((set, get) => ({
@@ -62,6 +63,7 @@ export const useCartStore = create<CartState>((set, get) => ({
   cartItemsForm: [],
   id: null,
   orders: [],
+  productTotalPrice: 0,
   reservationDetails: {
     name: '',
     email: '',
@@ -153,6 +155,7 @@ export const useCartStore = create<CartState>((set, get) => ({
     }
   },
   updateItemCount: (itemId: number, newCount: number, newPrice: string) => {
+    console.log("up price: ", newPrice);
     set((state) => ({
       cartItemsForm: state.cartItemsForm.map(item =>
         item.idMenu === itemId ? {
@@ -186,4 +189,5 @@ export const useCartStore = create<CartState>((set, get) => ({
       return [];
     }
   },
+  setProductTotalPrice: (price: number) => set({productTotalPrice: price})
 }));
