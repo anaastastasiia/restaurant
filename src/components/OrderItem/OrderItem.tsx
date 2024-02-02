@@ -50,6 +50,13 @@ export const OrderItem = ({
             {t('pages.orders.order')} № {order.id}, {order.date} {order.time}
           </div>
           <div className={styles.status}>
+            {t('pages.orders.reservationMessage', {
+              numberOfPeople: order.numberOfPeople,
+              date: order.date,
+              time: order.time,
+            })}
+          </div>
+          <div className={styles.status}>
             {t(`enums.OrderStatus.${order.status}`)}
           </div>
         </div>

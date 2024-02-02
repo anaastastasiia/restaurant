@@ -2,7 +2,9 @@ import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 import { useOrdersStore, Order, OrderResult } from '../../store/ordersStore';
 import { useAuthStore } from '../../store/authStore';
+import { useItemsStore } from '../../store/itemsStore';
 import OrderItem from '../../components/OrderItem';
+import ProductItem from '../../components/ProductItem';
 import styles from './OrdersPage.module.scss';
 
 export const OrdersPage = () => {
@@ -13,6 +15,7 @@ export const OrdersPage = () => {
 
   const { getOrderDetailsForUser, setOrdersResult, ordersResult } =
     useOrdersStore();
+  const { hotPriceItems } = useItemsStore();
 
   useEffect(() => {
     const user = authStore.user?.username;
@@ -130,7 +133,31 @@ export const OrdersPage = () => {
             )}
           </div>
         ) : (
-          ''
+          <>
+            <div className={styles.noOrdersTitle}>
+              {t('pages.orders.noOrders')}
+            </div>
+            <div className={styles.lowPricesWrapper}>
+              <div className={styles.hotPriceTitle}>
+                {t('pages.cart.offers')}
+              </div>
+              <div className={styles.hotPriceContentWrapper}>
+                <div className={styles.hotPriceContent}>
+                  {hotPriceItems.map((i) => {
+                    return (
+                      <ProductItem
+                        namePL={i.namePL}
+                        nameEN={i.nameEN}
+                        price={i.price}
+                        id={i.id}
+                        hotprice={i.hotprice}
+                      />
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </>
         )}
       </div>
     </>

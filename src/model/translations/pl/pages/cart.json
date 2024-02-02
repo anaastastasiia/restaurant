@@ -9,5 +9,6 @@
     "time": "Czas",
     "numberOfPeople": "Ilość osób",
     "createOrder": "Zamów",
-    "total": "Razem"
+    "total": "Razem",
+    "clearCart": "Wyczyść koszyk"
 }
