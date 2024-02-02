@@ -59,7 +59,7 @@
       }
     }
 
-    button {
+    .createOrderButton {
       background: none;
       color: #b4b4b4;
       border: 0.5px #b4b4b4 solid;
@@ -67,6 +67,20 @@
       margin: 5px 10px 5px 0;
       width: 135px;
       font-size: 18px;
+    }
+
+    .resetButton {
+      background: none;
+      color: #b4b4b4;
+      border: none;
+      padding: 10px 15px;
+      margin: 5px 10px 5px 0;
+      width: 135px;
+      font-size: 14px;
+
+      &:hover {
+        color: #fff;
+      }
     }
   }
 }

@@ -9,5 +9,6 @@
     "time": "Time",
     "numberOfPeople": "Number of people",
     "createOrder": "Create order",
-    "total": "Total"
+    "total": "Total",
+    "clearCart": "Clear cart"
 }

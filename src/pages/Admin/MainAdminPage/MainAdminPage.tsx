@@ -90,7 +90,7 @@ export const MainAdminPage = () => {
     <div>
       <div className={styles.wrapper}>
         <div className={styles.infoWrapper}>
-          <div className={styles.adminText}>All orders</div>
+          <div className={styles.adminText}>Wszystkie zamówienia</div>
         </div>
       </div>
       <div className={styles.contentWrapper} onChange={() => setDisable(false)}>

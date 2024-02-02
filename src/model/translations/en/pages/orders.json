@@ -6,5 +6,7 @@
         "all": "All",
         "month": "This month",
         "year": "This year"
-    }
+    },
+    "noOrders": "It looks like you haven't placed an order at our restaurant yet :(",
+    "reservationMessage": "Booking a table for {{numberOfPeople}} p. on {{date}} at {{time}}"
 }

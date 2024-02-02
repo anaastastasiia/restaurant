@@ -6,5 +6,7 @@
         "all": "Wszystkie",
         "month": "W tym miesiącu",
         "year": "W tym roku"
-    }
+    },
+    "noOrders": "Wygląda na to, że nie złożyłeś jeszcze zamówienia w naszej restauracji :(",
+    "reservationMessage": "Rezerwacja stolika na {{numberOfPeople}} os. na {{date}} o {{time}}"
 }

@@ -16,7 +16,8 @@ export const CartPage = () => {
 
   const { getHotPriceItems } = useItemsActions;
   const { hotPriceItems, menuItems } = useItemsStore();
-  const { cartItemsForm, cartItems, setTotalCartPrice } = useCartStore();
+  const { cartItemsForm, cartItems, setTotalCartPrice, clearCart } =
+    useCartStore();
   const createOrder = useCartStore((state) => state.placeOrder);
   const setRezervationDetails = useCartStore(
     (state) => state.setRezervationDetails
@@ -32,9 +33,13 @@ export const CartPage = () => {
     setShowStep2(false);
   }, []);
 
-  const onCLick = async () => {
+  const onCLick = () => {
     setShowStep2(true);
     setShowStep1(false);
+  };
+
+  const clearCartForm = () => {
+    clearCart();
   };
 
   const handleReservationSubmit = (formData: ClientData) => {
@@ -127,8 +132,17 @@ export const CartPage = () => {
                   <div>
                     {t('pages.cart.total')}: <b>{totalPrice}</b> PLN
                   </div>
-                  <button onClick={onCLick}>
+                  <button
+                    onClick={onCLick}
+                    className={styles.createOrderButton}
+                  >
                     {t('pages.cart.createOrder')}
+                  </button>
+                  <button
+                    onClick={clearCartForm}
+                    className={styles.resetButton}
+                  >
+                    {t('pages.cart.clearCart')}
                   </button>
                 </div>
               </>
