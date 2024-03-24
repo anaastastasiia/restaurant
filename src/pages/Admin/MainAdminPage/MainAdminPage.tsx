@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { OrderStatus } from '../../../model/translations/pl/enums';
 import { useOrdersStore, Order, OrderData } from '../../../store/ordersStore';
 import styles from './MainAdminPage.module.scss';
@@ -24,6 +25,7 @@ export const MainAdminPage = () => {
   const [orders, setOrders] = useState([] as Order[]);
   const [details, setDetails] = useState([] as OrdersForm[]);
   const [disable, setDisable] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -152,9 +154,9 @@ export const MainAdminPage = () => {
                             )
                           }
                         >
-                          {Object.values(OrderStatus).map((status) => (
+                          {Object.keys(OrderStatus).map((status) => (
                             <option key={status} value={status}>
-                              {status}
+                              {t(`enums.OrderStatus.${status}`)}
                             </option>
                           ))}
                         </select>

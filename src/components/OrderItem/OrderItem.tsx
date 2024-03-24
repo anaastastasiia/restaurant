@@ -42,6 +42,8 @@ export const OrderItem = ({
     fetchData();
   }, []);
 
+  console.log(order.status);
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.content}>

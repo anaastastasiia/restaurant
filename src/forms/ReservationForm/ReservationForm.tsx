@@ -22,9 +22,9 @@ export const ReservationForm: React.FC<ReservationFormProps> = ({
 
   const formik = useFormik({
     initialValues: {
-      name: '',
-      email: '',
-      phoneNumber: 0,
+      name: 'user',
+      email: 'user@gmail.com',
+      phoneNumber: Number('000000000'),
       date: '',
       time: '',
       numberOfPeople: 1,

@@ -112,7 +112,6 @@ export const OrdersPage = () => {
                 const result = ordersResult.filter(
                   (i) => i.id === order.idCart
                 );
-
                 return (
                   <OrderItem
                     order={order}
