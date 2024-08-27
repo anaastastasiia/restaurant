@@ -27,7 +27,7 @@ export const RegisterForm: React.FC = () => {
           values.password,
           values.confirmPassword,
           values.email,
-          values.phoneNumber
+          Number(values.phoneNumber)
         );
         if (res) {
           navigate('/');
